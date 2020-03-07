@@ -38,9 +38,10 @@ ul li.checked {
     color: #fff;
     text-decoration: line-through;
 }
-.completed{
-    width: 50px;
-    height: 30px;
+ .completed{
+    /* width: 20px;
+    height: 20px;
+    border:2px solid black; */
     position: relative;
     margin-top:-35px;
-}
+} 

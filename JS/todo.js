@@ -9,11 +9,20 @@ function createNewTodo(){
     if(inputValue===""){
         alert("You must write something!");
     }else{
-
         document.querySelector(".todo-ul").appendChild(addLi);
     }
     document.querySelector("#todo-inputbox").value="";
 }
+
+var completed=document.querySelector("ul");
+completed.addEventListener("click",function(complete){
+    if(complete.target.tagName="li"){
+        complete.target.classList.toggle("checked");
+        complete.target.style.display="block";
+        complete.target.classList.toggle("completed");
+    }
+});
+
 
 document.addEventListener("keypress",function(event){
     if(event.keycode===13 || event.which===13){

@@ -55,9 +55,9 @@ removed.addEventListener("click",function(remove){
 var completed=document.querySelector(".todo-container");
 completed.addEventListener("click",function(complete){
     if(complete.target.id==="complete"){
-        var a=complete.target.className;    
-        // a.target.classList.toggle("checked");
-        
+        var a=complete.target.id;    
+        console.log(a);
+        a.target.classList.toggle("checked");        
     }
 });
 

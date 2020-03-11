@@ -70,11 +70,12 @@
     margin-left: 1600px;
     margin-top: -40px;
 }
-.completed{
-    content:'\f058';
+.complete-icon{
     width:40px;
     height:35px;
     color: gray;
     margin-left:25px;
-
+}
+.colorchange{
+   background-color:red;
 }

@@ -32,7 +32,6 @@ function addNewTodo(ele) {
     //replace
     var newHtml=HTMLString.replace("%id%",Id).replace("%todoName%",todoName);
 
-    //document.querySelector(element).insertAdjacentHTML('beforeend',newHtml);
     container.insertAdjacentHTML('beforeend',newHtml);         
     
 }
@@ -57,7 +56,7 @@ completed.addEventListener("click",function(complete){
     if(complete.target.id==="complete"){
         var a=complete.target.id;    
         console.log(a);
-        a.target.classList.toggle("checked");        
+        //a.classList.add("checked");        
     }
 });
 

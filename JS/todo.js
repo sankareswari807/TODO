@@ -4,7 +4,7 @@ var newTodo=function(id,todoName) {
     this.todoName=todoName;
 };
 var todoItems=[];
-
+var todoData=(localStorage.todos)?JSON.parse(localStorage.todos):todoItems;
 function addNewTodo(ele) {
     var Id=(todoItems.length == 0)? 0:todoItems[todoItems.length-1].id+1;
     var todoName=document.getElementById("todo-inputbox").value;
@@ -21,7 +21,9 @@ function addNewTodo(ele) {
 
     var newHtml=HTMLString.replace("%id%",Id).replace("%todoName%",todoName);
 
-    container.insertAdjacentHTML('beforeend',newHtml);         
+    container.insertAdjacentHTML('beforeend',newHtml);   
+
+    localStorage.setItem('todos',JSON.stringify(todoData));      
     
 }
 
@@ -37,6 +39,7 @@ removed.addEventListener("click",function(remove){
             var removeEle=remove.target.parentNode.parentNode;
             removeEle.parentNode.removeChild(removeEle);            
     }
+    localStorage.setItem('todos',JSON.stringify(todoData)); 
 });
 
 //complete the todo
@@ -47,21 +50,7 @@ completed.addEventListener("click",function(complete){
         completeId.classList.toggle("checked"); 
         completeId.classList.toggle("completed")       
     }
-});
-
-//favourite of the todo
-var favourite=document.querySelector(".todo-container");
-favourite.addEventListener("click",function(favour){
-    if(favour.target.id==="favourite"){
-        // var itemid,splitid,type;
-        //     itemid=remove.target.parentNode.parentNode.id;
-        //     splitid=itemid.split("-");
-        //     type=splitid[0];
-        //     ID=parseInt(splitid[1]);
-        var starIcon=favour.target.classList;
-        console.log(starIcon);
-        starIcon.classList.toggle("colorchange");
-    }   
+    localStorage.setItem('todos',JSON.stringify(todoData)); 
 });
 
 //when the enter button was clicked 
@@ -70,3 +59,16 @@ document.addEventListener("keypress",function(event){
         addNewTodo();
     }
 }); 
+
+//edit the todo
+
+var edited=document.querySelector(".todo-container");
+edited.addEventListener("click",function(editing){
+    if(editing.target.id==="edit"){
+        var listItem=editing.target.parentNode;
+        console.log(listItem);
+        
+    }   
+});
+
+

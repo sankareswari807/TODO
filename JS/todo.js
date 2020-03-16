@@ -12,9 +12,8 @@ function addNewTodo(ele) {
     todoItems.push(newItem);
 
     var container=document.querySelector(".todo-container");
-    var HTMLString=  '<div class="todo-item" id="item-%id%">'+
-                     '<div class="todo-check"><i class="fa fa-circle-thin circle-icon" id="complete" style="font-size:34px"></i></div>'+
-                     '<input class="todo-item-input" value="%todoName%"></input>'+
+    var HTMLString=  '<div class="todo-item" id="item-%id%"><i class="fa fa-circle-thin circle-icon" id="complete" style="font-size:34px"></i>'+
+                     '<div class="todo-item-input">%todoName%</div>'+
                      '<div class="todo-favourite"><i class="fa fa-star-o favourite-icon" style="font-size:34px" id="favourite"></i></div>'+
                      '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div></div>';
 
@@ -39,12 +38,9 @@ removed.addEventListener("click",function(remove){
 var completed=document.querySelector(".todo-container");
 completed.addEventListener("click",function(complete){
     if(complete.target.id==="complete"){
-        var lineThroughEle=document.querySelector(".todo-item-input");
-        lineThroughEle.classList.toggle("checked");
-        var checkedElement=document.querySelector("#complete");
-        console.log(checkedElement);
-        var a=checkedElement.classList.toggle("completed") ;      
-        console.log(a);
+        var completeId=complete.target.parentNode;  
+        completeId.classList.toggle("checked");
+        completeId.classList.toggle("completed")       
     }
 });
 

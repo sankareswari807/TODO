@@ -1,7 +1,13 @@
+h2{
+    font-size: 30px;
+    color: #7F55BF;
+    margin-left: 45px;
+    margin-top:40px;
+}
 .todo-header{
-    width:99%;
+    width:95%;
     padding:10px;
-    /* border:2px solid gray; */
+    margin-left: 43px;
 }
 #todo-inputbox{
     width:80%;
@@ -19,28 +25,30 @@
     padding: 0;
 }
 .todo-item {
+    height: 50px;   
     cursor: pointer;
-    padding: 12px 8px 12px 40px;
     list-style-type: none;
     font-size: 18px;
     transition: 0.2s;
+    border-bottom: 1px solid #EBEFF0; 
+    margin-left: 40px;
+    margin-top: 5px;
 }
 .todo-check{
         width:40px;
         height:35px;
         color:gray;
-        
+
 }
 .checked {
     color:black;
     text-decoration: line-through;
 }   
 .completed{
-    content: '';
+    content: '\2714 ';
     width:40px;
     height:35px;
     color: gray;
-    margin-left:25px;
 }
 .edit-icon,.remove-icon,.favourite-icon{
         width:40px;
@@ -55,15 +63,15 @@
     outline: none;
     border: none;
     padding-left:5px;
-    line-height: 40px;
+    margin-top: -30px;
     margin-left:105px;
-    margin-top: -40px;
 }
 .circle-icon{
     width:40px;
     height:35px;
     color: gray;
-    margin-left:25px;
+    margin-left:14px;
+    margin-top: 7.5px;
 }
 .remove-icon{
     margin-left: 1650px;

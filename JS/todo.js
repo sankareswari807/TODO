@@ -12,17 +12,20 @@ function addNewTodo(ele) {
     todoItems.push(newItem);
 
     var container=document.querySelector(".todo-container");
-    var HTMLString=  '<div class="todo-item" id="item-%id%"><i class="fa fa-circle-thin circle-icon" id="complete" style="font-size:34px"></i>'+
+    var HTMLString=  '<div class="todo-item" id="item-%id%">'+
+                     '<input type="checkbox" class="circle-icon" id="complete"d>'+
                      '<div class="todo-item-input">%todoName%</div>'+
-                     '<div class="todo-favourite"><i class="fa fa-star-o favourite-icon" style="font-size:34px" id="favourite"></i></div>'+
-                     '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div></div>';
+                     '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div></div>'+
+                     '<i class="fa fa-star-o " style="font-size:34px"; id="favourite"></i>'+
+                     '<i class="fas fa-star favour-icon" style="font-size:34px;" id="favour"></i>';
+                     
 
     var newHtml=HTMLString.replace("%id%",Id).replace("%todoName%",todoName);
     if(todoName==''){
        newHtml='';
     }
     container.insertAdjacentHTML('beforeend',newHtml);   
-    //localStorage.setItem('todos',JSON.stringify(todoData));      
+    localStorage.setItem('todos',JSON.stringify(todoData));      
 }
 
 //delete the todo
@@ -38,18 +41,28 @@ removed.addEventListener("click",function(remove){
 var completed=document.querySelector(".todo-container");
 completed.addEventListener("click",function(complete){
     if(complete.target.id==="complete"){
-        var completeId=complete.target.parentNode;  
+        var completeId=complete.target.parentNode;
         completeId.classList.toggle("checked");
-        completeId.classList.toggle("completed")       
     }
 });
 
 //favourite of the task
 var favouriteTodo=document.querySelector(".todo-container");
 favouriteTodo.addEventListener("click",function(favour){
+    
     if(favour.target.id==="favourite"){
-        var favouriteId=favour.target.parentNode.parentNode; 
-        favouriteId.classList.toggle("favourite");
+        var count=0;    
+        var favouriteId=favour.target.parentNode.lastElementChild;
+        console.log(favouriteId);
+        if(count%2==0){
+            favouriteId.classList.remove(".fa-star-o");
+            favouriteId.classList.add(".fa-star");
+        }else{
+            favouriteId.classList.add(".fa-star-o");
+            favouriteId.classList.remove(".fa-star");
+        }
+        
+            
     }
 });
 
@@ -61,3 +74,31 @@ document.addEventListener("keypress",function(event){
         localStorage.setItem('todos',JSON.stringify(todoData));
     }
 }); 
+
+function sorting(){
+    var list = document.querySelector(".todo-container");
+    console.log(list);
+
+    var switching = true;
+    while (switching) {
+
+        switching = false;
+        var b = list.querySelector(".todo-item");
+        console.log(b);
+        console.log(b.length);
+        for (var i = 0; i > (b.length - 1); i++) {
+          var shouldSwitch = false;
+          console.log("hiiiii");
+          console.log(b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase());
+          if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        }    
+        if (shouldSwitch) {
+            console.log("papa");
+            b[i].parentNode.insertBefore(b[i + 1], b[i]);
+            switching = true;
+          }
+    }
+  };

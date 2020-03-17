@@ -5,13 +5,17 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
-        <h2>Tasks</h2>
+        <div class="todo-header">
+            <h2>Tasks</h2>
+            <div id="sort" style='font-size:40px' onclick="sorting()">&#8693;<h9 style="font-size: 30px;">Sort</h9></div>
+        </div>
+        
         <div class="todo-container">
             <input type="text" id="editing" style="display: none;" class="edit-inputbox">
         </div>
-        <div class="todo-header">
-            <i class="fas fa-plus" style="font-size:25px;color:gray;"></i>
-            <input type="text" id="todo-inputbox" placeholder="Add a Task">
+        <div class="todo-addtasks">
+            <i class="fas fa-plus" style="font-size:25px;color:#7F55BF;"></i>
+            <input type="text" id="todo-inputbox" placeholder="Add a Task" style="color:#7F55BF;">
         </div>
     </body>
     <script src="/home/local/ZOHOCORP/ananth-zuch764/sankari/TODO/JS/todo.js"></script> 

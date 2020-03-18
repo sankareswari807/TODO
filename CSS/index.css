@@ -72,9 +72,10 @@ h2{
 .todo-favourite{
     width:50px;
     height: 50px;
-    border:2px solid black;
+    /* border:2px solid black; */
     margin-left: 160px;
     margin-top: -40px;
+    cursor: pointer;
 }
 .fa-star-o,.fa-star{
     margin-left: 1750px;
@@ -94,5 +95,15 @@ h2{
    background-color:red;
 }
 .favourite{
-    background-color:lightskyblue;
+    color:palevioletred;
+}
+.edit-inputbox{
+    width:75%;
+    height:40px;
+    font-size: 25px;
+    border: 2px solid black;
+    outline: none;
+    /* border: none; */
+    margin-top: -60px;
+    margin-left:105px; 
 }

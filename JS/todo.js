@@ -13,7 +13,7 @@ function addNewTodo(ele) {
 
     var container=document.querySelector(".todo-container");
     var HTMLString=  '<div class="todo-item" id="item-%id%">'+
-                     '<input type="checkbox" class="circle-icon" id="complete"d>'+
+                     '<input type="checkbox" class="circle-icon" id="complete">'+
                      '<div class="todo-item-input">%todoName%</div>'+
                      '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div></div>'+
                      '<i class="fa fa-star-o " style="font-size:34px"; id="favourite"></i>'+
@@ -78,27 +78,21 @@ document.addEventListener("keypress",function(event){
 function sorting(){
     var list = document.querySelector(".todo-container");
     console.log(list);
-
+    var shouldSwitch=false;
     var switching = true;
     while (switching) {
 
         switching = false;
-        var b = list.querySelector(".todo-item");
+        var b = todoItems;
         console.log(b);
-        console.log(b.length);
-        for (var i = 0; i > (b.length - 1); i++) {
-          var shouldSwitch = false;
-          console.log("hiiiii");
-          console.log(b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase());
-          if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
-            shouldSwitch = true;
-            break;
-          }
-        }    
-        if (shouldSwitch) {
-            console.log("papa");
-            b[i].parentNode.insertBefore(b[i + 1], b[i]);
-            switching = true;
-          }
+        console.log(b.length-1);
+        for (var i = 0; i < (b.length - 1); i++) {
+                var shouldSwitch = false;
+                console.log("hiiiii");
+                var s=b.sort();
+                console.log(s);
+                var papa= document.querySelector(".todo-item").innerHTML=s;
+                console.log(papa);
+        }   
     }
   };

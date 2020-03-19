@@ -28,12 +28,9 @@ function addNewTodo(ele) {
     if(todoName==''){
        newHtml='';
     }
-    // var a=localStorage.getItem('TodoList', JSON.stringify(Todos)); 
-    // console.log(a);
-    // var b=localStorage.setItem('a',newHtml); 
-    // console.log(b);
+    var a=localStorage.setItem('TodoList', JSON.stringify(Todos)); 
+    console.log(a);
     container.insertAdjacentHTML('beforeend',newHtml);    
-    localStorage.setItem('TodoList', JSON.stringify(Todos));     
 }
 
 // function to return the values in local storage array
@@ -49,8 +46,6 @@ removed.addEventListener("click",function(remove){
             var removeEle=remove.target.parentNode.parentNode;
             var removedItem=removeEle.parentNode.removeChild(removeEle);
             console.log(removedItem);
-            var a=localStorage.setItem('Todos',JSON.stringify(Todos));  
-            console.log(a);
     }
 });
 
@@ -79,66 +74,11 @@ document.addEventListener("keypress",function(event){
     if(event.keycode===13 || event.which===13){
         addNewTodo();
         document.querySelector("#todo-inputbox").value='';
-
-        var Todos=(localStorage.TodoList)?(JSON.parse(localStorage.TodoList)):Todos;
-        console.log(Todos);
-
-        var Array = getValues().Arr;
-            console.log(Array);
+        var array = getValues().Arr;
+            console.log(array);
+        for(var i=0;i<array.length;i++){
+				addNewTodo(array[i]);
+		}
     }
 }); 
 
-// function sorting(){
-//     var list = document.querySelector(".todo-container");
-//     console.log(list);
-//     var shouldSwitch=false;
-//     var switching = true;
-//     while (switching) {
-
-//         switching = false;
-//         var b = todoItems;
-//         console.log(b);
-//         console.log(b.length-1);
-//         for (var i = 0; i < (b.length - 1); i++) {
-//             var b = todoItems[i].todoName;
-//             console.log(b);
-//                 var shouldSwitch = false;
-//                 console.log("hiiiii");
-//                 // var s=b.sort();
-//                 // console.log(s);
-//                 var papa= document.querySelector(".todo-item").innerHTML=s;
-//                 console.log(papa);
-//         }   
-//     }
-//   };
-
-var editTask=function(event){
-    var editInput=event.target;
-    console.log(editInput);
-    if(event.target.id=="inputbox"){
-        console.log(event.target.id);
-        var input = document.createElement("INPUT");
-        var a=input.setAttribute("type", "text");
-        var b=input.className="inputbox"; 
-        input.style.width="200px";
-        input.style.border="2px solid black";
-        event.target.classList.add("input");
-        event.target.classList.remove("todo-item-input");
-    }
-    // var label=listItem.querySelector("label");
-    // var containsClass=listItem.classList.contains("editMode");
-    //         //If class of the parent is .editmode
-    //         if(containsClass){
-    
-    //         //switch to .editmode
-    //         //label becomes the inputs value.
-    //             label.innerText=editInput.value;
-    //         }else{
-    //             editInput.value=label.innerText;
-    //         }
-    
-    //         //toggle .editmode on the parent.
-    //         listItem.classList.toggle("editMode");
-    }
-
-document.querySelector(".todo-container").addEventListener("click",editTask);

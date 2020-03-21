@@ -104,4 +104,5 @@ h2{
     cursor: pointer;
     margin-left: 1600px;
     margin-top: -40px;
+    display: none;
 }

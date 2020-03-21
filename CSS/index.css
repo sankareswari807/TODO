@@ -34,7 +34,6 @@ h2{
 }
 .todo-item {
     height: 50px;   
-    cursor: pointer;
     font-size: 18px;
     border-bottom: 1px solid #EBEFF0;
 }
@@ -51,7 +50,6 @@ h2{
     width:75%;
     height:40px;
     font-size: 25px;
-    border: 2px solid black;
     outline: none;
     border: none;
     margin-top: -30px;
@@ -60,10 +58,11 @@ h2{
 .circle-icon{
     width:30px;
     height:30px;
-    border:2px solid #7F55BF;
     outline: none;
-    border: none;
+    border: 2px solid black;
     border-radius: 5px; 
+    margin-top: 10px;
+    cursor: pointer;
 }
 .remove-icon{
     margin-left: 1700px;
@@ -97,13 +96,12 @@ h2{
 .favourite{
     color:palevioletred;
 }
-.edit-inputbox{
-    width:75%;
-    height:40px;
-    font-size: 25px;
-    border: 2px solid black;
-    outline: none;
-    /* border: none; */
-    margin-top: -60px;
-    margin-left:105px; 
+
+.edit-btn{
+    width:60px;
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    margin-left: 1600px;
+    margin-top: -40px;
 }

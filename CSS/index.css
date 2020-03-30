@@ -28,11 +28,11 @@ h2{
     border: none;
 }
 .todo-container{
-    margin-top: 20px;
+    margin-top: 0px;
     padding: 0;
     /* border:2px solid black; */
 }
-.todo-item {
+.todo-item,.todo-item-fav {
     height: 50px;   
     font-size: 18px;
     border-bottom: 1px solid #EBEFF0;
@@ -79,6 +79,7 @@ h2{
 .fa-star-o,.fa-star{
     margin-left: 1750px;
     margin-top: -40px;
+    cursor:pointer;
 }
 #favour{
     display:none;
@@ -105,4 +106,8 @@ h2{
     margin-left: 1600px;
     margin-top: -40px;
     display: none;
+}
+
+.todo-favourite-div{
+    margin-top: 20px;
 }

@@ -9,9 +9,7 @@
     };
     var todoItems=[];
     var favTodoList=[];
-    var rtnTodoItems=function(){
-        return todoItems;
-    };
+    
     var Todos=(localStorage.TodoList)?(JSON.parse(localStorage.TodoList)):todoItems;
     console.log(Todos);
     localStorage.setItem('TodoList',JSON.stringify(Todos));
@@ -52,24 +50,6 @@ var dataController=function(){
             localStorage.setItem('TodoList', JSON.stringify(Todos));
         },
 
-        favTodo:function(){
-            var Id,todoName,newItem;
-            //create new id
-            Id=(Todos.length == 0)? 0:Todos[Todos.length-1].id+1;
-            console.log(Id);
-            todoName=document.getElementById("todo-inputbox").value;
-            console.log(todoName);
-            //create new item
-            newItem=new newFavTodo(ID,todoName);
-            FavTodos.push(newItem); 
-
-            
-            console.log(Id,todoName,newItem)
-            localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
-            return newItem;
-            
-        },
-
         getValues:function() {
                 return{
                     Arr : Todos
@@ -107,7 +87,6 @@ var uicontroller=function(){
                             '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div>'+
                             '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favourite"></i></div>';
             var newHtml=HTMLString.replace("%id%",obj.id).replace("%todoName%",obj.todoName);
-            console.log(newHtml);
             if(obj.todoName==''){
                 newHtml='';
             }
@@ -125,7 +104,7 @@ var uicontroller=function(){
             console.log(favCont);
             // var obj=rtnTodoItems();
             for(i=0;i<favTodoList.length;i++){
-                var html='<div class="todo-item" id="item-'+i+'">'+
+                var html='<div class="fav-todo-item" id="item-'+i+'">'+
                         '<input type="checkbox" class="circle-icon" id="complete"></input>'+
                         '<div class="todo-item-input" id="inputbox" >%todoName%</div>'+
                         '<input type="button" id="edit" class="edit-btn" value="Save"></input>'+
@@ -147,6 +126,21 @@ var uicontroller=function(){
         getDOMStrings:function () {
             return DOMStrings;
         },
+
+        clearfields:function() {
+
+			var fields,fieldsArr;
+
+			fields=document.querySelectorAll(DOMStrings.inputvalue);
+			fieldsArr=Array.prototype.slice.call(fields);
+
+			fieldsArr.forEach(function(current,index,array){
+				current.value="";
+			});
+
+			fieldsArr[0].focus();
+			
+		}
         
     }
 
@@ -155,7 +149,7 @@ var uicontroller=function(){
 
 var controller=function(Datactrl,UIctrl){
 
-    var settupEventListeners=function(){
+    var settupEventListeners=function(element){
         var DOM=UIctrl.getDOMStrings();
         //when the enter button was clicked 
         document.addEventListener("keypress",function(event){
@@ -167,15 +161,6 @@ var controller=function(Datactrl,UIctrl){
         document.querySelector(DOM.container).addEventListener('click',ctrlDeleteitem);
         document.querySelector(DOM.container).addEventListener('click',ctrlFavouriteitem);
         document.querySelector(DOM.container).addEventListener('click',ctrlcompleteItem);
-    };
-
-    var ctrlAdditem=function(){
-        //get the input
-            var INPUT=UIctrl.getInput();
-        //add the item
-            var NEWITEM=Datactrl.addNewTodo(INPUT.Input);
-        //add the item to the ui
-            UIctrl.addListItem(NEWITEM);
     };
 
     var ctrlDeleteitem=function(event){
@@ -197,10 +182,12 @@ var controller=function(Datactrl,UIctrl){
         if(favour.target.id==="favourite"){   
             var favourId=favour.target;
             console.log(favourId)
-            favourId.classList.add("favourite"); 
+            favourId.classList.toggle("favourite"); 
             var favouriteId=favour.target.parentNode;
-            favouriteId.classList.add("favourite"); 
-        }
+            favouriteId.classList.toggle("favourite"); 
+
+            document.querySelector(".fav-heading").style.display="block";
+
             var itemId,splitId,ID;
             itemId=favour.target.parentNode.id;
             if(itemId){
@@ -219,7 +206,9 @@ var controller=function(Datactrl,UIctrl){
                 }
             };
             UIctrl.favListItem(innerTxt);
-    };    
+            
+        }   
+    };
 
     var ctrlcompleteItem=function(complete){
         if(complete.target.id==="complete"){
@@ -240,3 +229,14 @@ var controller=function(Datactrl,UIctrl){
     }   
 }(dataController,uicontroller)
 controller.init();
+
+var ctrlAdditem=function(){
+    //get the input
+        var INPUT=uicontroller.getInput();
+    //add the item
+        var NEWITEM=dataController.addNewTodo(INPUT.Input);
+    //add the item to the ui
+        uicontroller.addListItem(NEWITEM);
+    //clear the fields
+        uicontroller.clearfields();
+};

@@ -25,10 +25,10 @@ h2{
     font-size: 20px;
     outline:none;   
     margin-left: 20px; 
-    border: none;
+    border: none;   
 }
 .todo-container{
-    margin-top: 0px;
+    margin-top: 20px;
     padding: 0;
     /* border:2px solid black; */
 }
@@ -110,4 +110,16 @@ h2{
 
 .todo-favourite-div{
     margin-top: 20px;
+}
+
+.fav-todo-item{
+    background-color:rgb(137, 119, 173);
+    ;
+    margin-top: 20px;
+}
+
+.fav-heading{
+    font-size: 30px;
+    color:#7F55BF;
+    display: none;
 }

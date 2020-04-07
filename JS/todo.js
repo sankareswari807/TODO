@@ -135,13 +135,9 @@ var uicontroller=function(){
 			fieldsArr.forEach(function(current,index,array){
 				current.value="";
 			});
-
 			fieldsArr[0].focus();
-			
 		}
-        
     }
-
 }();
 
 
@@ -177,14 +173,13 @@ var controller=function(Datactrl,UIctrl){
     };
 
     var ctrlFavouriteitem=function(favour){
+        var clickCount=0;
         if(favour.target.id==="favourite"){   
             var favourId=favour.target;
             console.log(favourId);
             favourId.classList.toggle("favourite"); 
             var favouriteId=favour.target.parentNode;
             favouriteId.classList.toggle("favourite"); 
-
-            document.querySelector(".fav-heading").style.display="block";
 
             var itemId,splitId,ID;
             itemId=favour.target.parentNode.id;
@@ -204,8 +199,8 @@ var controller=function(Datactrl,UIctrl){
                     Todos.splice(i,1);
                 }
             };
+            document.querySelector(".fav-heading").style.display="block";
             UIctrl.favListItem(innerTxt);
-            
         }   
     };
 

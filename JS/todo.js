@@ -102,7 +102,6 @@ var uicontroller=function(){
         favListItem:function(){		
             var favCont=document.querySelector(DOMStrings.favCont);
             console.log(favCont);
-            // var obj=rtnTodoItems();
             for(i=0;i<favTodoList.length;i++){
                 var html='<div class="fav-todo-item" id="item-'+i+'">'+
                         '<input type="checkbox" class="circle-icon" id="complete"></input>'+
@@ -111,7 +110,6 @@ var uicontroller=function(){
                         '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div>'+
                         '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favourite"></i></div>';
                 var favHtml=html.replace("%todoName%",favTodoList[i].todoName);
-                console.log(favHtml);
             }		
             favCont.insertAdjacentHTML('beforeend',favHtml);             
         },
@@ -181,7 +179,7 @@ var controller=function(Datactrl,UIctrl){
     var ctrlFavouriteitem=function(favour){
         if(favour.target.id==="favourite"){   
             var favourId=favour.target;
-            console.log(favourId)
+            console.log(favourId);
             favourId.classList.toggle("favourite"); 
             var favouriteId=favour.target.parentNode;
             favouriteId.classList.toggle("favourite"); 
@@ -194,6 +192,7 @@ var controller=function(Datactrl,UIctrl){
                 splitId=itemId.split('-'); 
                 type=splitId[0]; 
                 ID=parseInt(splitId[1]);
+                // Datactrl.favouriteTodo();
                 UIctrl.favDelitem(itemId);
             };
             var innerTxt=favour.target.parentNode.innerText;

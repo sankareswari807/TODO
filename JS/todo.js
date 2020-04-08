@@ -1,4 +1,4 @@
-    var oldItem="";
+var oldItem="";
     var newTodo=function(id,todoName) {
         this.id=id;
         this.todoName=todoName;
@@ -15,7 +15,6 @@
     localStorage.setItem('TodoList',JSON.stringify(Todos));
 
     var FavTodos=(localStorage.FavTodo)?(JSON.parse(localStorage.FavTodo)):favTodoList;
-    console.log(FavTodos);
     localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
 
 var dataController=function(){
@@ -49,10 +48,25 @@ var dataController=function(){
             }
             localStorage.setItem('TodoList', JSON.stringify(Todos));
         },
+		favlist:function(name) {
+			
+            var Id,todoName,newItem;
+            //create new id
+            Id=(FavTodos.length == 0)? 0:FavTodos[FavTodos.length-1].ID+1;
+            console.log(FavTodos[FavTodos.length-1].ID);
+            //create new item
+            newItem=new newFavTodo(Id,name);
+			console.log(newItem);
+            FavTodos.push(newItem); 
 
+            localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
+            console.log(Id,todoName,newItem);
+            return newItem;
+        },
         getValues:function() {
                 return{
-                    Arr : Todos
+                    Arr : Todos,
+					Arr1 : FavTodos
                 }
         },
         testing:function(){
@@ -67,7 +81,8 @@ var uicontroller=function(){
     var DOMStrings={
         inputvalue:"#todo-inputbox",
         container:".todo-container",
-        favCont:".todo-favourite-div"
+        favCont:".favourite-icon"
+
     };
     return{
         //getting input values
@@ -122,7 +137,9 @@ var uicontroller=function(){
 
         //this is used to return the classes and id's
         getDOMStrings:function () {
+			console.log(DOMStrings);
             return DOMStrings;
+			
         },
 
         clearfields:function() {
@@ -145,6 +162,7 @@ var controller=function(Datactrl,UIctrl){
 
     var settupEventListeners=function(element){
         var DOM=UIctrl.getDOMStrings();
+		console.log(DOM.favCont);
         //when the enter button was clicked 
         document.addEventListener("keypress",function(event){
             if(event.keycode===13 || event.which===13){
@@ -173,7 +191,7 @@ var controller=function(Datactrl,UIctrl){
     };
 
     var ctrlFavouriteitem=function(favour){
-        var clickCount=0;
+        ctrlAdditem();
         if(favour.target.id==="favourite"){   
             var favourId=favour.target;
             console.log(favourId);
@@ -183,6 +201,7 @@ var controller=function(Datactrl,UIctrl){
 
             var itemId,splitId,ID;
             itemId=favour.target.parentNode.id;
+			console.log(itemId);
             if(itemId){
                 splitId=itemId.split('-'); 
                 type=splitId[0]; 
@@ -190,9 +209,8 @@ var controller=function(Datactrl,UIctrl){
                 // Datactrl.favouriteTodo();
                 UIctrl.favDelitem(itemId);
             };
-            var innerTxt=favour.target.parentNode.innerText;
-            console.log(innerTxt);
 
+            var innerTxt=favour.target.parentNode.innerText;
             for(i=0;i<Todos.length;i++){
                 if(innerTxt==Todos[i].todoName){
                     favTodoList.push(Todos[i]);
@@ -200,7 +218,10 @@ var controller=function(Datactrl,UIctrl){
                 }
             };
             document.querySelector(".fav-heading").style.display="block";
-            UIctrl.favListItem(innerTxt);
+            UIctrl.favListItem(favTodoList);
+			console.log(UIctrl.favListItem(innerTxt));
+            var NEWITEM=dataController.favlist(innerTxt);
+            console.log(NEWITEM);
         }   
     };
 

@@ -45,6 +45,7 @@ h2{
         width:40px;
         height:35px;
         color:gray;
+        cursor: pointer;
 }
 .todo-item-input{
     width:75%;
@@ -114,7 +115,6 @@ h2{
 
 .fav-todo-item{
     background-color:plum;
-    margin-top: 20px;
 }
 
 .fav-heading{

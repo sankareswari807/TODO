@@ -15,8 +15,8 @@ var oldItem="";
     localStorage.setItem('TodoList',JSON.stringify(Todos));
 
     var FavTodos=(localStorage.FavTodo)?(JSON.parse(localStorage.FavTodo)):favTodoList;
-    localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
     console.log(FavTodos);
+    localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
 
 var dataController=function(){
     return{
@@ -30,6 +30,7 @@ var dataController=function(){
             console.log(todoName);
             //create new item
             newItem=new newTodo(Id,todoName);
+            console.log(newItem)
             Todos.push(newItem); 
 
             localStorage.setItem('TodoList',JSON.stringify(Todos));
@@ -37,16 +38,19 @@ var dataController=function(){
             return newItem;
         },
 
-        favlist:function(name) {
+        favlist:function(Id,todoName) {
 			
             var Id,todoName,newItem;
             //create new id
             Id=(FavTodos.length == 0)? 0:FavTodos[FavTodos.length-1].ID+1;
+            console.log(Id);
             //create new item
-            newItem=new newFavTodo(Id,name);
+            // var todoName=favour.target.tagName;
+            // alert(todoName);
+            newItem=new newFavTodo(Id,todoName);
 			console.log(newItem);
             FavTodos.push(newItem); 
-
+            console.log(todoName);
             localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
             console.log(Id ,newItem);
             return newItem;
@@ -64,17 +68,9 @@ var dataController=function(){
             }
             localStorage.setItem('TodoList', JSON.stringify(Todos));
         },
-        favTodo:function(ID){
-            var IDS,Index;
-            IDS=FavTodos.map(function(current){
-                return current.ID;
-            });
-            Index=IDS.indexOf(ID);
-
-            if(Index!==-1){
-                FavTodos.splice(Index,1);
-            }
-            localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
+        favTodo:function(event){
+            console.log("papapapapapaapp");
+            document.querySelector('.fav-todo-item').style.display='none';
         },
 
         getValues:function() {
@@ -140,20 +136,29 @@ var uicontroller=function(){
                          '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favourite"></i></div>';
                 console.log(html);
                 var favHtml=html.replace("%todoName%",favTodoList[i].todoName);
+                var a=document.querySelector('.todo-favourite-div').innerHTML+=favTodoList[i].todoName;
+                console.log(a);
             }
             favCont.insertAdjacentHTML('beforeend',favHtml);         
         },
 
         favDelitem:function(selectorID) {
+
+            // var container=document.querySelector(DOMStrings.container);
+            // console.log(container);
             var ele=document.getElementById(selectorID);
-            console.log(ele)
-            ele.parentNode.removeChild(ele);
+            console.log(ele);ele.style.display='none';
+            var a=
+            console.log(a);
+            if(){
+                alert("Hi papa.....");
+            }
+            console.log(document.querySelector('.todo-item').style.display='block');
         },
 
         //this is used to return the classes and id's
         getDOMStrings:function () {
             return DOMStrings;
-			
         },
 
         clearfields:function() {
@@ -205,7 +210,7 @@ var controller=function(Datactrl,UIctrl){
         }
     };
 
-    var ctrlFavDeleteitem=function(event){
+    var ctrlFavDeleteitem=function(event) {
         if(event.target.id=="delete"){
             var itemId,splitId,type,ID;
                 itemId=event.target.parentNode.parentNode.id;
@@ -214,6 +219,7 @@ var controller=function(Datactrl,UIctrl){
                     splitId=itemId.split('-'); 
                     type=splitId[0]; 
                     ID=parseInt(splitId[1]);
+                    console.log(splitId+","+type+","+ID);
                     Datactrl.favTodo(ID);
                     UIctrl.favDelitem(itemId);
                 };
@@ -221,16 +227,21 @@ var controller=function(Datactrl,UIctrl){
     };
 
     var ctrlFavouriteitem=function(favour){
-        // ctrlAdditem();
+        ctrlAdditem();
         if(favour.target.id==="favourite"){   
             var favourId=favour.target;
             console.log(favourId);
             favourId.classList.toggle("favourite"); 
             var favouriteId=favour.target.parentNode;
-            favouriteId.classList.toggle("favourite"); 
+            favouriteId.classList.toggle("favourite");  
 
             var itemId,splitId,ID;
             itemId=favour.target.parentNode.id;
+            console.log(itemId)
+            var name=favour.target.parentNode.innerText;
+            console.log(name);  
+            document.querySelector('.todo-favourite-div').innerHTML+=name;
+
 			console.log(itemId);
             if(itemId){
                 splitId=itemId.split('-'); 
@@ -247,9 +258,11 @@ var controller=function(Datactrl,UIctrl){
                 }
             };
             document.querySelector(".fav-heading").style.display="block";
-           // UIctrl.favListItem(favTodoList);
-			UIctrl.favListItem(innerTxt);
-			var NEWITEM=dataController.favlist(innerTxt);
+           //UIctrl.favListItem(favTodoList);
+             UIctrl.favListItem(innerTxt);
+             var NEWITEM=dataController.favlist(itemId, innerTxt);
+            // var NEWITEM=dataController.favlist(innerTxt);
+            console.log(NEWITEM);
         }   
     };
 
@@ -257,7 +270,9 @@ var controller=function(Datactrl,UIctrl){
         if(complete.target.id==="complete"){
             var completeId=complete.target.parentNode;
             completeId.classList.toggle("checked");
+            // localStorage.setItem('TodoList', JSON.stringify(Todos));
          }
+        
     };
 
     var ctrlFavcompleteItem=function(complete){
@@ -276,8 +291,9 @@ var controller=function(Datactrl,UIctrl){
                 UIctrl.addListItem(ArrayList[i]);
             }   
             var FavArrayList = Datactrl.getValues().Arr1;
-            for(var i=0;i<FavArrayList.length;i++){
-               console.log(UIctrl.favListItem(FavArrayList[i]));
+            console.log(FavArrayList);
+            for(var j=0;j<FavArrayList.length;j++){
+                UIctrl.favListItem(FavArrayList[j]);
             }
         }
     }   

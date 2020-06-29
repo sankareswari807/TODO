@@ -83,7 +83,7 @@ h2{
     cursor:pointer;
 }
 #favour{
-    display:none;
+    display:block;
 }
 .check-icon{
     width:20px;
@@ -115,6 +115,7 @@ h2{
 
 .fav-todo-item{
     background-color:plum;
+    display: block;
 }
 
 .fav-heading{

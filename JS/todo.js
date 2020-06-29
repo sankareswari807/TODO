@@ -150,9 +150,9 @@ var uicontroller=function(){
             console.log(ele);ele.style.display='none';
             var a=
             console.log(a);
-            if(){
-                alert("Hi papa.....");
-            }
+            // if(){
+            //     alert("Hi papa.....");
+            // }
             console.log(document.querySelector('.todo-item').style.display='block');
         },
 

@@ -9,6 +9,7 @@ h2{
 }
 .todo-header{
     width: 95%;
+    display: black;
 }
 #sort{
     width: 40px;

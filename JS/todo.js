@@ -148,7 +148,6 @@ var uicontroller=function(){
             // console.log(container);
             var ele=document.getElementById(selectorID);
             console.log(ele);ele.style.display='none';
-            var a=
             console.log(a);
             // if(){
             //     alert("Hi papa.....");

@@ -12,11 +12,11 @@ var oldItem="";
     
     var Todos=(localStorage.TodoList)?(JSON.parse(localStorage.TodoList)):todoItems;
     console.log(Todos);
-    localStorage.setItem('TodoList',JSON.stringify(Todos));
+    //localStorage.setItem('TodoList',JSON.stringify(Todos));
 
     var FavTodos=(localStorage.FavTodo)?(JSON.parse(localStorage.FavTodo)):favTodoList;
     console.log(FavTodos);
-    localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
+    //localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
 
 var dataController=function(){
     return{
@@ -38,20 +38,18 @@ var dataController=function(){
             return newItem;
         },
 
-        favlist:function(Id,todoName) {
+        favlist:function(Id,name) {
 			
             var Id,todoName,newItem;
             //create new id
             Id=(FavTodos.length == 0)? 0:FavTodos[FavTodos.length-1].ID+1;
             console.log(Id);
             //create new item
-            // var todoName=favour.target.tagName;
-            // alert(todoName);
-            newItem=new newFavTodo(Id,todoName);
+            newItem=new newFavTodo(Id,name);
 			console.log(newItem);
             FavTodos.push(newItem); 
-            console.log(todoName);
-            localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
+
+            localStorage.setItem("FavTodo",JSON.stringify(FavTodos));
             console.log(Id ,newItem);
             return newItem;
         },
@@ -68,9 +66,15 @@ var dataController=function(){
             }
             localStorage.setItem('TodoList', JSON.stringify(Todos));
         },
-        favTodo:function(event){
-            console.log("papapapapapaapp");
-            document.querySelector('.fav-todo-item').style.display='none';
+        favTodo:function(id){            
+            document.querySelector(".todo-favourite-div #item-"+id).style.display = "none";
+            document.querySelector(".todo-container #item-"+id).style.display = "block";  
+            for(i=0;i<FavTodos.length;i++){
+                if(FavTodos[i].ID == id){
+                    FavTodos.splice(i,1);
+                }
+            }
+            localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
         },
 
         getValues:function() {
@@ -115,7 +119,7 @@ var uicontroller=function(){
             if(obj.todoName==''){
                 newHtml='';
             }
-            container.insertAdjacentHTML('beforeend',newHtml); 
+            container.insertAdjacentHTML('beforeend',newHtml);  
         },
 
         //delete the item ui 
@@ -124,40 +128,40 @@ var uicontroller=function(){
                 ele.parentNode.removeChild(ele);
         },
 
-        favListItem:function(){
+        favListItem:function(innertext){
             var favCont=document.querySelector(DOMStrings.favCont);
             console.log(favCont);
-            for(i=0;i<favTodoList.length;i++){
+            if(FavTodos.length > 0){
+                document.querySelector(".fav-heading").style.display="block";
+            }
+            for(i=0;i<FavTodos.length;i++){
                 var html='<div class="fav-todo-item" id="item-'+i+'">'+
                          '<input type="checkbox" class="circle-icon" id="complete"></input>'+
                          '<div class="todo-item-input" id="inputbox" >%todoName%</div>'+
                          '<input type="button" id="edit" class="edit-btn" value="Save"></input>'+
                          '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div>'+      
-                         '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favourite"></i></div>';
-                console.log(html);
-                var favHtml=html.replace("%todoName%",favTodoList[i].todoName);
-                var a=document.querySelector('.todo-favourite-div').innerHTML+=favTodoList[i].todoName;
-                console.log(a);
+                         '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favouritestar"></i></div>';
+                console.log("todoname","n"+FavTodos[i].todoName+"n");
+                var favHtml=html.replace("%todoName%",FavTodos[i].todoName);
+                console.log(FavTodos[i].todoName);  
+                 
             }
-            favCont.insertAdjacentHTML('beforeend',favHtml);         
+            favCont.insertAdjacentHTML('beforeend',favHtml);
+                   
         },
 
         favDelitem:function(selectorID) {
 
-            // var container=document.querySelector(DOMStrings.container);
-            // console.log(container);
-            var ele=document.getElementById(selectorID);
-            console.log(ele);ele.style.display='none';
-            console.log(a);
-            // if(){
-            //     alert("Hi papa.....");
-            // }
-            console.log(document.querySelector('.todo-item').style.display='block');
+            var container=document.querySelector(DOMStrings.container);
+            console.log(container);
+            var ele=document.getElementById(selectorID).style.display="none";
+            console.log(ele);
         },
 
         //this is used to return the classes and id's
         getDOMStrings:function () {
             return DOMStrings;
+			
         },
 
         clearfields:function() {
@@ -185,13 +189,16 @@ var controller=function(Datactrl,UIctrl){
             if(event.keycode===13 || event.which===13){
                 ctrlAdditem();
                 document.querySelector("#todo-inputbox").value='';
+                console.log("Enter was pressed");
             }
         });
+        // document.querySelector(DOM.container).addEventListener('click',ctrlAdditem);
         document.querySelector(DOM.container).addEventListener('click',ctrlDeleteitem);
         document.querySelector(DOM.container).addEventListener('click',ctrlFavouriteitem);
         document.querySelector(DOM.container).addEventListener('click',ctrlcompleteItem);
         document.querySelector(DOM.favCont).addEventListener('click',ctrlFavDeleteitem);
         document.querySelector(DOM.favCont).addEventListener('click',ctrlFavcompleteItem);
+        document.querySelector(DOM.favCont).addEventListener('click',ctrlFavouritestarItem);
     };
 
     var ctrlDeleteitem=function(event){
@@ -219,7 +226,6 @@ var controller=function(Datactrl,UIctrl){
                     type=splitId[0]; 
                     ID=parseInt(splitId[1]);
                     console.log(splitId+","+type+","+ID);
-                    Datactrl.favTodo(ID);
                     UIctrl.favDelitem(itemId);
                 };
         }
@@ -232,16 +238,11 @@ var controller=function(Datactrl,UIctrl){
             console.log(favourId);
             favourId.classList.toggle("favourite"); 
             var favouriteId=favour.target.parentNode;
-            favouriteId.classList.toggle("favourite");  
+            favouriteId.classList.toggle("favourite"); 
 
             var itemId,splitId,ID;
             itemId=favour.target.parentNode.id;
-            console.log(itemId)
-            var name=favour.target.parentNode.innerText;
-            console.log(name);  
-            document.querySelector('.todo-favourite-div').innerHTML+=name;
-
-			console.log(itemId);
+            console.log(itemId);
             if(itemId){
                 splitId=itemId.split('-'); 
                 type=splitId[0]; 
@@ -252,16 +253,14 @@ var controller=function(Datactrl,UIctrl){
             var innerTxt=favour.target.parentNode.innerText;
             for(i=0;i<Todos.length;i++){
                 if(innerTxt==Todos[i].todoName){
-                    favTodoList.push(Todos[i]);
                     Todos.splice(i,1);
                 }
             };
             document.querySelector(".fav-heading").style.display="block";
            //UIctrl.favListItem(favTodoList);
-             UIctrl.favListItem(innerTxt);
-             var NEWITEM=dataController.favlist(itemId, innerTxt);
-            // var NEWITEM=dataController.favlist(innerTxt);
-            console.log(NEWITEM);
+           var NEWITEM=dataController.favlist(ID,innerTxt);
+           UIctrl.favListItem(innerTxt);
+           console.log(NEWITEM);
         }   
     };
 
@@ -281,7 +280,38 @@ var controller=function(Datactrl,UIctrl){
          }
     };
 
-    return{
+    var ctrlFavouritestarItem=function(favourstar) {
+        if(favourstar.target.id=="favouritestar") {
+           console.log("Hi alagee...");
+
+           var favourstarId=favourstar.target.parentNode.id;
+           console.log(favourstarId);
+            if(favourstarId){
+                var splitId=favourstarId.split('-'); 
+                console.log(splitId);
+                var  type=splitId[0]; 
+                console.log(type);
+                var ID=parseInt(splitId[1]);
+                console.log(ID);
+                // Datactrl.favTodo(ID);
+
+                //document.querySelector(".todo-favourite-div #item-"+ID).style.display = "none";
+                // document.querySelector(".todo-item #item-"+ID).style.display = "block"; 
+                console.log(document.querySelector(".todo-container #item-"+ID).style.display="block"); 
+                Todos.push(favourstarId)
+                for(i=0;i<FavTodos.length;i++){
+                        if(FavTodos[i].ID == ID){
+                            FavTodos.splice(i,1);
+                        }
+                }
+            };
+
+        localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
+           
+        }
+    };
+
+    return{        
         init:function(){
             console.log("Application has started...");
             settupEventListeners();
@@ -290,9 +320,9 @@ var controller=function(Datactrl,UIctrl){
                 UIctrl.addListItem(ArrayList[i]);
             }   
             var FavArrayList = Datactrl.getValues().Arr1;
-            console.log(FavArrayList);
+            console.log(FavArrayList.length);
             for(var j=0;j<FavArrayList.length;j++){
-                UIctrl.favListItem(FavArrayList[j]);
+                UIctrl.favListItem(localStorage.getItem(FavArrayList[j].todoName));
             }
         }
     }   

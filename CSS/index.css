@@ -96,8 +96,12 @@ h2{
 .colorchange{
    background-color:red;
 }
-.favourite{
-    color:palevioletred;
+.show{
+    display: block;
+}
+
+.hide{
+    display: none;
 }
 
 .edit-btn{

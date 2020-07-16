@@ -69,13 +69,13 @@ var dataController=function(){
         favTodo:function(id){            
             document.querySelector(".todo-favourite-div #item-"+id).style.display = "none";
             document.querySelector(".todo-container #item-"+id).style.display = "block";  
+            console.log(document.querySelector(".todo-container #item-"+id));
             for(i=0;i<FavTodos.length;i++){
                 if(FavTodos[i].ID == id){
                     FavTodos.splice(i,1);
                 }
             }
             localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
-            localStorage.setItem('TodoList', JSON.stringify(Todos));
         },
 
         favdeleteTodo:function(id){
@@ -156,13 +156,10 @@ var uicontroller=function(){
                          '<input type="button" id="edit" class="edit-btn" value="Save"></input>'+
                          '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div>'+      
                          '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favouritestar"></i></div>';
-                console.log("todoname","n"+FavTodos[i].todoName+"n");
-                var favHtml=html.replace("%todoName%",FavTodos[i].todoName);
-                console.log(FavTodos[i].todoName);  
+                var favHtml=html.replace("%todoName%",FavTodos[i].todoName);  
                  
             }
             favCont.insertAdjacentHTML('beforeend',favHtml);
-                   
         },
 
         favDelitem:function(selectorID) {
@@ -283,15 +280,15 @@ var controller=function(Datactrl,UIctrl){
                 var  type=splitId[0];
                 var ID=parseInt(splitId[1]);
                 Datactrl.favTodo(ID);
-
-                document.querySelector(".todo-favourite-div #item-"+ID).style.display = "none";
-                document.querySelector(".todo-container #item-"+ID).style.display="block"; 
-                Todos.push(favourstarId)
-                for(i=0;i<FavTodos.length;i++){
-                        if(FavTodos[i].ID == ID){
-                            FavTodos.splice(i,1);
-                        }
-                }   
+                // console.log(document.querySelector(".todo-favourite-div #item-"+ID));
+                // console.log(document.querySelector(".todo-container #item-"+ID))
+                // document.querySelector(".todo-favourite-div #item-"+ID).style.display = "none";
+                // document.querySelector(".todo-container #item-"+ID).style.display="block"; 
+                // for(i=0;i<FavTodos.length;i++){
+                //         if(FavTodos[i].ID == ID){
+                //             FavTodos.splice(i,1);
+                //         }
+                // }   
              };
         localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
         }
@@ -315,14 +312,13 @@ var controller=function(Datactrl,UIctrl){
 
     return{        
         init:function(){
-            console.log("Application has started...");
+            //console.log("Application has started...");
             settupEventListeners();
             var ArrayList = Datactrl.getValues().Arr;
             for(var i=0;i<ArrayList.length;i++){
                 UIctrl.addListItem(ArrayList[i]);
             }   
             var FavArrayList = Datactrl.getValues().Arr1;
-            console.log(FavArrayList.length);
             for(var j=0;j<FavArrayList.length;j++){
                 UIctrl.favListItem(localStorage.getItem(FavArrayList[j].todoName));
             }

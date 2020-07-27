@@ -20,7 +20,7 @@ var oldItem="";
 
     var FavTodos=(localStorage.FavTodo)?(JSON.parse(localStorage.FavTodo)):favTodoList;
     console.log(FavTodos);
-    localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
+    //localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
 
 var dataController=function(){
     return{
@@ -76,15 +76,15 @@ var dataController=function(){
 
         favdeleteTodo:function(id){
             var ids,index;
-            ids=Todos.map(function(current){
+            ids=FavTodos.map(function(current){
                 return current.id;
             });
             index=ids.indexOf(id);
 
             if(index!==-1){
-                Todos.splice(index,1);
+                FavTodos.splice(index,1);
             }
-            localStorage.setItem("FavTodo",JSON.stringify(FavTodos));
+            localStorage.setItem('FavTodo', JSON.stringify(FavTodos));
         },
 
         getValues:function() {
@@ -93,10 +93,10 @@ var dataController=function(){
 					Arr1 : FavTodos
                 }
         },
-        testing:function(){
-            console.log(Todos);
-            console.log(FavTodos);
-        }
+        // testing:function(){
+        //     console.log(Todos);
+        //     console.log(FavTodos);
+        // }
     }
 }();
 
@@ -118,9 +118,9 @@ var uicontroller=function(){
         //add the item ui
         addListItem:function(obj){
             var container=document.querySelector(DOMStrings.container);
-            var x='<div class="todo-item" id="item-%id%">';
+            var x='<div class="todo-item" id="item-%id%" draggable=true>';
             if(obj.isFav == "Fav"){
-                 x='<div class="todo-item hide" id="item-%id%">';
+                 x='<div class="todo-item hide" id="item-%id%" draggable=true>';
             }   
             var HTMLString= x+
                             '<input type="checkbox" class="circle-icon" id="complete"></input>'+
@@ -141,7 +141,9 @@ var uicontroller=function(){
                 ele.parentNode.removeChild(ele);
         },
 
-        favListItem:function(){
+        favListItem:function(id,name,fav){
+            console.log(id,name,fav);
+            var name1=name+"";
             var favCont=document.querySelector(DOMStrings.favCont);
             console.log(favCont);
             if(FavTodos.length > 0){
@@ -149,33 +151,29 @@ var uicontroller=function(){
             }else{
                 document.querySelector(".fav-heading").style.display="none`";
             }
-            var y='<div class="fav-todo-item" id="item-';
-            if(FavTodos.isFav == "unFav"){
-                 y='<div class="fav-todo-item hide" id="item-';
+            var y='<div class="fav-todo-item" id="item-%id%" draggable="true">';
+            if(fav == "unFav"){
+                 y='<div class="fav-todo-item hide" id="item-%id%" draggable="true">';
             } 
-            for(i=0;i<FavTodos.length;i++){
-                var html=y+i+'">'+
+            console.log(FavTodos);
+        
+                var html=y+
                          '<input type="checkbox" class="circle-icon" id="complete"></input>'+
-                         '<div class="todo-item-input" id="inputbox" >%todoName%</div>'+
+                         '<div class="todo-item-input" id="inputbox" >'+name1+'</div>'+
                          '<input type="button" id="edit" class="edit-btn" value="Save"></input>'+
                          '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div>'+      
                          '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favouritestar"></i></div>';
-                var favHtml=html.replace("%todoName%",FavTodos[i].todoName);  
+                var favHtml=html.replace("%id%",id);  
+                console.log(FavTodos);
                  
-            }
+    
+            console.log(FavTodos);
             favCont.insertAdjacentHTML('beforeend',favHtml);
+            console.log(favCont);
             localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
         },
 
         favTodo:function(selectorID){            
-            // document.querySelector(".todo-favourite-div #item-"+id).style.display = "none";
-            // document.querySelector(".todo-container #item-"+id).style.display = "block";  
-            // for(i=0;i<FavTodos.length;i++){
-            //     if(FavTodos[i].ID == id){
-            //         FavTodos.splice(i,1);
-            //     }
-            // }
-            // localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
             var ele=document.getElementById("item-"+selectorID);
             console.log(ele);
             ele.style.display="none";
@@ -183,8 +181,9 @@ var uicontroller=function(){
         },
 
         favDelitem:function(selectorID) {
-            var ele=document.getElementById(selectorID);
-            ele.parentNode.removeChild(ele);
+                var ele=document.getElementById(selectorID);
+                ele.parentNode.removeChild(ele);
+                localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
         },
 
         //this is used to return the classes and id's
@@ -211,7 +210,7 @@ var uicontroller=function(){
 
 var controller=function(Datactrl,UIctrl){
 
-    var settupEventListeners=function(element){
+    var settupEventListeners=function(){
         var DOM=UIctrl.getDOMStrings();
         //when the enter button was clicked 
         document.addEventListener("keypress",function(event){
@@ -268,20 +267,23 @@ var controller=function(Datactrl,UIctrl){
                 splitId=itemId.split('-'); 
                 type=splitId[0]; 
                 ID=parseInt(splitId[1]);
-                Todos.splice(ID,1,{"id":ID,"todoName":innerTxt,"isFav":"Fav"});
-                localStorage.setItem('TodoList', JSON.stringify(Todos));
-
+                console.log(ID);
+            var number=0;
             for(i=0;i<Todos.length;i++){
                 if(innerTxt==Todos[i].todoName){
-                    Todos.splice(i,1);  
+                    number=i; 
                 }   
             };
+            Todos.splice(number,1,{"id":number,"todoName":innerTxt,"isFav":"Fav"});
+            localStorage.setItem('TodoList', JSON.stringify(Todos));
 
             document.querySelector(".fav-heading").style.display="block";
            //UIctrl.favListItem(favTodoList);
            var NEWITEM=dataController.favlist(ID,innerTxt);
-           UIctrl.favListItem(innerTxt);
+        //    UIctrl.favListItem(innerTxt);
            console.log(NEWITEM);
+           console.log(Todos);
+           location.reload();
         }   
     };
 
@@ -307,7 +309,7 @@ var controller=function(Datactrl,UIctrl){
                 FavTodos.splice(ID,1,{"id":ID,"todoName":innerTxt,"isFav":"unFav"});
                 localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
 
-                console.log(Todos);
+                console.log(Todos); 
                 for(i=0;i<FavTodos.length;i++){
                     if(innerTxt==FavTodos[i].todoName){
                         console.log(innerTxt,FavTodos[i]);
@@ -315,18 +317,27 @@ var controller=function(Datactrl,UIctrl){
                     }   
                 };
 
-                Todos.splice(ID,0,{"id":ID,"todoName":innerTxt,"isFav":"unFav"});
-                localStorage.setItem('TodoList', JSON.stringify(Todos));
+                //Todos.splice(ID,0,{"id":ID,"todoName":innerTxt,"isFav":"unFav"});
+               // localStorage.setItem('TodoList', JSON.stringify(Todos));
                 console.log(Todos);
-                for(j=0;j<Todos.length;j++){                    
+                var num=0;
+                for(j=0;j<Todos.length;j++){             
+                    console.log(innerTxt);       
                     if(innerTxt==Todos[j].todoName){
-                        console.log(innerTxt,Todos[j]);
-                        Todos.splice(j,0);
+                        // Todos.splice(j,0);
+                        num=j;   
                     }
                 };
+                Todos.splice(num,1,{"id":num,"todoName":innerTxt,"isFav":"unFav"});
+                        console.log(Todos);
+                        localStorage.setItem('TodoList', JSON.stringify(Todos));
+                        console.log(innerTxt,Todos[j]);
+                //location.reload();
         localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
         var NEWITEM=uicontroller.favTodo(ID);
-           //UIctrl.favListItem(innerTxt);
+        
+           location.reload();
+           
         }
     };
 
@@ -339,15 +350,17 @@ var controller=function(Datactrl,UIctrl){
                     splitId=itemId.split('-'); 
                     type=splitId[0]; 
                     ID=parseInt(splitId[1]);
-                    console.log(splitId+","+type+","+ID);
+                    //console.log(splitId+","+type+","+ID);
                     Datactrl.favdeleteTodo(ID);
-                    UIctrl.favDelitem(itemId);
+                    UIctrl.favTodo(ID);
                 };
+                localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
         }   
-    };
+    };    
 
     return{        
         init:function(){
+            
             settupEventListeners();
             // var ArrayList = Datactrl.getValues().Arr;
             // console.log(ArrayList);
@@ -357,7 +370,11 @@ var controller=function(Datactrl,UIctrl){
 
             // var FavArrayList = Datactrl.getValues().Arr1;
             for(var j=0;j<FavTodos.length;j++){
-                UIctrl.favListItem(localStorage.getItem(FavTodos[j]));
+                var id=FavTodos[j].ID;
+                var name=FavTodos[j].todoName;
+                var fav=FavTodos[j].isFav;
+                console.log(id,name,fav);
+                UIctrl.favListItem(id,name,fav);
             }
         }
     }   
@@ -376,3 +393,51 @@ var ctrlAdditem=function(){
                 uicontroller.clearfields();
     }
 };
+
+//drag and drop functions
+
+    function dragStart(ele) {
+        this.style.opacity = '0.2';
+        console.log("its working....");
+        dragSrcEl = this;
+        ele.dataTransfer.effectAllowed="move";
+        ele.dataTransfer.setData('text/html', this.innerHTML);
+    };
+    
+    function dragOver(ele) {
+        console.log("its dragover....");
+        ele.preventDefault();
+        ele.dataTransfer.dropEffect="move";
+        return false;
+    };
+
+    function dragDrop(e) {
+        if (dragSrcEl != this) {
+          dragSrcEl.innerHTML = this.innerHTML;
+          this.innerHTML = e.dataTransfer.getData('text/html');
+        }
+        return false;
+    };      
+
+    function dragEnd(e) {
+        this.style.opacity = '1';
+    };
+
+    function addEventsDragAndDrop(el) {
+        el.addEventListener('dragstart',dragStart,false);
+        el.addEventListener('dragover',dragOver,false);
+        el.addEventListener('drop',dragDrop,false);
+        el.addEventListener('dragend',dragEnd,false);
+    };
+
+    var dragitems=document.querySelectorAll(".todo-item");
+    console.log(dragitems);
+        [].forEach.call(dragitems, function(item) {
+        addEventsDragAndDrop(item);
+    });
+
+    var dragfavitems=document.querySelectorAll(".fav-todo-item");
+    console.log(dragfavitems);
+        [].forEach.call(dragfavitems, function(item) {
+        addEventsDragAndDrop(item);
+    });

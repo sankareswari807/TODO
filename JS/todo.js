@@ -1,8 +1,10 @@
 var oldItem="";
-    var newTodo=function(id,todoName,isFav) {
+    var newTodo=function(id,todoName,isFav,place,date) {
         this.id=id;
         this.todoName=todoName;
         this.isFav=isFav;
+        this.place=place;
+        this.date=date;
     };
     var newFavTodo=function(ID,todoName,isFav){
         this.ID=ID;
@@ -26,21 +28,31 @@ var dataController=function(){
     return{
         //Add the item
         addNewTodo:function() {
-            var Id,todoName,newItem;
+            var Id,todoName,optionPlace,newItem,optionDate;
             //create new id
             Id=(Todos.length == 0)? 0:Todos[Todos.length-1].id+1;
 
             //create todoname
             todoName=document.getElementById("todo-inputbox").value;
             
+            //category
+            optionPlace=prompt("Enter Category");
+            console.log(optionPlace);
+            if (optionPlace == null || optionPlace == "") {
+                alert("Please, Enter Place Category");
+            };
+
+            optionDate=prompt("Enter Your Deadend");
+            console.log(optionDate);
+            if (optionDate == null || optionDate == "") {
+                alert("Please, Enter Date Category");
+            };
             //create new item
-            newItem=new newTodo(Id,todoName,"unFav");
+            newItem=new newTodo(Id,todoName,"unFav",optionPlace,optionDate);
             
             Todos.push(newItem); 
 
             localStorage.setItem('TodoList',JSON.stringify(Todos));
-
-            console.log(Id,todoName,newItem)
             return newItem;
         },
 
@@ -127,8 +139,11 @@ var uicontroller=function(){
                             '<div class="todo-item-input" id="inputbox" >%todoName%</div>'+
                             '<input type="button" id="edit" class="edit-btn" value="Save"></input>'+
                             '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div>'+
-                            '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favourite"></i></div>';
-            var newHtml=HTMLString.replace("%id%",obj.id).replace("%todoName%",obj.todoName);
+                            '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favourite"></i>'+
+                            '<div class="todo-place">%placecategory%</div>'+
+                            '<div class="todo-date">%datecategory%</div>'+
+                            '</div>';
+            var newHtml=HTMLString.replace("%id%",obj.id).replace("%todoName%",obj.todoName).replace("%placecategory%",obj.place).replace("%datecategory%",obj.date);
             if(obj.todoName==''){
                 newHtml='';
             }
@@ -398,14 +413,12 @@ var ctrlAdditem=function(){
 
     function dragStart(ele) {
         this.style.opacity = '0.2';
-        console.log("its working....");
         dragSrcEl = this;
         ele.dataTransfer.effectAllowed="move";
         ele.dataTransfer.setData('text/html', this.innerHTML);
     };
     
     function dragOver(ele) {
-        console.log("its dragover....");
         ele.preventDefault();
         ele.dataTransfer.dropEffect="move";
         return false;
@@ -431,13 +444,29 @@ var ctrlAdditem=function(){
     };
 
     var dragitems=document.querySelectorAll(".todo-item");
-    console.log(dragitems);
         [].forEach.call(dragitems, function(item) {
         addEventsDragAndDrop(item);
     });
 
     var dragfavitems=document.querySelectorAll(".fav-todo-item");
-    console.log(dragfavitems);
         [].forEach.call(dragfavitems, function(item) {
         addEventsDragAndDrop(item);
     });
+
+    // category wise tasks
+
+    function homecategoryFunction () { 
+        for(var i=0; i<Todos.length; i++) {
+            var home=Todos[i];
+            console.log(home);
+            if(Todos[i].place == "Home") {
+                console.log("papa");
+                    console.log(home);
+                    var ids=Todos.map(function(current){
+                        return current.place;
+                    });
+                    console.log(ids);
+                };
+        };        
+    }
+    document.querySelector("#homebut").addEventListener('click', homecategoryFunction);

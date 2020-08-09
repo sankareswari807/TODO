@@ -1,10 +1,8 @@
 var oldItem="";
-    var newTodo=function(id,todoName,isFav,place,date) {
+    var newTodo=function(id,todoName,isFav) {
         this.id=id;
         this.todoName=todoName;
         this.isFav=isFav;
-        this.place=place;
-        this.date=date;
     };
     var newFavTodo=function(ID,todoName,isFav){
         this.ID=ID;
@@ -13,8 +11,6 @@ var oldItem="";
     };
     var todoItems=[];
     var favTodoList=[];
-
-    // var Todos=[];
     
     var Todos=(localStorage.TodoList)?(JSON.parse(localStorage.TodoList)):todoItems;
     console.log(Todos);
@@ -34,19 +30,7 @@ var dataController=function(){
 
             //create todoname
             todoName=document.getElementById("todo-inputbox").value;
-            
-            //category
-            optionPlace=prompt("Enter Category");
-            console.log(optionPlace);
-            if (optionPlace == null || optionPlace == "") {
-                alert("Please, Enter Place Category");
-            };
 
-            optionDate=prompt("Enter Your Deadend");
-            console.log(optionDate);
-            if (optionDate == null || optionDate == "") {
-                alert("Please, Enter Date Category");
-            };
             //create new item
             newItem=new newTodo(Id,todoName,"unFav",optionPlace,optionDate);
             
@@ -105,10 +89,6 @@ var dataController=function(){
 					Arr1 : FavTodos
                 }
         },
-        // testing:function(){
-        //     console.log(Todos);
-        //     console.log(FavTodos);
-        // }
     }
 }();
 
@@ -140,8 +120,6 @@ var uicontroller=function(){
                             '<input type="button" id="edit" class="edit-btn" value="Save"></input>'+
                             '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div>'+
                             '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favourite"></i>'+
-                            '<div class="todo-place">%placecategory%</div>'+
-                            '<div class="todo-date">%datecategory%</div>'+
                             '</div>';
             var newHtml=HTMLString.replace("%id%",obj.id).replace("%todoName%",obj.todoName).replace("%placecategory%",obj.place).replace("%datecategory%",obj.date);
             if(obj.todoName==''){
@@ -237,6 +215,7 @@ var controller=function(Datactrl,UIctrl){
         document.querySelector(DOM.container).addEventListener('click',ctrlDeleteitem);
         document.querySelector(DOM.container).addEventListener('click',ctrlFavouriteitem);
         document.querySelector(DOM.container).addEventListener('click',ctrlcompleteItem);
+        document.querySelector(".categories").addEventListener('click',ctrlcompleteItem);
         document.querySelector(DOM.favCont).addEventListener('click',ctrlFavDeleteitem);
         document.querySelector(DOM.favCont).addEventListener('click',ctrlFavcompleteItem);
         document.querySelector(DOM.favCont).addEventListener('click',ctrlFavouritestarItem);
@@ -348,10 +327,9 @@ var controller=function(Datactrl,UIctrl){
                         localStorage.setItem('TodoList', JSON.stringify(Todos));
                         console.log(innerTxt,Todos[j]);
                 //location.reload();
-        localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
-        var NEWITEM=uicontroller.favTodo(ID);
-        
-           location.reload();
+                localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
+                var NEWITEM=uicontroller.favTodo(ID);
+                location.reload();
            
         }
     };
@@ -435,7 +413,7 @@ var ctrlAdditem=function(){
     function dragEnd(e) {
         this.style.opacity = '1';
     };
-
+  
     function addEventsDragAndDrop(el) {
         el.addEventListener('dragstart',dragStart,false);
         el.addEventListener('dragover',dragOver,false);
@@ -453,20 +431,41 @@ var ctrlAdditem=function(){
         addEventsDragAndDrop(item);
     });
 
-    // category wise tasks
 
-    function homecategoryFunction () { 
-        for(var i=0; i<Todos.length; i++) {
-            var home=Todos[i];
-            console.log(home);
-            if(Todos[i].place == "Home") {
-                console.log("papa");
-                    console.log(home);
-                    var ids=Todos.map(function(current){
-                        return current.place;
-                    });
-                    console.log(ids);
-                };
-        };        
+    function clickFunction(e) {
+        var target=e.target.className;
+        if(target == "todo-item"){
+            console.log("baby");
+            document.querySelector(".categories").style.display="block";
+            document.querySelector(".todo-addtasks").style.width="1100px";
+            document.querySelector(".todo-addtasks").style.marginTop="-190px";
+            document.querySelector(".TODO").style.width="60%";
+            var input=document.querySelectorAll("#inputbox");
+            var del=document.querySelectorAll("#delete");
+            var fav=document.querySelectorAll("#favourite");
+            for(var i=0; i<input.length; i++){
+                del[i].style.marginLeft="1000px";
+                fav[i].style.marginLeft="1050px";
+            }   
+
+            //set the inputName
+            var gettodoname=e.target.innerText;
+            document.querySelector(".inputName").innerHTML = gettodoname;
+
+            //add my day
+            function addMyDay() {
+                console.log("add to my day");
+                var addInput="Added to My Day";
+                var changeInput=document.querySelector(".daySettings");
+                changeInput.innerHTML=addInput;
+                changeInput.style.color="#67A8F7";
+                document.querySelector(".iconify").style.color="#67A8F7";
+                // var HTML='<span class="glyphicon glyphicon-remove"></span>'
+                
+            }
+            document.querySelector(".secondDiv").addEventListener('click',addMyDay);
+        }         
     }
-    document.querySelector("#homebut").addEventListener('click', homecategoryFunction);
+
+    document.querySelector(".todo-container").addEventListener('click',clickFunction);
+    //document.querySelector(".secondDiv").addEventListener('click',addMyDay);

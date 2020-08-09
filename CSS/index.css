@@ -3,6 +3,12 @@ h2{
     color: #7F55BF;
     margin-top:40px; 
 }
+
+.TODO{
+    width:100%;
+    /* border:2px solid black; */
+}
+
 .todo-addtasks{
     width:95%;
     margin-top: 20px;
@@ -22,19 +28,20 @@ h2{
 #todo-inputbox{
     width:80%;
     height: 40px;
-    border:1px solid black; 
+    /* border:1px solid black;  */
     font-size: 20px;
     outline:none;   
     margin-left: 20px; 
     border: none;   
 }
 .todo-container{
+    /* width: 1100px; */
     margin-top: 20px;
     padding: 0;
     /* border:2px solid black; */
 }
 .todo-item,.todo-item-fav {
-    height: 100px;   
+    height: 80px;   
     font-size: 18px;
     border-bottom: 1px solid #EBEFF0;
 }
@@ -49,12 +56,13 @@ h2{
         cursor: pointer;
 }
 .todo-item-input{
-    width:75%;
+    width:50%;
     height:40px;
     font-size: 25px;
     outline: none;
     border: none;
-    margin-top: -40px;
+    /* border: 1px solid black; */
+    margin-top: -30px;
     margin-left:105px; 
 }
 .circle-icon{
@@ -68,7 +76,8 @@ h2{
 }
 .remove-icon{
     margin-left: 1700px;
-    margin-top: -20px;
+    /* margin-left: 1000px; */
+    margin-top: -40px;
 }
 .todo-favourite{
     width:50px;
@@ -80,6 +89,7 @@ h2{
 }
 .fa-star-o,.fa-star{
     margin-left: 1750px;
+    /* margin-left: 1050px; */
     margin-top: -40px;
     cursor:pointer;
 }
@@ -129,54 +139,145 @@ h2{
     display: none;
 }
 
-/* #placecategory,#datecategory{
-    width: 120px;
-    height: 30px;
-    border: 1px solid #999;
-    font-size: 18px;
-    color: #1c87c9;
-    background-color: #eee;
-    border-radius: 5px;
-    box-shadow: 4px 4px #ccc;
-    margin-left: 300px;
-} */
-
-/* #datecategory{
-    margin-left: 100px;   
-} */
-.todo-place{
-    width: 100px;
-    height: 30px;
-    /* border: 1px solid black; */
-    margin-left: 150px;
-    text-align: center;
-    line-height: 30px;
-    font-size: 24px;
-    color: gray;
-    margin-top:-20px;
-}
-
-.todo-date{
-    width: 100px;
-    height: 30px;
-    /* border: 1px solid black; */
-    margin-top: -30px;
-    margin-left: 300px;
-    text-align: center;
-    line-height: 30px;
-    font-size: 24px;
-    color: gray;
-}
-
-#homeoption{
-    width: 100px;
-    height: 50px;
+.categories{
+    width:680px;
+    height:500px;
     border:2px solid black;
+    display: none;
+    margin-left: 1120px;
+    margin-top: -220px;
 }
 
-#homebut,#officebut{
-    width:100px;
-    height: 30px;
-    font-size: 16px;
+.firstDiv{
+    width:600px;
+    height:70px;
+    border:1px solid grey;
+    margin:auto;
+    margin-top: 20px;
+}
+
+.inputName{
+    width:350px;
+    height:35px;
+    /* border:1px solid grey; */
+    margin:auto;
+    margin-top: -45px;
+    font-size: 20px;
+    line-height: 60px;
+}
+
+#complete{
+    width:30px;
+    height:30px;
+    outline: none;
+    border: 2px solid black;
+    border-radius: 5px; 
+    margin-top: 17px;
     margin-left: 20px;
+    cursor: pointer;
+}
+
+.secondDiv{
+    width:600px;
+    height:50px;
+    border:1px solid grey;
+    margin:auto;
+    margin-top: 20px;
+}
+
+.iconify{
+    /* border:2px solid black; */
+    font-size: 30px;
+    margin-top: 8px;
+    margin-left: 20px;
+    color: gray;
+    cursor: pointer;
+}
+
+.secondDiv:hover{
+   background-color:#F5F5F5;
+}
+
+.daySettings{
+    font-size: 20px;
+    margin-left: 130px;
+    margin-top:-25px;
+    cursor: pointer;
+}
+
+.thirdDiv{
+    width:600px;
+    height:100px;
+    border:1px solid grey;
+    margin:auto;
+    margin-top: 20px;
+}
+
+.remainder{
+    width: 600px;
+    height:50px;
+    border-bottom: 1px solid gray;
+}
+
+.notify{
+    font-size: 30px;
+    margin-top: 8px;
+    margin-left: 20px;
+    color: gray;
+    cursor: pointer;
+}
+.remainInput{
+    height:50px;
+    font-size: 20px;
+    margin-left: 130px;
+    margin-top:-25px;
+    cursor: pointer;
+}
+.duedate{
+    width: 600px;
+    height:50px;
+    border-bottom: 1px solid gray;
+}
+
+.date{
+    font-size: 30px;
+    margin-top: 8px;
+    margin-left: 20px;
+    color: gray;
+    cursor: pointer;
+}
+
+.dateInput{
+    height:50px;
+    font-size: 20px;
+    margin-left: 130px;
+    margin-top:-25px;
+    cursor: pointer;
+}
+
+.fourthDiv{
+    width:600px;
+    height:50px;
+    border:1px solid grey;
+    margin:auto;
+    margin-top: 20px;
+}
+
+.categoryInput{
+    width:300px;
+    border:none;
+    height:30px;
+    outline: none;
+    font-size: 18   px;
+    margin-top: 10px;
+    margin-left: 80px;
+}
+
+.categorypick{
+    font-size: 30px;
+    margin-top: 8px;
+    margin-left: 20px;
+    color: gray;
+    cursor: pointer;
+    transform: rotate(90deg);
 }

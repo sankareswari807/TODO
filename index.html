@@ -3,22 +3,50 @@
         <link rel="stylesheet" href="/home/local/ZOHOCORP/ananth-zuch764/sankari/TODO/CSS/index.css">
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="/home/local/ZOHOCORP/ananth-zuch764/sankari/TODO/jquery-3.4.1.js"></script>
     </head>
     <body>
         <div class="TODO">
+
             <div class="todo-header">
                 <h2>Tasks</h2>
             </div>
+
             <div class="todo-favourite-div">
                 <div class="fav-heading">Favourite</div>
             </div>
+
             <div class="todo-container">
             </div>
+
+            <div class="categories">
+                <div class="firstDiv">
+                    <input type="checkbox" class="checked" id="complete">
+                    <div class="inputName"></div>
+                </div>
+                <div class="secondDiv">
+                    <i class="fas fa-sun iconify" ></i>
+                    <div class="daySettings">Add to my Day</div>
+                </div>
+                <div class="thirdDiv">
+                    <div class="remainder">
+                        <i class="fas fa-bell notify"></i>
+                        <div class="remainInput">Remainder</div>
+                    </div>
+                    <div class="duedate">
+                        <i class='far fa-calendar-alt date'></i>
+                        <div class="dateInput" onclick="addMyDay()">Add Due Date</div>
+                    </div>
+                </div>
+                <div class="fourthDiv">
+                    <i class='fas fa-tag categorypick'></i>
+                    <input type="text" placeholder="Pick Category" class="categoryInput">
+                </div>
+            </div>
+
             <div class="todo-addtasks">
                 <i class="fas fa-plus" style="font-size:25px;color:#7F55BF;" onclick="ctrlAdditem()" id="add"></i>
                 <input type="text" id="todo-inputbox" placeholder="Add a Task" style="color:#7F55BF;"></input>
-                <button id="homebut">Home</button>
-                <button id="officebut">Office</button>
             </div>
         </div>
     </body>

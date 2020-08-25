@@ -3,10 +3,31 @@ h2{
     color: #7F55BF;
     margin-top:40px; 
 }
+.body{
+    display: inline;
+}
 
-.TODO{
+.todohead{
     width:100%;
-    /* border:2px solid black; */
+    height:75px;
+    border-bottom:gray ;
+    font-size: 30px;
+    color: white;
+    background-color: dodgerblue;
+    text-align: center;
+    line-height: 2.5;
+}
+.TODO{
+    width:77%;
+    float: left;
+    margin-left: 405px;
+    margin-top: -880px;
+}
+
+.Types{
+    width:400px;
+    height:91%;
+    background-color: #EDEDED;
 }
 
 .todo-addtasks{
@@ -26,7 +47,7 @@ h2{
     cursor: pointer;
 }
 #todo-inputbox{
-    width:80%;
+    width:50%;
     height: 40px;
     /* border:1px solid black;  */
     font-size: 20px;
@@ -75,7 +96,7 @@ h2{
     cursor: pointer;
 }
 .remove-icon{
-    margin-left: 1700px;
+    margin-left: 1390px;
     /* margin-left: 1000px; */
     margin-top: -40px;
 }
@@ -88,7 +109,7 @@ h2{
     cursor: pointer;
 }
 .fa-star-o,.fa-star{
-    margin-left: 1750px;
+    margin-left: 1330px;
     /* margin-left: 1050px; */
     margin-top: -40px;
     cursor:pointer;
@@ -140,20 +161,22 @@ h2{
 }
 
 .categories{
-    width:680px;
-    height:500px;
-    border:2px solid black;
+    width:530px;
+    height:90%;
+    /* border:2px solid black; */
+    background-color: #EDEDED;
     display: none;
-    margin-left: 1120px;
-    margin-top: -220px;
+    margin-left: 900px;
+    margin-top: -240px;
 }
 
 .firstDiv{
-    width:600px;
+    width:500px;
     height:70px;
-    border:1px solid grey;
+    border:1px solid whitesmoke;
     margin:auto;
-    margin-top: 20px;
+    margin-top:20px;
+    background-color: #FFFFFF;
 }
 
 .inputName{
@@ -170,7 +193,7 @@ h2{
     width:30px;
     height:30px;
     outline: none;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     border-radius: 5px; 
     margin-top: 17px;
     margin-left: 20px;
@@ -178,11 +201,12 @@ h2{
 }
 
 .secondDiv{
-    width:600px;
+    width:500px;
     height:50px;
-    border:1px solid grey;
+    /* border:1px solid grey; */
     margin:auto;
     margin-top: 20px;
+    background-color: #FFFFFF
 }
 
 .iconify{
@@ -206,17 +230,19 @@ h2{
 }
 
 .thirdDiv{
-    width:600px;
+    width:500px;
     height:100px;
-    border:1px solid grey;
+    /* border:1px solid grey; */
     margin:auto;
     margin-top: 20px;
+    background-color: #FFFFFF
 }
 
 .remainder{
-    width: 600px;
+    width: 525px;
     height:50px;
-    border-bottom: 1px solid gray;
+    /* border-bottom: 1px solid gray; */
+    position: relative;
 }
 
 .notify{
@@ -234,9 +260,9 @@ h2{
     cursor: pointer;
 }
 .duedate{
-    width: 600px;
+    width: 525px;
     height:50px;
-    border-bottom: 1px solid gray;
+    /* border-bottom: 1px solid gray; */
 }
 
 .date{
@@ -256,11 +282,12 @@ h2{
 }
 
 .fourthDiv{
-    width:600px;
-    height:50px;
-    border:1px solid grey;
+    width:500px;
+    /* height:50px; */
+    /* border:1px solid grey; */
     margin:auto;
     margin-top: 20px;
+    background-color: #FFFFFF
 }
 
 .categoryInput{
@@ -268,16 +295,445 @@ h2{
     border:none;
     height:30px;
     outline: none;
-    font-size: 18   px;
-    margin-top: 10px;
-    margin-left: 80px;
+    font-size: 18px;
+    margin-top: -23px;
+    margin-left:130px;
 }
 
 .categorypick{
     font-size: 30px;
     margin-top: 8px;
     margin-left: 20px;
-    color: gray;
+    opacity: 0.5;
     cursor: pointer;
     transform: rotate(90deg);
+}
+
+#crossIcon{
+    width:50px;
+    height: 50px;
+    font-size: 30px;
+    margin-top: -30px;
+    margin-left: 450px; 
+    color: gray;
+    cursor: pointer;
+    display: none;
+}
+
+.newElementClass{
+    width:80px;
+    height: 30px;   
+    /* border:2px solid black; */
+    font-size:17px;
+    color:lightBlack;
+    margin-left:20px;
+}
+
+.icon{
+    width:30px;
+    height: 30px;
+    font-size: 20px;
+    margin-top: -20px; 
+    margin-left: -85px;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.fifthDiv{
+    width:500px;
+    height:50px;
+    /* border:1px solid grey; */
+    margin:auto;
+    margin-top: 20px;
+    background-color: #FFFFFF
+}
+
+.fa-paperclip{
+    margin-top: 8px;
+    margin-left: 20px;
+    color: gray;
+    cursor: pointer;
+}
+
+.addFile{
+    width: 375px;
+    height:50px;
+    font-size: 20px;
+    margin-left: 130px;
+    margin-top:-27px;
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-user-select: none; 
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.newElementClass1{
+    width:170px;
+    height: 30px;
+    /* border:2px solid black; */
+    font-size:17px;
+    margin-top: -30px; 
+    margin-left:105px;
+    opacity: 0.5;
+    cursor: pointer;
+    text-align: right;
+    color: black;
+}
+
+.fileAttachIcon{
+    width:30px;
+    height: 30px;
+    font-size: 20px;
+    margin-top: -20px; 
+    margin-right:270px;
+    /* opacity: 0.5; */
+    cursor: pointer;
+    text-align: left;
+}
+
+.fileattachDiv{
+    width:500px;
+    height:50px;
+    border:1px solid whitesmoke;
+    background-color: white;
+    margin:auto;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.remainderPopup{
+    width:400px;
+    height:288px;
+    border: 2px solid  #EBEFF0;
+    position: absolute;
+    margin-top: -60px;
+    margin-left: 75px;
+    background-color: white;
+}
+
+.Head{
+    font-size: 20px;
+    width:100%;
+    height:40px;
+    /* border:1px solid black; */
+    border-bottom: 1px solid #EBEFF0;
+    line-height: 40px;
+    text-align: center;
+}
+
+.laterToday,.tomorrow,.nextweek,.pickdatetimeRemain,.pickdatetimeDue,.today{
+    width: 100%;
+    height: 50px;
+    border-bottom:2px solid #EBEFF0;
+    cursor: pointer;
+}
+
+.pickdatetime{
+    margin-top: 25px;
+}
+.latertodayInput,.tomorrowInput,.nextweekInput,.datetimeInput,.todayInput{
+    text-align: center;
+    margin-top: -30px;
+    font-size: 17px;
+    color: grey;
+}
+
+.timerIcon,.tomorrowIcon,.nextweekIcon,.datetimeIcon{
+    width:30px;
+    height:30px;
+    color:gray;
+    /* border:1px solid black; */
+    font-size: 20px;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.laterToday:hover,.tomorrow:hover,.nextweek:hover,.pickdatetimeRemain:hover,.pickdatetimeDue:hover,.today:hover{
+    background-color: #F5F5F5;
+}
+
+.duePopup{
+    width:400px;
+    height:288px;
+    border: 2px solid  #EBEFF0;
+    position: absolute;
+    margin-top: -310px;
+    margin-left: 75px;
+    background-color: white;
+}
+
+.TodayName,.TomorrowName,.NextweekName,.TodayTime{
+    width:100px;
+    height:20px;
+    /* border:1px solid gray; */
+    text-align: center;
+    margin-top: -20px;
+    margin-left: 290px;
+    font-size: 17px;
+    color: grey;
+}
+
+.note{
+    width:30px;
+    height: 30px;
+    font-size: 20px;
+    /* border:1px solid black; */
+    opacity: 0.5;
+    cursor: pointer;
+    margin-top: 25px;
+    margin-left: 100px;
+}
+
+.newElementClass2{
+    width:30px;
+    height: 30px;
+    font-size: 20px;
+    /* border:1px solid black; */
+    margin-top:-55px; 
+    margin-left: 222px;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.hoverelement1{
+    width:200px;
+    height: 25px;
+    border:1px solid gray;
+    font-size:20px;
+    text-align: center;
+}
+
+.categoryPopup{
+    width:400px;
+    height:350px;
+    border: 2px solid  #EBEFF0;
+    position: absolute;
+    margin-top: -310px;
+    margin-left: 75px;
+    background-color: white;
+}
+
+.redcolor,.yellowcolor,.bluecolor,.greencolor,.purplecolor,.orangecolor{
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    font-size: 17px;
+    list-style: none;
+    margin-left: -20px;
+ }
+
+.redcolor{
+    margin-top:14px;
+}   
+
+.orangecolor{
+    margin-top:9px;
+}
+
+.redcolor:hover,.yellowcolor:hover,.bluecolor:hover,.greencolor:hover,.purplecolor:hover,.orangecolor:hover{
+    background-color:#F5F5F5 ;
+}
+
+#red,#blue,#purple,#green,#yellow,#orange{
+    width:20px;
+    height:20px;
+    /* border:2px solid black; */
+    color: red;
+    margin-top: 15px;
+}
+
+#blue{
+    color: skyblue;
+}
+
+#yellow{
+    color: #DAD7A7;
+}
+
+#green{
+    color:lightseagreen
+}
+
+#purple{
+    color: purple;
+}
+
+#orange{
+    color: orange;
+}
+
+.red,.green,.blue,.purple,.yellow,.orange{
+    text-align: center;
+    margin-top: -20px;
+}
+
+.divred{
+    width:160px;
+    height: 30px;
+    border:1px solid red;
+    background-color: #F4C7C9;
+    text-align: center;
+    color:red;
+    font-size: 15px;
+    line-height: 30px;
+    display: inline-block;
+    margin-top:-10px;
+    margin-left: 375px;
+}
+
+.divyellow{
+    width:160px;
+    height: 30px;
+    border:1px solid black;
+    background-color: lemonchiffon;
+    text-align: center;
+    color:black;
+    font-size: 15px;
+    line-height: 30px;
+    display: inline-block;
+}
+
+.divgreen{
+    width:160px;
+    height: 30px;
+    border:1px solid #257E20;
+    background-color: #C2E1C1;
+    text-align: center;
+    color:#257E20;
+    font-size: 15px;
+    line-height: 30px;
+    display: inline-block;
+}
+
+.divblue{
+    width:160px;
+    height: 30px;
+    border:1px solid #277898;
+    background-color: #B2DCE8;
+    text-align: center;
+    color: #277898;
+    font-size: 15px;
+    line-height: 30px;
+    display: inline-block;
+}
+
+.divpurple{
+    width:160px;
+    height: 30px;
+    border:1px solid #7D57B2;
+    background-color:#C1B1DB;
+    text-align: center;
+    color: #7D57B2  ;
+    font-size: 15px;
+    line-height: 30px;
+    display: inline-block;
+}
+
+.divorange{
+    width:160px;
+    height: 30px;
+    border:1px solid #A35A00;
+    background-color: #EBD4B7;
+    text-align: center;
+    color:#A35A00;
+    font-size: 15px;
+    line-height: 30px;
+    display: inline-block;
+}
+
+.day{
+    width:100%;
+    height:50px;
+    border:1px solid rgba(248, 240, 240, 0.801); 
+}   
+
+.addday{
+    width:200px;
+    height:30px;
+    border:gray;
+    font-size: 18px;
+    margin-top:-23px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.Iconify{
+    font-size: 25px;
+    color: gray;
+    cursor: pointer;
+}
+
+.important{
+    width:100%;
+    height:50px;
+    border:1px solid rgba(248, 240, 240, 0.801);
+}
+
+.favIcon{
+    font-size: 25px;
+    color: gray;
+    cursor: pointer;
+}
+
+.addimp{
+    width:200px;
+    height:30px;
+    border:gray;
+    font-size: 18px;
+    margin-top:-25px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tasks{
+    width:100%;
+    height:50px;
+    border:1px solid rgba(248, 240, 240, 0.801);
+}
+
+.addtask{
+    width:200px;
+    height:30px;
+    border:gray;
+    font-size: 18px;
+    margin-top:-25px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.homeIcon{
+    font-size: 25px;
+    color: gray;
+    cursor: pointer;
+}
+
+.completed{
+    width:100%;
+    height:50px;
+    border:1px solid rgba(248, 240, 240, 0.801);
+}
+
+.addcomplete{
+    width:200px;
+    height:30px;
+    border:gray;
+    font-size: 18px;
+    margin-top:-25px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.checkIcon{
+    font-size: 25px;
+    color: gray;
+    cursor: pointer;
+}
+
+.noofTasks{
+    font-size:20px ;
+    text-align: center;
+    margin-top: -30px;
+    margin-left:350px;
 }

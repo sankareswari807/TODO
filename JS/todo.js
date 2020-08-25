@@ -434,18 +434,18 @@ var ctrlAdditem=function(){
 
     function clickFunction(e) {
         var target=e.target.className;
-        if(target == "todo-item"){
-            console.log("baby");
+        if(target == "todo-item"){              
+            // console.log("baby");
             document.querySelector(".categories").style.display="block";
-            document.querySelector(".todo-addtasks").style.width="1100px";
-            document.querySelector(".todo-addtasks").style.marginTop="-190px";
-            document.querySelector(".TODO").style.width="60%";
+            document.querySelector(".todo-addtasks").style.width="900px";
+            document.querySelector(".todo-addtasks").style.marginTop="-590px";
+            document.querySelector(".TODO").style.width="50%";
             var input=document.querySelectorAll("#inputbox");
             var del=document.querySelectorAll("#delete");
             var fav=document.querySelectorAll("#favourite");
             for(var i=0; i<input.length; i++){
-                del[i].style.marginLeft="1000px";
-                fav[i].style.marginLeft="1050px";
+                del[i].style.marginLeft="850px";
+                fav[i].style.marginLeft="800px";
             }   
 
             //set the inputName
@@ -454,18 +454,443 @@ var ctrlAdditem=function(){
 
             //add my day
             function addMyDay() {
-                console.log("add to my day");
+                // console.log("add to my day");
                 var addInput="Added to My Day";
+                document.querySelector(".todo-item-input").style.marginTop="-50px";
                 var changeInput=document.querySelector(".daySettings");
                 changeInput.innerHTML=addInput;
                 changeInput.style.color="#67A8F7";
                 document.querySelector(".iconify").style.color="#67A8F7";
-                // var HTML='<span class="glyphicon glyphicon-remove"></span>'
-                
+                document.querySelector("#crossIcon").style.display="block";
+
+                var createDiv=document.createElement("div");
+                createDiv.className="newElementClass";
+                createDiv.innerHTML="My Day";
+                document.querySelector(".todo-item-input").appendChild(createDiv);
+
+                var createSpan=document.createElement("span");
+                createSpan.className="fas fa-sun icon";
+                createDiv.appendChild(createSpan);
             }
-            document.querySelector(".secondDiv").addEventListener('click',addMyDay);
+            document.querySelector(".daySettings").addEventListener('click',addMyDay);
+            
+            //remove my day
+            function removeMyDay() {
+                console.log("remove my day");   
+                var removeInput="Add My Day"
+                var changeInput=document.querySelector(".daySettings");
+                changeInput.innerHTML=removeInput;
+                changeInput.style.color="gray";
+                document.querySelector(".iconify").style.color="gray";
+                document.querySelector(".todo-item-input").style.marginTop="-28px";
+                document.querySelector("#crossIcon").style.display="none";
+                document.querySelector(".newElementClass").remove();
+            }
+            document.querySelector("#crossIcon").addEventListener('click',removeMyDay);
+
+            //file attaching
+            function fileAttach() {
+                // console.log("file attached");
+                document.querySelector(".todo-item-input").style.marginTop="-50px";
+                document.querySelector(".fileattachDiv").style.display="block";
+                var createDiv=document.createElement("div");
+                createDiv.className="newElementClass1";
+                createDiv.innerHTML="Files Attached";
+                createDiv.style.color="black";
+                document.querySelector(".todo-item-input").appendChild(createDiv);
+                var createSpan=document.createElement("span");
+                createSpan.className="fa fa-paperclip fileAttachIcon";
+                createDiv.appendChild(createSpan);
+
+                function myFunction(){
+                    var x = document.getElementById("fileAttach");
+                    console.log(x);
+                    var txt = "";
+                    if ('files' in x) {
+                         if (x.files.length == 0) {
+                             txt = "Select one or more files.";
+                         }else {
+                            for(var i=0; i<x.files.length; i++) {
+                                var file = x.files[i];
+                                if ('name' in file) {
+                                    txt +=file.name +"<br>";
+                                }
+                                if ('size' in file) {
+                                    txt +=file.size + " bytes <br>";
+                                }
+                            }
+                         }
+                    } 
+                    else {
+                        if(x.value == "") {
+                            txt += "Select one or more files.";
+                        }else {
+                            txt += "The files property is not supported by your browser!";
+                            txt  += "<br>The path of the selected file: " + x.value;  
+                        }
+                    }
+                    document.querySelector(".fileattachDiv").innerHTML = txt;
+                }
+                document.querySelector(".addFile").addEventListener('mouseover',myFunction);
+            }
+            document.querySelector(".addFile").addEventListener('click',fileAttach);
+
+            //remainder
+            function remainderFunction() {
+                var count = 0;
+                var countButton = document.querySelector(".remainder");
+                countButton.onclick = function(){
+                    count++;
+                    if(count % 2 == 0){
+                        document.querySelector(".remainderPopup").style.display="none";
+                    } else if(count % 2 != 0){
+                        document.querySelector(".remainderPopup").style.display="block";
+                    }
+                }
+            }
+            document.querySelector(".remainInput").addEventListener('click',remainderFunction);
+
+            //remainder popup function
+            function remainderPopupFunction(e) {
+
+                console.log(e.target.className);
+                //get time
+                var dateget= new Date();
+                var Todaytime=dateget.getHours();
+
+                //get day
+                var date = new Date();
+                    var weekday = new Array(7);
+                    weekday[0] = "Sun";
+                    weekday[1] = "Mon";
+                    weekday[2] = "Tues";
+                    weekday[3] = "Wed";
+                    weekday[4] = "Thurs";
+                    weekday[5] = "Fri";
+                    weekday[6] = "Satur";
+                  
+                var day = weekday[date.getDay()];
+
+                //later today timesettings
+                var time=Todaytime+3 +":00";
+                document.querySelector(".TodayTime").textContent=time;
+                
+                //get tomorrow day & time settings
+
+                    //set day          
+                    var day = weekday[date.getDay()+1];
+                    //set time
+                    var time=Todaytime-10 +":00";
+                    document.querySelector(".TomorrowName").textContent=day+' ,'+time;
+
+                //get nextweek day & time settings
+
+                    //set day
+                    var day=weekday[1];
+                    //set time
+                    var time=Todaytime-10 +":00";
+                    document.querySelector(".NextweekName").textContent=day+' ,'+time;
+
+                 //get latertodayFunction
+                function latertodayFunction() {
+                    document.querySelector(".todo-item-input").style.marginTop="-50px";
+
+                    var createDiv=document.createElement("div");
+                    createDiv.className="newElementClass2";
+                    document.querySelector(".todo-item-input").appendChild(createDiv);
+
+                    var createSpan=document.createElement("span");
+                    createSpan.className="fas fa-bell note";
+                    createDiv.appendChild(createSpan);  
+      
+                    var addInput="Remaind me at ";
+                    var numInput=document.querySelector(".TodayTime").innerHTML;
+                    var changeInput=document.querySelector(".remainInput");
+                    changeInput.innerHTML=addInput +" "+numInput;
+                    changeInput.style.color="#67A8F7";
+                    document.querySelector(".notify").style.color="#67A8F7";
+                }
+                document.querySelector(".laterToday").addEventListener('click',latertodayFunction);
+
+                //  get tomorrowFunction
+                 function tomorrowFunction() {
+                    document.querySelector(".todo-item-input").style.marginTop="-50px";
+
+                    var createDiv=document.createElement("div");
+                    createDiv.className="newElementClass2";
+                    document.querySelector(".todo-item-input").appendChild(createDiv);
+                    var createSpan=document.createElement("span");
+                    createSpan.className="fas fa-bell note";
+                    createDiv.appendChild(createSpan);
+
+                    var addInput="Remaind me at ";
+                    var numInput=document.querySelector(".TomorrowName").innerHTML;
+                    var changeInput=document.querySelector(".remainInput");
+                    changeInput.innerHTML=addInput +" "+numInput;
+                    changeInput.style.color="#67A8F7";                    
+                    document.querySelector(".notify").style.color="#67A8F7";
+                }
+                document.querySelector(".tomorrow").addEventListener('click',tomorrowFunction);
+
+                 //  get tomorrowFunction
+                 function nextWeekFunction() {
+                    document.querySelector(".todo-item-input").style.marginTop="-50px";
+
+                    var createDiv=document.createElement("div");
+                    createDiv.className="newElementClass2";
+                    document.querySelector(".todo-item-input").appendChild(createDiv);
+
+                    var createSpan=document.createElement("span");
+                    createSpan.className="fas fa-bell note";
+                    createDiv.appendChild(createSpan);
+                     
+                    var addInput="Remaind me at ";
+                    var numInput=document.querySelector(".NextweekName").innerHTML;
+                    var changeInput=document.querySelector(".remainInput");
+                    changeInput.innerHTML=addInput +" "+numInput;
+                    changeInput.style.color="#67A8F7";                    
+                    document.querySelector(".notify").style.color="#67A8F7";
+                }
+                document.querySelector(".nextweek").addEventListener('click',nextWeekFunction);
+
+                //pick  date function
+                function pickdatefunction(){
+                    $( function() {
+                        $( ".pickdatetimeRemain" ).datepicker();
+                      } );
+                }
+                document.querySelector(".pickdatetimeRemain").addEventListener('click',pickdatefunction); 
+                
+                //remove remainderfunction
+            function removeremainderfunction() {
+                // console.log("remove my day");   
+                var removeInput="Remaind Me"
+                var changeInput=document.querySelector(".remainInput");
+                changeInput.innerHTML=removeInput;
+                changeInput.style.color="gray";
+                document.querySelector(".notify").style.color="gray";
+                document.querySelector("#crossIcon").style.display="none";
+                document.querySelector(".newElementClass").remove();
+            }
+            document.querySelector("#crossIcon").addEventListener('click',removeremainderfunction);
+            }
+            document.querySelector(".remainderPopup").addEventListener('click',remainderPopupFunction);
+
+            //due date & time
+            function dueFunction() {
+                var count = 0;
+                var countButton = document.querySelector(".duedate");
+                countButton.onclick = function(){
+                    count++;
+                    if(count % 2 == 0){
+                        document.querySelector(".duePopup").style.display="none";
+                    } else if(count % 2 != 0){
+                        document.querySelector(".duePopup").style.display="block";
+                    }
+                }
+            }
+            document.querySelector(".dateInput").addEventListener('click',dueFunction);
+
+            //due popup function
+            function duepopupFunction() {
+
+                //get day
+                var date = new Date();
+                    var weekday = new Array(7);
+                    weekday[0] = "Sun";
+                    weekday[1] = "Mon";
+                    weekday[2] = "Tues";
+                    weekday[3] = "Wed";
+                    weekday[4] = "Thurs";
+                    weekday[5] = "Fri";
+                    weekday[6] = "Satur";
+                  
+                var day = weekday[date.getDay()];
+
+                //get today
+                function todayFunction(){
+                    document.querySelector(".TodayName").textContent=day;
+                }
+                todayFunction();
+
+                //get tomorrow
+                function tomorrowFunction(){                  
+                    var tomday = weekday[date.getDay()+1];
+                    console.log(tomday);
+                    document.querySelector(".TomorrowName").textContent=tomday;
+                }
+                tomorrowFunction();
+
+                //get nextweek
+                function nextWeekFunction() {
+                    var nexday=weekday[1];
+                    console.log(nexday);
+                    document.querySelector(".NextweekName").textContent=nexday;
+                }
+                nextWeekFunction();
+
+                //pick date & time
+                function datefunction(){
+                    $( function() {
+                        $( ".pickdatetimeDue" ).datepicker();
+                      } );
+                }
+                document.querySelector(".pickdatetimeDue").addEventListener('click',datefunction); 
+            }
+            document.querySelector(".duePopup").addEventListener('click',duepopupFunction);   
+
+            //category popup function
+
+            function categoryPopup() {
+                var count = 0;
+                var countButton = document.querySelector(".fourthDiv");
+                countButton.onclick = function(){
+                    count++;
+                    console.log(count);
+                    if(count % 2 == 0){
+                        document.querySelector(".categoryPopup").style.display="none";
+                    } else if(count % 2 != 0){
+                        document.querySelector(".categoryPopup").style.display="block";
+                    }
+                }                
+            }
+            document.querySelector(".categoryInput").addEventListener('click',categoryPopup);
+
+            //colors function
+            // color - red
+            function redfunction(e) {
+                console.log("red");    
+                document.querySelector(".todo-item-input").style.marginTop="-50px";
+                var createdivred=document.createElement("div");
+                createdivred.className="divred";
+                createdivred.innerHTML="Red Category";  
+                console.log(createdivred);  
+                document.querySelector(".todo-item-input").appendChild(createdivred);
+                document.querySelector(".categoryInput").innerHTML = createdivred.innerText;
+                function createdivredfunction(e){
+                    if(e.target.className=="divred"){
+                        var ele=e.target;
+                        ele.parentNode.removeChild(ele);
+                    }
+                }                
+                document.querySelector('.divred').addEventListener('click',createdivredfunction);
+            }
+            document.querySelector(".redcolor").addEventListener('click',redfunction);
+            //color - yellow
+            function yellowfunction() {
+                console.log("yellow");    
+                var createdivyellow=document.createElement("div");
+                createdivyellow.className="divyellow";
+                createdivyellow.innerHTML="Yellow Category";
+                document.querySelector(".fourthDiv").appendChild(createdivyellow);
+                document.querySelector(".todo-item-input").appendChild(createdivyellow);
+                document.querySelector(".categoryInput").innerHTML = createdivyellow.innerText;
+                function createdivyellowfunction(e){
+                    if(e.target.className=="divyellow"){
+                        var ele=e.target;
+                        ele.parentNode.removeChild(ele);
+                    }
+                }                
+                document.querySelector('.divyellow').addEventListener('click',createdivyellowfunction);
+            }
+            document.querySelector(".yellowcolor").addEventListener('click',yellowfunction);
+            //color - blue
+            function bluefunction() {
+                console.log("blue");  
+                var createdivblue=document.createElement("div");
+                createdivblue.className="divblue";
+                createdivblue.innerHTML="Blue Category";
+                document.querySelector(".fourthDiv").appendChild(createdivblue); 
+                document.querySelector(".todo-item-input").appendChild(createdivblue); 
+                document.querySelector(".categoryInput").innerHTML = createdivblue.innerText;
+                function createdivbluefunction(e){
+                    if(e.target.className=="divblue"){
+                        var ele=e.target;
+                        ele.parentNode.removeChild(ele);
+                    }
+                }                
+                document.querySelector('.divblue').addEventListener('click',createdivbluefunction);
+            }
+            document.querySelector(".bluecolor").addEventListener('click',bluefunction);
+            //color- green
+            function greenfunction() {
+                console.log("green");    
+                var createdivgreen=document.createElement("div");
+                createdivgreen.className="divgreen";
+                createdivgreen.innerHTML="Green Category";
+                document.querySelector(".fourthDiv").appendChild(createdivgreen); 
+                document.querySelector(".todo-item-input").appendChild(createdivgreen);
+                document.querySelector(".categoryInput").innerHTML = createdivgreen.innerText;
+                function createdivgreenfunction(e){
+                    if(e.target.className=="divgreen"){
+                        var ele=e.target;
+                        ele.parentNode.removeChild(ele);
+                    }
+                }                
+                document.querySelector('.divgreen').addEventListener('click',createdivgreenfunction);
+            }
+            document.querySelector(".greencolor").addEventListener('click',greenfunction);
+            //color - purple
+            function purplefunction() {
+                console.log("purple");    
+                var createdivpurple=document.createElement("div");
+                createdivpurple.className="divpurple";
+                createdivpurple.innerHTML="Purple Category";
+                document.querySelector(".fourthDiv").appendChild(createdivpurple); 
+                document.querySelector(".todo-item-input").appendChild(createdivpurple);
+                document.querySelector(".categoryInput").innerHTML = createdivpurple.innerText;
+                function createdivpurplefunction(e){
+                    if(e.target.className=="divpurle"){
+                        var ele=e.target;
+                        ele.parentNode.removeChild(ele);
+                    }
+                }                
+                document.querySelector('.divpurple').addEventListener('click',createdivpurplefunction);
+            }
+            document.querySelector(".purplecolor").addEventListener('click',purplefunction);
+            //color - orange
+            function orangefunction() {
+                console.log("orange");    
+                var createdivorange=document.createElement("div");
+                createdivorange.className="divorange";
+                createdivorange.innerHTML="Orange Category";
+                document.querySelector(".fourthDiv").appendChild(createdivorange);
+                document.querySelector(".todo-item-input").appendChild(createdivorange); 
+                document.querySelector(".categoryInput").innerHTML = createdivorange.innerText;
+                function createdivorangefunction(e){
+                    if(e.target.className=="divorange"){
+                        var ele=e.target;
+                        ele.parentNode.removeChild(ele);
+                    }
+                }                
+                document.querySelector('.divorange').addEventListener('click',createdivorangefunction);
+            }
+            document.querySelector(".orangecolor").addEventListener('click',orangefunction);
         }         
     }
 
     document.querySelector(".todo-container").addEventListener('click',clickFunction);
-    //document.querySelector(".secondDiv").addEventListener('click',addMyDay);
+
+
+    function taskFunction() {
+        document.querySelector(".todo-container").style.display="block";
+        document.querySelector(".todo-addtasks").style.display="block";
+        document.querySelector(".homeIcon").style.color="#4993E9";
+        document.querySelector(".addtask").style.color="#4993E9";
+        document.querySelector(".todo-header").style.display="block";
+        document.querySelector(".favIcon").style.color="grey";
+        document.querySelector(".addimp").style.color="grey";
+    }
+    document.querySelector(".tasks").addEventListener('click',taskFunction);
+
+    function favFunction() {
+        document.querySelector(".todo-container").style.display="none";
+        document.querySelector(".todo-favourite-div").style.display="block";
+        document.querySelector(".todo-addtasks").style.display="none";
+        document.querySelector(".todo-header").style.display="none";
+        document.querySelector(".favIcon").style.color="#4993E9";
+        document.querySelector(".addimp").style.color="#4993E9";
+        document.querySelector(".homeIcon").style.color="grey";
+        document.querySelector(".addtask").style.color="grey";
+    }
+    document.querySelector(".important").addEventListener('click',favFunction);

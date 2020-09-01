@@ -22,156 +22,165 @@
         <div class="todohead"> ToDo </div>
         <div class="Types">
             <div class="day"></div>
-            <div class="day">
-                <i class="fas fa-sun Iconify"></i>
-                <div class="addday">My Day</div>
-            </div>
             <div class="important">
                 <i class="fa fa-star-o favIcon" style="font-size: 25px; margin-left: 20px; margin-top: 12px;" id="favIcon"></i>
                 <div class="addimp">Important</div>
+                <div class="nooffavTasks"></div>
             </div>
             <div class="tasks">
                 <i class="fa fa-home homeIcon" style="font-size: 25px; margin-left: 20px; margin-top: 12px;" aria-hidden="true"></i>
                 <div class="addtask">Tasks</div>
-                <div class="noofTasks">6</div>
+                <div class="noofTasks"></div>
             </div>
             <div class="completed">
                 <i class="fa fa-check-circle-o checkIcon" style="font-size: 25px; margin-left: 20px; margin-top: 12px;" aria-hidden="true"></i>
                 <div class="addcomplete">Complete</div>
+                <div class="noofcompleteTasks"></div>
+            </div>
+            <div class="colorcategories">
+                <div class="headcolor">Color Categories</div>
+                <div class="redcolors" style="display: none;"></div>
+                <div class="yellowcolors" style="display: none;"></div>
+                <div class="bluecolors" style="display: none;"></div>
+                <div class="greencolors" style="display: none;"></div>
+                <div class="purplecolors" style="display: none;"></div>
+                <div class="orangecolors" style="display: none;"></div>
+
             </div>
         </div>
         <div class="TODO"">
 
-            <div class="todo-header">
-                <h2>Tasks</h2>
+            <div class="todo-header">Tasks</div>
+
+            <div class="todo-addtasks">
+                <i class="fas fa-plus" style="font-size:25px;color:#7F55BF;" onclick="ctrlAdditem()" id="add"></i>
+                <input type="text" id="todo-inputbox" placeholder="Add a Task" style="color:#7F55BF;"></input>
             </div>
 
             <div class="todo-favourite-div">
-                <div class="fav-heading">Favourite</div>
+                <div class="fav-heading" style="display: none;">Favourite</div>
             </div>
 
             <div class="todo-container">
                 <div class="categories-container" style="display: none;"></div>
             </div>
 
-            <div class="categories">
+            <div class="todo-complete-div">
+                <div class="complete-heading">Complete</div>
+            </div>
+        </div>
+        <div class="categories">
 
-                <div class="firstDiv">
-                    <input type="checkbox" class="checked" id="complete">
-                    <div class="inputName"></div>
-                </div>
-
-                <div class="secondDiv">
-                    <i class="fas fa-sun iconify"></i>
-                    <div class="daySettings">Add to my Day</div>
-                    <span class="glyphicon glyphicon-remove" id="crossIcon"></span>
-                </div>
-
-                <div class="thirdDiv">
-                    <div class="remainder">
-                        <i class="fas fa-bell notify"></i>
-                        <div class="remainInput">Remaind Me</div>
-                    </div>
-                    <div class="duedate">
-                        <i class='far fa-calendar-alt date'></i>
-                        <div class="dateInput">Add Due Date</div>
-                    </div>
-                </div>
-                
-                <div class="remainderPopup" style="display:none">
-                    <h4 class="Head">Remainder</h4>
-                    <div class="laterToday">
-                        <i class="fas fa-history timerIcon"></i>
-                        <div class="latertodayInput">Later Today</div>
-                        <div class="TodayTime"> </div>
-                    </div>
-                    <div class="tomorrow">
-                        <i class='far fa-arrow-alt-circle-right tomorrowIcon'></i>
-                        <div class="tomorrowInput">Tomorrow</div>
-                        <div class="TomorrowName"></div>
-                    </div>
-                    <div class="nextweek">
-                        <i class='fas fa-angle-double-right nextweekIcon'></i>
-                        <div class="nextweekInput">Next Week</div>
-                        <div class="NextweekName"></div>
-                    </div>
-                    <div class="pickdatetimeRemain">
-                        <i class='far fa-calendar-alt datetimeIcon'></i>
-                        <div class="datetimeInput">Pick a Date & Time</div>
-                    </div>
-                </div>
-
-                <div class="duePopup" style="display: none;">
-                    <h4 class="Head">Due</h4>
-                    <div class="today">
-                        <i class="fas fa-history timerIcon"></i>
-                        <div class="todayInput">Today</div>
-                        <div class="TodayName"></div>
-                    </div>
-                    <div class="Tomorrow">
-                        <i class='far fa-arrow-alt-circle-right tomorrowIcon'></i>
-                        <div class="tomorrowInput">Tomorrow</div>
-                        <div class="TomorrowName"></div>
-                    </div>
-                    <div class="nextweek">
-                        <i class='fas fa-angle-double-right nextweekIcon'></i>
-                        <div class="nextweekInput">Next Week</div>
-                        <div class="NextweekName"></div>
-                    </div>
-                    <div class="pickdatetimeDue">
-                        <i class='far fa-calendar-alt datetimeIcon'></i>
-                        <div class="datetimeInput">Pick a Date & Time</div>
-                    </div>
-                </div>  
-
-                <div class="fourthDiv">
-                    <i class='fas fa-tag categorypick'></i>
-                    <div class="categoryInput">Pick Category</div>
-                </div>
-
-                <div class="categoryPopup" style="display: none;">
-                    <ul class="colors">
-                        <div class="redcolor"> 
-                            <i class="fa fa-circle-o" aria-hidden="true" id="red"></i>
-                            <li class="red">Red Category</li>
-                        </div>
-                        <div class="yellowcolor">
-                            <i class="fa fa-circle-o" aria-hidden="true" id="yellow"></i>
-                            <li class="yellow">Yellow Category</li>
-                        </div>
-                        <div class="bluecolor">
-                            <i class="fa fa-circle-o" aria-hidden="true" id="blue"></i>
-                            <li class="blue">Blue Category</li>
-                        </div>
-                        <div class="greencolor">
-                            <i class="fa fa-circle-o" aria-hidden="true" id="green"></i>
-                            <li class="green">Green Category</li>
-                        </div>
-                        <div class="purplecolor">
-                            <i class="fa fa-circle-o" aria-hidden="true" id="purple"></i>
-                            <li class="purple"> Purple Category</li>
-                        </div>
-                        <div class="orangecolor">
-                            <i class="fa fa-circle-o" aria-hidden="true" id="orange"></i>
-                            <li class="orange"> Orange Category</li>
-                        </div> 
-                    </ul>
-                </div>
- 
-                <div class="fileattachDiv" style="display: none;"></div>
-
-                <div class="fifthDiv">
-                    <i class="fa fa-paperclip fileAttach" style="font-size:30px;"></i>
-                    <input type="file" id="fileAttach" class="inputFile" tabindex="-1" style="display: none;" >
-                    <label for="fileAttach" class="addFile">Add File</label>
-                </div>
-
+            <div class="firstDiv">
+                <input type="checkbox" class="checked" id="complete">
+                <div class="inputName"></div>
             </div>
 
-            <div class="todo-addtasks">
-                <i class="fas fa-plus" style="font-size:25px;color:#7F55BF;" onclick="ctrlAdditem()" id="add"></i>
-                <input type="text" id="todo-inputbox" placeholder="Add a Task" style="color:#7F55BF;"></input>
+            <div class="secondDiv">
+                <i class="fas fa-sun iconify"></i>
+                <div class="daySettings">Add to my Day</div>
+                <span class="glyphicon glyphicon-remove" id="crossIcon"></span>
             </div>
+
+            <div class="thirdDiv">
+                <div class="remainder">
+                    <i class="fas fa-bell notify"></i>
+                    <div class="remainInput">Remaind Me</div>
+                </div>
+                <div class="duedate">
+                    <i class='far fa-calendar-alt date'></i>
+                    <div class="dateInput">Add Due Date</div>
+                </div>
+            </div>
+            
+            <div class="remainderPopup" style="display:none">
+                <h4 class="Head">Remainder</h4>
+                <div class="laterToday">
+                    <i class="fas fa-history timerIcon"></i>
+                    <div class="latertodayInput">Later Today</div>
+                    <div class="TodayTime"> </div>
+                </div>
+                <div class="tomorrow">
+                    <i class='far fa-arrow-alt-circle-right tomorrowIcon'></i>
+                    <div class="tomorrowInput">Tomorrow</div>
+                    <div class="TomorrowName"></div>
+                </div>
+                <div class="nextweek">
+                    <i class='fas fa-angle-double-right nextweekIcon'></i>
+                    <div class="nextweekInput">Next Week</div>
+                    <div class="NextweekName"></div>
+                </div>
+                <div class="pickdatetimeRemain">
+                    <i class='far fa-calendar-alt datetimeIcon'></i>
+                    <div class="datetimeInput">Pick a Date & Time</div>
+                </div>
+            </div>
+
+            <div class="duePopup" style="display: none;">
+                <h4 class="Head">Due</h4>
+                <div class="today">
+                    <i class="fas fa-history timerIcon"></i>
+                    <div class="todayInput">Today</div>
+                    <div class="TodayName"></div>
+                </div>
+                <div class="Tomorrow">
+                    <i class='far fa-arrow-alt-circle-right tomorrowIcon'></i>
+                    <div class="tomorrowInput">Tomorrow</div>
+                    <div class="TomorrowName"></div>
+                </div>
+                <div class="nextweek">
+                    <i class='fas fa-angle-double-right nextweekIcon'></i>
+                    <div class="nextweekInput">Next Week</div>
+                    <div class="NextweekName"></div>
+                </div>
+                <div class="pickdatetimeDue">
+                    <i class='far fa-calendar-alt datetimeIcon'></i>
+                    <div class="datetimeInput">Pick a Date & Time</div>
+                </div>
+            </div>  
+
+            <div class="fourthDiv">
+                <i class='fas fa-tag categorypick'></i>
+                <div class="categoryInput">Pick Category</div>
+            </div>
+
+            <div class="categoryPopup" style="display: none;">
+                <ul class="colors">
+                    <div class="redcolor"> 
+                        <i class="fa fa-circle-o" aria-hidden="true" id="red"></i>
+                        <li class="red">Red Category</li>
+                    </div>
+                    <div class="yellowcolor">
+                        <i class="fa fa-circle-o" aria-hidden="true" id="yellow"></i>
+                        <li class="yellow">Yellow Category</li>
+                    </div>
+                    <div class="bluecolor">
+                        <i class="fa fa-circle-o" aria-hidden="true" id="blue"></i>
+                        <li class="blue">Blue Category</li>
+                    </div>
+                    <div class="greencolor">
+                        <i class="fa fa-circle-o" aria-hidden="true" id="green"></i>
+                        <li class="green">Green Category</li>
+                    </div>
+                    <div class="purplecolor">
+                        <i class="fa fa-circle-o" aria-hidden="true" id="purple"></i>
+                        <li class="purple"> Purple Category</li>
+                    </div>
+                    <div class="orangecolor">
+                        <i class="fa fa-circle-o" aria-hidden="true" id="orange"></i>
+                        <li class="orange"> Orange Category</li>
+                    </div> 
+                </ul>
+            </div>
+
+            <div class="fileattachDiv" style="display: none;"></div>
+
+            <div class="fifthDiv">
+                <i class="fa fa-paperclip fileAttach" style="font-size:30px;"></i>
+                <input type="file" id="fileAttach" class="inputFile" tabindex="-1" style="display: none;" >
+                <label for="fileAttach" class="addFile">Add File</label>
+            </div>
+
         </div>
     </body>
         <script src="/home/local/ZOHOCORP/ananth-zuch764/sankari/TODO/JS/todo.js"></script> 

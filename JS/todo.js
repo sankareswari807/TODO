@@ -1,17 +1,26 @@
 var oldItem="";
-    var newTodo=function(id,todoName,isFav) {
+    var newTodo=function(id,todoName,isFav,isComplete) {
         this.id=id;
         this.todoName=todoName;
         this.isFav=isFav;
+        this.isComplete=isComplete;
     };
-    var newFavTodo=function(ID,todoName,isFav){
+    var newFavTodo=function(ID,todoName,isFav,isComplete){
         this.ID=ID;
         this.todoName=todoName;
         this.isFav=isFav;
+        this.isComplete=isComplete;
+    };
+    var newcompleteTodo=function(ID,todoName,isFav,isComplete){
+        this.ID=ID;
+        this.todoName=todoName;
+        this.isFav=isFav;
+        this.isComplete=isComplete;
     };
     var todoItems=[];
     var favTodoList=[];
-    
+    var completeTodoList=[];
+
     var Todos=(localStorage.TodoList)?(JSON.parse(localStorage.TodoList)):todoItems;
     console.log(Todos);
     localStorage.setItem('TodoList',JSON.stringify(Todos));
@@ -20,11 +29,15 @@ var oldItem="";
     console.log(FavTodos);
     //localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
 
+    var CompleteTodos=(localStorage.CompleteTodo)?(JSON.parse(localStorage.CompleteTodo)):completeTodoList;
+    console.log(CompleteTodos);
+    localStorage.setItem('CompleteTodo',JSON.stringify(CompleteTodos));
+
 var dataController=function(){
     return{
         //Add the item
         addNewTodo:function() {
-            var Id,todoName,optionPlace,newItem,optionDate;
+            var Id,todoName,newItem;
             //create new id
             Id=(Todos.length == 0)? 0:Todos[Todos.length-1].id+1;
 
@@ -32,7 +45,7 @@ var dataController=function(){
             todoName=document.getElementById("todo-inputbox").value;
 
             //create new item
-            newItem=new newTodo(Id,todoName,"unFav",optionPlace,optionDate);
+            newItem=new newTodo(Id,todoName,"unFav","incomplete");
             
             Todos.push(newItem); 
 
@@ -48,10 +61,27 @@ var dataController=function(){
             Id=(FavTodos.length == 0)? 0:FavTodos[FavTodos.length-1].ID+1;
             console.log(Id);
             //create new item
-            newItem=new newFavTodo(Id,name,"Fav");
+            newItem=new newFavTodo(Id,name,"Fav","incomplete");
             FavTodos.push(newItem); 
 
             localStorage.setItem("FavTodo",JSON.stringify(FavTodos));
+
+            console.log(Id,newItem);
+            return newItem;
+        },
+
+        completelist:function(Id,name) {
+			
+            var Id,newItem;
+            console.log(FavTodos);
+            //create new id
+            Id=(CompleteTodos.length == 0)? 0:CompleteTodos[CompleteTodos.length-1].ID+1;
+            console.log(Id);
+            //create new item
+            newItem=new newFavTodo(Id,name,"Fav","complete");
+            CompleteTodos.push(newItem); 
+
+            localStorage.setItem('CompleteTodo',JSON.stringify(CompleteTodos));
 
             console.log(Id,newItem);
             return newItem;
@@ -97,7 +127,8 @@ var uicontroller=function(){
     var DOMStrings={
         inputvalue:"#todo-inputbox",
         container:".todo-container",
-        favCont:".todo-favourite-div"
+        favCont:".todo-favourite-div",
+        completecont:".todo-complete-div"
     };
     return{
         //getting input values
@@ -111,7 +142,7 @@ var uicontroller=function(){
         addListItem:function(obj){
             var container=document.querySelector(DOMStrings.container);
             var x='<div class="todo-item" id="item-%id%" draggable=true>';
-            if(obj.isFav == "Fav"){
+            if(obj.isFav == "Fav" && obj.isComplete == "complete"){
                  x='<div class="todo-item hide" id="item-%id%" draggable=true>';
             }   
             var HTMLString= x+
@@ -131,21 +162,17 @@ var uicontroller=function(){
         //delete the item ui 
         deleteListitem:function(selectorID){
                 var ele=document.getElementById(selectorID);
+                console.log(ele);
                 ele.parentNode.removeChild(ele);
         },
 
-        favListItem:function(id,name,fav){
+        favListItem:function(id,name,fav,comp){
             console.log(id,name,fav);
             var name1=name+"";
             var favCont=document.querySelector(DOMStrings.favCont);
             console.log(favCont);
-            if(FavTodos.length > 0){
-                document.querySelector(".fav-heading").style.display="block";
-            }else{
-                document.querySelector(".fav-heading").style.display="none`";
-            }
             var y='<div class="fav-todo-item" id="item-%id%" draggable="true">';
-            if(fav == "unFav"){
+            if(fav == "unFav" && comp == "complete"){
                  y='<div class="fav-todo-item hide" id="item-%id%" draggable="true">';
             } 
             console.log(FavTodos);
@@ -166,13 +193,44 @@ var uicontroller=function(){
             localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
         },
 
+        completelistitem:function(id,name,fav,comp){
+            var name1=name+"";
+            var completecont=document.querySelector(DOMStrings.completecont);
+            console.log(completecont);
+            if(CompleteTodos.length > 0){
+                document.querySelector(".complete-heading").style.display="block";
+            }else{
+                document.querySelector(".complete-heading").style.display="none`";
+            }
+            var y='<div class="complete-todo-item" id="item-%id%" draggable="true">';
+            if(fav == "Fav" && comp == "incomplete"){
+                 y='<div class="complete-todo-item hide" id="item-%id%" draggable="true">';
+            } 
+            console.log(CompleteTodos);
+        
+                var html=y+
+                         '<input type="checkbox" class="circle-icon" id="completeicon"></input>'+
+                         '<div class="todo-item-input" id="inputbox" >'+name1+'</div>'+
+                         '<input type="button" id="edit" class="edit-btn" value="Save"></input>'+
+                         '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div>'+      
+                         '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favourite"></i></div>';
+                var completeHtml=html.replace("%id%",id);  
+                console.log(CompleteTodos);
+                 
+    
+            console.log(CompleteTodos);
+            completecont.insertAdjacentHTML('beforeend',completeHtml);
+            console.log(completecont);
+            localStorage.setItem('CompleteTodo',JSON.stringify(CompleteTodos));
+        },
+
         favTodo:function(selectorID){            
             var ele=document.getElementById("item-"+selectorID);
             console.log(ele);
             ele.style.display="none";
             localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
         },
-
+        
         favDelitem:function(selectorID) {
                 var ele=document.getElementById(selectorID);
                 ele.parentNode.removeChild(ele);
@@ -214,7 +272,7 @@ var controller=function(Datactrl,UIctrl){
         });
         document.querySelector(DOM.container).addEventListener('click',ctrlDeleteitem);
         document.querySelector(DOM.container).addEventListener('click',ctrlFavouriteitem);
-        document.querySelector(DOM.container).addEventListener('click',ctrlcompleteItem);
+        // document.querySelector(DOM.container).addEventListener('click',ctrlcompleteItem);
         document.querySelector(".categories").addEventListener('click',ctrlcompleteItem);
         document.querySelector(DOM.favCont).addEventListener('click',ctrlFavDeleteitem);
         document.querySelector(DOM.favCont).addEventListener('click',ctrlFavcompleteItem);
@@ -234,15 +292,6 @@ var controller=function(Datactrl,UIctrl){
                     UIctrl.deleteListitem(itemId);
                 };
         }
-    };
-
-    var ctrlcompleteItem=function(complete){
-        if(complete.target.id==="complete"){
-            var completeId=complete.target.parentNode;
-            completeId.classList.toggle("checked");
-            // localStorage.setItem('TodoList', JSON.stringify(Todos));
-         }
-        
     };
 
     var ctrlFavouriteitem=function(favour){
@@ -280,6 +329,7 @@ var controller=function(Datactrl,UIctrl){
            location.reload();
         }   
     };
+
 
     var ctrlFavcompleteItem=function(complete){
         if(complete.target.id==="complete"){
@@ -326,7 +376,6 @@ var controller=function(Datactrl,UIctrl){
                         console.log(Todos);
                         localStorage.setItem('TodoList', JSON.stringify(Todos));
                         console.log(innerTxt,Todos[j]);
-                //location.reload();
                 localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
                 var NEWITEM=uicontroller.favTodo(ID);
                 location.reload();
@@ -355,25 +404,31 @@ var controller=function(Datactrl,UIctrl){
         init:function(){
             
             settupEventListeners();
-            // var ArrayList = Datactrl.getValues().Arr;
-            // console.log(ArrayList);
             for(var i=0; i<Todos.length;i++){
                 UIctrl.addListItem(Todos[i]);
             }   
 
-            // var FavArrayList = Datactrl.getValues().Arr1;
             for(var j=0;j<FavTodos.length;j++){
                 var id=FavTodos[j].ID;
                 var name=FavTodos[j].todoName;
                 var fav=FavTodos[j].isFav;
-                console.log(id,name,fav);
-                UIctrl.favListItem(id,name,fav);
+                var comp=FavTodos[j].isComplete;
+                UIctrl.favListItem(id,name,fav,comp);
+            }
+
+            for(var k=0;k<CompleteTodos.length;k++){
+                var id=CompleteTodos[k].ID;
+                var name=CompleteTodos[k].todoName;
+                var fav=CompleteTodos[k].isFav;
+                var comp=CompleteTodos[k].isComplete;
+                UIctrl.completelistitem(id,name,fav,comp);
             }
         }
     }   
 }(dataController,uicontroller)
 controller.init();
 
+//add the tasks
 var ctrlAdditem=function(){
     //get the input
     var INPUT=uicontroller.getInput();
@@ -386,6 +441,40 @@ var ctrlAdditem=function(){
                 uicontroller.clearfields();
     }
 };
+
+//complete the tasks
+function ctrlcompleteItem(complete){
+    if(complete.target.id==="complete"){
+        var completeId=complete.target.parentNode;
+        completeId.classList.toggle("checked");
+
+        var itemId,splitId,ID;
+        itemId=complete.target.parentNode.id;
+        var innerTxt=complete.target.parentNode.innerText;
+            splitId=itemId.split('-'); 
+            type=splitId[0]; 
+            ID=parseInt(splitId[1]);
+            console.log(ID);
+        var number=0;
+        for(i=0;i<Todos.length;i++){
+            if(innerTxt==Todos[i].todoName){
+                number=i; 
+            }   
+        };
+        Todos.splice(number,1,{"id":number,"todoName":innerTxt,"isFav":"Fav","isComplete":"complete"});
+        localStorage.setItem('TodoList', JSON.stringify(Todos));
+
+        document.querySelector(".complete-heading").style.display="block";
+       //UIctrl.favListItem(favTodoList);
+       var NEWITEM=dataController.completelist(ID,innerTxt);
+    //    UIctrl.favListItem(innerTxt);
+       console.log(NEWITEM);
+       console.log(Todos);
+       location.reload();
+     }
+    
+};
+document.querySelector(".todo-container").addEventListener('click',ctrlcompleteItem);
 
 //drag and drop functions
 
@@ -431,58 +520,63 @@ var ctrlAdditem=function(){
         addEventsDragAndDrop(item);
     });
 
+    function todonamefunction(papa){
+        var itemId,splitId,ID; 
+        itemId=papa.target.id;
+        splitId=itemId.split('-'); 
+        type=splitId[0]; 
+        ID=parseInt(splitId[1]);
+        console.log(itemId,splitId,ID);
+        if(itemId){
+            var innertext=papa.target.innerText;
+            console.log(innertext);
+            document.querySelector(".inputName").innerHTML = innertext;
+        }  
+    }
+    document.querySelector(".todo-container").addEventListener('click',todonamefunction);
 
-    function clickFunction(e) {
-        var target=e.target.className;
-        if(target == "todo-item"){              
-            // console.log("baby");
-            document.querySelector(".categories").style.display="block";
-            document.querySelector(".todo-addtasks").style.width="900px";
-            document.querySelector(".todo-addtasks").style.marginTop="-590px";
-            document.querySelector(".TODO").style.width="50%";
-            var input=document.querySelectorAll("#inputbox");
-            var del=document.querySelectorAll("#delete");
-            var fav=document.querySelectorAll("#favourite");
-            for(var i=0; i<input.length; i++){
-                del[i].style.marginLeft="850px";
-                fav[i].style.marginLeft="800px";
-            }   
+    function clickFunction(elementID) {    
+        // var ele=document.getElementById(elementID);
+        // console.log(ele);    
 
-            //set the inputName
-            var gettodoname=e.target.innerText;
-            document.querySelector(".inputName").innerHTML = gettodoname;
+        // //get todoname
+        // var gettodoname=elementID.target.innerText;
+        // document.querySelector(".inputName").innerHTML=gettodoname;
+            
 
+            var totalDiv=document.createElement("div");
+            totalDiv.className="totaldiv";
+            document.getElementById(elementID).appendChild(totalDiv);
             //add my day
-            function addMyDay() {
-                // console.log("add to my day");
+            function addMyDay(e) {
+                document.querySelector(".totaldiv").style.display="block";
                 var addInput="Added to My Day";
-                document.querySelector(".todo-item-input").style.marginTop="-50px";
                 var changeInput=document.querySelector(".daySettings");
                 changeInput.innerHTML=addInput;
                 changeInput.style.color="#67A8F7";
                 document.querySelector(".iconify").style.color="#67A8F7";
                 document.querySelector("#crossIcon").style.display="block";
-
                 var createDiv=document.createElement("div");
                 createDiv.className="newElementClass";
                 createDiv.innerHTML="My Day";
-                document.querySelector(".todo-item-input").appendChild(createDiv);
-
+                document.querySelector(".totaldiv").appendChild(createDiv);
                 var createSpan=document.createElement("span");
                 createSpan.className="fas fa-sun icon";
                 createDiv.appendChild(createSpan);
+                document.getElementById("elementID").height="100px";
             }
             document.querySelector(".daySettings").addEventListener('click',addMyDay);
             
             //remove my day
             function removeMyDay() {
                 console.log("remove my day");   
+                // document.querySelector(".totaldiv").style.display="block";
+                // document.querySelector(".todo-item-input").style.marginTop="-50px";
                 var removeInput="Add My Day"
                 var changeInput=document.querySelector(".daySettings");
                 changeInput.innerHTML=removeInput;
                 changeInput.style.color="gray";
                 document.querySelector(".iconify").style.color="gray";
-                document.querySelector(".todo-item-input").style.marginTop="-28px";
                 document.querySelector("#crossIcon").style.display="none";
                 document.querySelector(".newElementClass").remove();
             }
@@ -497,7 +591,7 @@ var ctrlAdditem=function(){
                 createDiv.className="newElementClass1";
                 createDiv.innerHTML="Files Attached";
                 createDiv.style.color="black";
-                document.querySelector(".todo-item-input").appendChild(createDiv);
+                document.querySelector(".totaldiv").appendChild(createDiv);
                 var createSpan=document.createElement("span");
                 createSpan.className="fa fa-paperclip fileAttachIcon";
                 createDiv.appendChild(createSpan);
@@ -593,11 +687,11 @@ var ctrlAdditem=function(){
 
                  //get latertodayFunction
                 function latertodayFunction() {
-                    document.querySelector(".todo-item-input").style.marginTop="-50px";
+                    // document.querySelector(".todo-item-input").style.marginTop="-50px";
 
                     var createDiv=document.createElement("div");
                     createDiv.className="newElementClass2";
-                    document.querySelector(".todo-item-input").appendChild(createDiv);
+                    document.querySelector(".totaldiv").appendChild(createDiv);
 
                     var createSpan=document.createElement("span");
                     createSpan.className="fas fa-bell note";
@@ -618,7 +712,7 @@ var ctrlAdditem=function(){
 
                     var createDiv=document.createElement("div");
                     createDiv.className="newElementClass2";
-                    document.querySelector(".todo-item-input").appendChild(createDiv);
+                    document.querySelector(".totaldiv").appendChild(createDiv);
                     var createSpan=document.createElement("span");
                     createSpan.className="fas fa-bell note";
                     createDiv.appendChild(createSpan);
@@ -634,7 +728,7 @@ var ctrlAdditem=function(){
 
                  //  get tomorrowFunction
                  function nextWeekFunction() {
-                    document.querySelector(".todo-item-input").style.marginTop="-50px";
+                    document.querySelector(".totaldiv").style.marginTop="-50px";
 
                     var createDiv=document.createElement("div");
                     createDiv.className="newElementClass2";
@@ -760,13 +854,15 @@ var ctrlAdditem=function(){
             // color - red
             function redfunction(e) {
                 console.log("red");    
-                document.querySelector(".todo-item-input").style.marginTop="-50px";
+                // document.querySelector(".todo-item-input").style.marginTop="-50px";
                 var createdivred=document.createElement("div");
                 createdivred.className="divred";
                 createdivred.innerHTML="Red Category";  
                 console.log(createdivred);  
                 document.querySelector(".todo-item-input").appendChild(createdivred);
                 document.querySelector(".categoryInput").innerHTML = createdivred.innerText;
+                document.querySelector(".redcolors").style.display="block";
+                document.querySelector(".redcolors").innerHTML=createdivred.innerText;
                 function createdivredfunction(e){
                     if(e.target.className=="divred"){
                         var ele=e.target;
@@ -785,6 +881,8 @@ var ctrlAdditem=function(){
                 document.querySelector(".fourthDiv").appendChild(createdivyellow);
                 document.querySelector(".todo-item-input").appendChild(createdivyellow);
                 document.querySelector(".categoryInput").innerHTML = createdivyellow.innerText;
+                document.querySelector(".yellowcolors").style.display="block";
+                document.querySelector(".yellowcolors").innerHTML=createdivyellow.innerText;
                 function createdivyellowfunction(e){
                     if(e.target.className=="divyellow"){
                         var ele=e.target;
@@ -803,6 +901,8 @@ var ctrlAdditem=function(){
                 document.querySelector(".fourthDiv").appendChild(createdivblue); 
                 document.querySelector(".todo-item-input").appendChild(createdivblue); 
                 document.querySelector(".categoryInput").innerHTML = createdivblue.innerText;
+                document.querySelector(".bluecolors").style.display="block";
+                document.querySelector(".bluecolors").innerHTML=createdivblue.innerText;
                 function createdivbluefunction(e){
                     if(e.target.className=="divblue"){
                         var ele=e.target;
@@ -821,6 +921,8 @@ var ctrlAdditem=function(){
                 document.querySelector(".fourthDiv").appendChild(createdivgreen); 
                 document.querySelector(".todo-item-input").appendChild(createdivgreen);
                 document.querySelector(".categoryInput").innerHTML = createdivgreen.innerText;
+                document.querySelector(".greencolors").style.display="block";
+                document.querySelector(".greencolors").innerHTML=createdivgreen.innerText;
                 function createdivgreenfunction(e){
                     if(e.target.className=="divgreen"){
                         var ele=e.target;
@@ -839,6 +941,8 @@ var ctrlAdditem=function(){
                 document.querySelector(".fourthDiv").appendChild(createdivpurple); 
                 document.querySelector(".todo-item-input").appendChild(createdivpurple);
                 document.querySelector(".categoryInput").innerHTML = createdivpurple.innerText;
+                document.querySelector(".purplecolors").style.display="block";
+                document.querySelector(".purplecolors").innerHTML=createdivpurple.innerText;
                 function createdivpurplefunction(e){
                     if(e.target.className=="divpurle"){
                         var ele=e.target;
@@ -857,6 +961,8 @@ var ctrlAdditem=function(){
                 document.querySelector(".fourthDiv").appendChild(createdivorange);
                 document.querySelector(".todo-item-input").appendChild(createdivorange); 
                 document.querySelector(".categoryInput").innerHTML = createdivorange.innerText;
+                document.querySelector(".orangecolors").style.display="block";
+                document.querySelector(".orangecolors").innerHTML=createdivorange.innerText;
                 function createdivorangefunction(e){
                     if(e.target.className=="divorange"){
                         var ele=e.target;
@@ -867,11 +973,21 @@ var ctrlAdditem=function(){
             }
             document.querySelector(".orangecolor").addEventListener('click',orangefunction);
         }         
-    }
-
     document.querySelector(".todo-container").addEventListener('click',clickFunction);
-
-
+   
+    function karumam(papa) {
+        var itemId,splitId,ID;
+        itemId=papa.target.id;
+        console.log(itemId);
+        if(itemId){
+            splitId=itemId.split('-'); 
+            type=splitId[0]; 
+            ID=parseInt(splitId[1]);
+            clickFunction(itemId);
+        }   
+    }
+    document.querySelector(".todo-container").addEventListener('click',karumam);
+   
     function taskFunction() {
         document.querySelector(".todo-container").style.display="block";
         document.querySelector(".todo-addtasks").style.display="block";
@@ -880,8 +996,14 @@ var ctrlAdditem=function(){
         document.querySelector(".todo-header").style.display="block";
         document.querySelector(".favIcon").style.color="grey";
         document.querySelector(".addimp").style.color="grey";
+        document.querySelector(".checkIcon").style.color="grey";
+        document.querySelector(".addcomplete").style.color="grey";
+        document.querySelector(".todo-complete-div").style.display="block";
     }
     document.querySelector(".tasks").addEventListener('click',taskFunction);
+    document.querySelector(".noofTasks").textContent=Todos.length;
+    document.querySelector(".nooffavTasks").textContent=FavTodos.length;
+    document.querySelector(".noofcompletetasks").textContent=CompleteTodos.length
 
     function favFunction() {
         document.querySelector(".todo-container").style.display="none";
@@ -892,5 +1014,24 @@ var ctrlAdditem=function(){
         document.querySelector(".addimp").style.color="#4993E9";
         document.querySelector(".homeIcon").style.color="grey";
         document.querySelector(".addtask").style.color="grey";
+        document.querySelector(".checkIcon").style.color="grey";
+        document.querySelector(".addcomplete").style.color="grey";
+        document.querySelector(".fav-heading").style.display="block";
+        document.querySelector(".todo-complete-div").style.display="none";
     }
     document.querySelector(".important").addEventListener('click',favFunction);
+
+    function completefunction(){
+        document.querySelector(".todo-container").style.display="none";
+        document.querySelector(".todo-favourite-div").style.display="none";
+        document.querySelector(".todo-addtasks").style.display="none";
+        document.querySelector(".todo-header").style.display="none";
+        document.querySelector(".checkIcon").style.color="#4993E9";
+        document.querySelector(".addcomplete").style.color="#4993E9";
+        document.querySelector(".homeIcon").style.color="grey";
+        document.querySelector(".addtask").style.color="grey";
+        document.querySelector(".favIcon").style.color="grey";
+        document.querySelector(".addimp").style.color="grey";
+        document.querySelector(".todo-complete-div").style.display="block";
+    }
+    document.querySelector(".completed").addEventListener("click",completefunction);

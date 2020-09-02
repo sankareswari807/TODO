@@ -272,7 +272,6 @@ var controller=function(Datactrl,UIctrl){
         });
         document.querySelector(DOM.container).addEventListener('click',ctrlDeleteitem);
         document.querySelector(DOM.container).addEventListener('click',ctrlFavouriteitem);
-        // document.querySelector(DOM.container).addEventListener('click',ctrlcompleteItem);
         document.querySelector(".categories").addEventListener('click',ctrlcompleteItem);
         document.querySelector(DOM.favCont).addEventListener('click',ctrlFavDeleteitem);
         document.querySelector(DOM.favCont).addEventListener('click',ctrlFavcompleteItem);
@@ -321,10 +320,8 @@ var controller=function(Datactrl,UIctrl){
             localStorage.setItem('TodoList', JSON.stringify(Todos));
 
             document.querySelector(".fav-heading").style.display="block";
-           //UIctrl.favListItem(favTodoList);
            var NEWITEM=dataController.favlist(ID,innerTxt);
-        //    UIctrl.favListItem(innerTxt);
-           console.log(NEWITEM);
+          console.log(NEWITEM);
            console.log(Todos);
            location.reload();
         }   
@@ -361,21 +358,17 @@ var controller=function(Datactrl,UIctrl){
                     }   
                 };
 
-                //Todos.splice(ID,0,{"id":ID,"todoName":innerTxt,"isFav":"unFav"});
-               // localStorage.setItem('TodoList', JSON.stringify(Todos));
-                console.log(Todos);
                 var num=0;
                 for(j=0;j<Todos.length;j++){             
                     console.log(innerTxt);       
                     if(innerTxt==Todos[j].todoName){
-                        // Todos.splice(j,0);
                         num=j;   
                     }
                 };
                 Todos.splice(num,1,{"id":num,"todoName":innerTxt,"isFav":"unFav"});
-                        console.log(Todos);
-                        localStorage.setItem('TodoList', JSON.stringify(Todos));
-                        console.log(innerTxt,Todos[j]);
+                console.log(Todos);
+                localStorage.setItem('TodoList', JSON.stringify(Todos));
+                console.log(innerTxt,Todos[j]);
                 localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
                 var NEWITEM=uicontroller.favTodo(ID);
                 location.reload();
@@ -392,7 +385,6 @@ var controller=function(Datactrl,UIctrl){
                     splitId=itemId.split('-'); 
                     type=splitId[0]; 
                     ID=parseInt(splitId[1]);
-                    //console.log(splitId+","+type+","+ID);
                     Datactrl.favdeleteTodo(ID);
                     UIctrl.favTodo(ID);
                 };
@@ -465,12 +457,10 @@ function ctrlcompleteItem(complete){
         localStorage.setItem('TodoList', JSON.stringify(Todos));
 
         document.querySelector(".complete-heading").style.display="block";
-       //UIctrl.favListItem(favTodoList);
-       var NEWITEM=dataController.completelist(ID,innerTxt);
-    //    UIctrl.favListItem(innerTxt);
-       console.log(NEWITEM);
-       console.log(Todos);
-       location.reload();
+        var NEWITEM=dataController.completelist(ID,innerTxt);
+        console.log(NEWITEM);
+        console.log(Todos);
+        location.reload();
      }
     
 };
@@ -535,14 +525,7 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
     }
     document.querySelector(".todo-container").addEventListener('click',todonamefunction);
 
-    function clickFunction(elementID) {    
-        // var ele=document.getElementById(elementID);
-        // console.log(ele);    
-
-        // //get todoname
-        // var gettodoname=elementID.target.innerText;
-        // document.querySelector(".inputName").innerHTML=gettodoname;
-            
+    function clickFunction(elementID) {               
 
             var totalDiv=document.createElement("div");
             totalDiv.className="totaldiv";
@@ -569,9 +552,6 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
             
             //remove my day
             function removeMyDay() {
-                console.log("remove my day");   
-                // document.querySelector(".totaldiv").style.display="block";
-                // document.querySelector(".todo-item-input").style.marginTop="-50px";
                 var removeInput="Add My Day"
                 var changeInput=document.querySelector(".daySettings");
                 changeInput.innerHTML=removeInput;
@@ -584,7 +564,6 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
 
             //file attaching
             function fileAttach() {
-                // console.log("file attached");
                 document.querySelector(".todo-item-input").style.marginTop="-50px";
                 document.querySelector(".fileattachDiv").style.display="block";
                 var createDiv=document.createElement("div");
@@ -687,7 +666,6 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
 
                  //get latertodayFunction
                 function latertodayFunction() {
-                    // document.querySelector(".todo-item-input").style.marginTop="-50px";
 
                     var createDiv=document.createElement("div");
                     createDiv.className="newElementClass2";
@@ -746,14 +724,6 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                     document.querySelector(".notify").style.color="#67A8F7";
                 }
                 document.querySelector(".nextweek").addEventListener('click',nextWeekFunction);
-
-                //pick  date function
-                function pickdatefunction(){
-                    $( function() {
-                        $( ".pickdatetimeRemain" ).datepicker();
-                      } );
-                }
-                document.querySelector(".pickdatetimeRemain").addEventListener('click',pickdatefunction); 
                 
                 //remove remainderfunction
             function removeremainderfunction() {
@@ -822,14 +792,6 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                     document.querySelector(".NextweekName").textContent=nexday;
                 }
                 nextWeekFunction();
-
-                //pick date & time
-                function datefunction(){
-                    $( function() {
-                        $( ".pickdatetimeDue" ).datepicker();
-                      } );
-                }
-                document.querySelector(".pickdatetimeDue").addEventListener('click',datefunction); 
             }
             document.querySelector(".duePopup").addEventListener('click',duepopupFunction);   
 
@@ -854,7 +816,6 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
             // color - red
             function redfunction(e) {
                 console.log("red");    
-                // document.querySelector(".todo-item-input").style.marginTop="-50px";
                 var createdivred=document.createElement("div");
                 createdivred.className="divred";
                 createdivred.innerHTML="Red Category";  
@@ -975,9 +936,9 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
         }         
     document.querySelector(".todo-container").addEventListener('click',clickFunction);
    
-    function karumam(papa) {
+    function clicked(clk) {
         var itemId,splitId,ID;
-        itemId=papa.target.id;
+        itemId=clk.target.id;
         console.log(itemId);
         if(itemId){
             splitId=itemId.split('-'); 
@@ -986,7 +947,7 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
             clickFunction(itemId);
         }   
     }
-    document.querySelector(".todo-container").addEventListener('click',karumam);
+    document.querySelector(".todo-container").addEventListener('click',clicked);
    
     function taskFunction() {
         document.querySelector(".todo-container").style.display="block";

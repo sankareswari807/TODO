@@ -194,14 +194,14 @@
 
 .categories{
     width:520px;
-    height:90%;
+    height:92%;
     /* border:2px solid black; */
     /* display: inline-block; */
     position: absolute;
     background-color: #EDEDED;
     /* display: none; */
-    margin-left: 1317px;
-    margin-top: -850px;
+    margin-left: 1298px;
+    margin-top: -825px;
 } 
 
 .firstDiv{
@@ -457,7 +457,7 @@
     text-align: center;
 }
 
-.laterToday,.tomorrow,.nextweek,.pickdatetimeRemain,.pickdatetimeDue,.today{
+.laterToday,.tomorrow,.nextweek,.pickdatetimeRemain,.today{
     width: 100%;
     height: 50px;
     border-bottom:2px solid #EBEFF0;
@@ -484,7 +484,7 @@
     margin-left: 20px;
 }
 
-.laterToday:hover,.tomorrow:hover,.nextweek:hover,.pickdatetimeRemain:hover,.pickdatetimeDue:hover,.today:hover{
+.laterToday:hover,.tomorrow:hover,.nextweek:hover,.today:hover{
     background-color: #F5F5F5;
 }
 

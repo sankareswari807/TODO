@@ -17,6 +17,7 @@ var oldItem="";
         this.isFav=isFav;
         this.isComplete=isComplete;
     };
+
     var todoItems=[];
     var favTodoList=[];
     var completeTodoList=[];
@@ -27,7 +28,6 @@ var oldItem="";
 
     var FavTodos=(localStorage.FavTodo)?(JSON.parse(localStorage.FavTodo)):favTodoList;
     console.log(FavTodos);
-    //localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
 
     var CompleteTodos=(localStorage.CompleteTodo)?(JSON.parse(localStorage.CompleteTodo)):completeTodoList;
     console.log(CompleteTodos);
@@ -45,12 +45,13 @@ var dataController=function(){
             todoName=document.getElementById("todo-inputbox").value;
 
             //create new item
-            newItem=new newTodo(Id,todoName,"unFav","incomplete");
+            newItem=new newTodo(Id,todoName,"unFav","incomplete","day");
             
             Todos.push(newItem); 
 
             localStorage.setItem('TodoList',JSON.stringify(Todos));
             return newItem;
+            
         },
 
         favlist:function(Id,name) {
@@ -61,7 +62,7 @@ var dataController=function(){
             Id=(FavTodos.length == 0)? 0:FavTodos[FavTodos.length-1].ID+1;
             console.log(Id);
             //create new item
-            newItem=new newFavTodo(Id,name,"Fav","incomplete");
+            newItem=new newFavTodo(Id,name,"Fav","incomplete","day");
             FavTodos.push(newItem); 
 
             localStorage.setItem("FavTodo",JSON.stringify(FavTodos));
@@ -78,7 +79,7 @@ var dataController=function(){
             Id=(CompleteTodos.length == 0)? 0:CompleteTodos[CompleteTodos.length-1].ID+1;
             console.log(Id);
             //create new item
-            newItem=new newFavTodo(Id,name,"Fav","complete");
+            newItem=new newFavTodo(Id,name,"unFav","complete","day");
             CompleteTodos.push(newItem); 
 
             localStorage.setItem('CompleteTodo',JSON.stringify(CompleteTodos));
@@ -90,12 +91,15 @@ var dataController=function(){
         deleteTodo:function(id){
             var ids,index;
             ids=Todos.map(function(current){
+                console.log(id);
                 return current.id;
             });
             index=ids.indexOf(id);
-
+            console.log(ids);
+            console.log(index);
             if(index!==-1){
-                Todos.splice(index,1);
+                var a=Todos.splice(ids,1);
+                console.log(a); 
             }
             localStorage.setItem('TodoList', JSON.stringify(Todos));
         },
@@ -128,7 +132,8 @@ var uicontroller=function(){
         inputvalue:"#todo-inputbox",
         container:".todo-container",
         favCont:".todo-favourite-div",
-        completecont:".todo-complete-div"
+        completecont:".todo-complete-div",
+        daycont:".todo-day-div"
     };
     return{
         //getting input values
@@ -142,26 +147,38 @@ var uicontroller=function(){
         addListItem:function(obj){
             var container=document.querySelector(DOMStrings.container);
             var x='<div class="todo-item" id="item-%id%" draggable=true>';
-            if(obj.isFav == "Fav" && obj.isComplete == "complete"){
+            if(obj.isFav == "Fav" && obj.isComplete == "complete" && obj.isday == "setday"){
                  x='<div class="todo-item hide" id="item-%id%" draggable=true>';
             }   
             var HTMLString= x+
                             '<input type="checkbox" class="circle-icon" id="complete"></input>'+
-                            '<div class="todo-item-input" id="inputbox" >%todoName%</div>'+
-                            '<input type="button" id="edit" class="edit-btn" value="Save"></input>'+
-                            '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div>'+
+                            '<input type="text" class="todo-item-input" id="inputbox" value="%todoName%"></input>'+
+                            '<input type="button" id="edit" class="edit-btn" value="Edit"></input>'+
+                            '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i>'+
+                                '<div class="DeletePopup" id="deleteBox" style="display: none;">'+
+                                    '<div class="delete-content">'+ 
+                                        '<span class="name-content"></span>'+
+                                        '<span class="content"> will be permanently deleted.</span> <br>'+
+                                        '<span class="delete-content">'+'You will not be able to undo this action.'+'</span>'+
+                                        '<div class="buttons">'+
+                                            '<input type="button" class="cancelbut" value="Cancel"></input>'+
+                                            '<input type="button" class="deletebut" id="Delete" value="Delete"></input>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>' +
+                            '</div>'+
                             '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favourite"></i>'+
                             '</div>';
             var newHtml=HTMLString.replace("%id%",obj.id).replace("%todoName%",obj.todoName).replace("%placecategory%",obj.place).replace("%datecategory%",obj.date);
             if(obj.todoName==''){
                 newHtml='';
             }
-            container.insertAdjacentHTML('beforeend',newHtml);  
+            container.insertAdjacentHTML('beforeend',newHtml); 
         },
 
         //delete the item ui 
         deleteListitem:function(selectorID){
-                var ele=document.getElementById(selectorID);
+                var ele=document.getElementById("item-"+selectorID);
                 console.log(ele);
                 ele.parentNode.removeChild(ele);
         },
@@ -172,14 +189,14 @@ var uicontroller=function(){
             var favCont=document.querySelector(DOMStrings.favCont);
             console.log(favCont);
             var y='<div class="fav-todo-item" id="item-%id%" draggable="true">';
-            if(fav == "unFav" && comp == "complete"){
+            if(fav == "unFav" && comp == "complete" && day == "setday"){
                  y='<div class="fav-todo-item hide" id="item-%id%" draggable="true">';
             } 
             console.log(FavTodos);
         
                 var html=y+
                          '<input type="checkbox" class="circle-icon" id="complete"></input>'+
-                         '<div class="todo-item-input" id="inputbox" >'+name1+'</div>'+
+                         '<input type="text" class="todo-item-input" id="inputbox" value='+name1+'></input>'+
                          '<input type="button" id="edit" class="edit-btn" value="Save"></input>'+
                          '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div>'+      
                          '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favouritestar"></i></div>';
@@ -203,16 +220,16 @@ var uicontroller=function(){
                 document.querySelector(".complete-heading").style.display="none`";
             }
             var y='<div class="complete-todo-item" id="item-%id%" draggable="true">';
-            if(fav == "Fav" && comp == "incomplete"){
+            if(fav == "Fav" && comp == "incomplete" && day == "day"){
                  y='<div class="complete-todo-item hide" id="item-%id%" draggable="true">';
             } 
             console.log(CompleteTodos);
         
                 var html=y+
                          '<input type="checkbox" class="circle-icon" id="completeicon"></input>'+
-                         '<div class="todo-item-input" id="inputbox" >'+name1+'</div>'+
+                         '<input type="text" class="todo-item-input" id="inputbox" value='+name1+'></input>'+
                          '<input type="button" id="edit" class="edit-btn" value="Save"></input>'+
-                         '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div>'+      
+                         '<div class="todo-remove"><i class="fa fa-trash-o remove-icon" style="font-size:34px" id="delete"></i></div>'+    
                          '<i class="fa fa-star-o favourite-icon" style="font-size:34px"; id="favourite"></i></div>';
                 var completeHtml=html.replace("%id%",id);  
                 console.log(CompleteTodos);
@@ -246,10 +263,8 @@ var uicontroller=function(){
         clearfields:function() {
 
 			var fields,fieldsArr;
-
 			fields=document.querySelectorAll(DOMStrings.inputvalue);
 			fieldsArr=Array.prototype.slice.call(fields);
-
 			fieldsArr.forEach(function(current){
 				current.value="";
 			});
@@ -279,25 +294,34 @@ var controller=function(Datactrl,UIctrl){
     };
 
     var ctrlDeleteitem=function(event){
-        if(event.target.id=="delete"){
-            var itemId,splitId,type,ID;
-                itemId=event.target.parentNode.parentNode.id;
+        var target=event.target.parentNode.parentNode;
+            if(event.target.id=="delete"){
+                // document.querySelector(".DeletePopup").style.display="block";
+                console.log(event.target.id);
+                var innerTxt=target.querySelector('input[type=text]').value;
+                document.querySelector(".name-content").innerHTML=innerTxt;
+                console.log(target,innerTxt);
+                var itemId=target.id;
                 console.log(itemId);
-                if(itemId){
-                    splitId=itemId.split('-'); 
-                    type=splitId[0]; 
-                    ID=parseInt(splitId[1]);
-                    Datactrl.deleteTodo(ID);
-                    UIctrl.deleteListitem(itemId);
-                };
-        }
+                var splitId,type,ID;
+                        if(itemId){
+                            console.log(itemId)
+                            splitId=itemId.split('-'); 
+                            console.log(splitId)
+                            type=splitId[0]; 
+                            ID=parseInt(splitId[1]);
+                            console.log(type);
+                            console.log(ID);
+                            Datactrl.deleteTodo(ID);
+                            UIctrl.deleteListitem(ID);
+                        };
+            }
     };
+    document.querySelector(".todo-container").addEventListener('click',ctrlDeleteitem);
 
     var ctrlFavouriteitem=function(favour){
-        ctrlAdditem();
         if(favour.target.id==="favourite"){   
-            var favourId=favour.target;
-            console.log(favourId);
+
             var favouriteId=favour.target.parentNode;
             console.log(favouriteId);
             favouriteId.classList.toggle("hide"); 
@@ -305,24 +329,28 @@ var controller=function(Datactrl,UIctrl){
             favouriteId.style.display="none";
             var itemId,splitId,ID;
             itemId=favour.target.parentNode.id;
-            var innerTxt=favour.target.parentNode.innerText;
+
+            var innerTxt=favouriteId.querySelector('input[type=text]').value;
+            console.log(innerTxt)
                 splitId=itemId.split('-'); 
                 type=splitId[0]; 
                 ID=parseInt(splitId[1]);
                 console.log(ID);
             var number=0;
             for(i=0;i<Todos.length;i++){
+                console.log(number);
                 if(innerTxt==Todos[i].todoName){
                     number=i; 
+                    console.log(number);
                 }   
             };
-            Todos.splice(number,1,{"id":number,"todoName":innerTxt,"isFav":"Fav"});
+            var a=Todos.splice(number,1,{"id":number,"todoName":innerTxt,"isFav":"Fav"});
+            console.log(a);
             localStorage.setItem('TodoList', JSON.stringify(Todos));
 
             document.querySelector(".fav-heading").style.display="block";
-           var NEWITEM=dataController.favlist(ID,innerTxt);
-          console.log(NEWITEM);
-           console.log(Todos);
+            var NEWITEM=dataController.favlist(ID,innerTxt);
+            console.log(NEWITEM);
            location.reload();
         }   
     };
@@ -337,6 +365,7 @@ var controller=function(Datactrl,UIctrl){
 
     var ctrlFavouritestarItem=function(favourstar) {
         if(favourstar.target.id=="favouritestar") {
+            var favour=favourstar.target.parentNode;
            var favourstarId=favourstar.target.parentNode.id;
            console.log(favourstarId);
                 var splitId=favourstarId.split('-'); 
@@ -345,8 +374,8 @@ var controller=function(Datactrl,UIctrl){
                 console.log(ID);
                 UIctrl.favTodo(ID);
 
-                var innerTxt=favourstar.target.parentNode.innerText;
-                console.log(innerTxt);
+                var innerTxt=favour.querySelector('input[type=text]').value;
+                console.log(innerTxt)
                 FavTodos.splice(ID,1,{"id":ID,"todoName":innerTxt,"isFav":"unFav"});
                 localStorage.setItem('FavTodo',JSON.stringify(FavTodos));
 
@@ -405,7 +434,8 @@ var controller=function(Datactrl,UIctrl){
                 var name=FavTodos[j].todoName;
                 var fav=FavTodos[j].isFav;
                 var comp=FavTodos[j].isComplete;
-                UIctrl.favListItem(id,name,fav,comp);
+                var day=FavTodos[j].isday;
+                UIctrl.favListItem(id,name,fav,comp,day);
             }
 
             for(var k=0;k<CompleteTodos.length;k++){
@@ -413,8 +443,10 @@ var controller=function(Datactrl,UIctrl){
                 var name=CompleteTodos[k].todoName;
                 var fav=CompleteTodos[k].isFav;
                 var comp=CompleteTodos[k].isComplete;
-                UIctrl.completelistitem(id,name,fav,comp);
+                var day=CompleteTodos[k].isday;
+                UIctrl.completelistitem(id,name,fav,comp,day);
             }
+
         }
     }   
 }(dataController,uicontroller)
@@ -442,7 +474,8 @@ function ctrlcompleteItem(complete){
 
         var itemId,splitId,ID;
         itemId=complete.target.parentNode.id;
-        var innerTxt=complete.target.parentNode.innerText;
+        var innerTxt=completeId.querySelector('input[type=text]').value;
+        console.log(innerTxt)
             splitId=itemId.split('-'); 
             type=splitId[0]; 
             ID=parseInt(splitId[1]);
@@ -458,13 +491,37 @@ function ctrlcompleteItem(complete){
 
         document.querySelector(".complete-heading").style.display="block";
         var NEWITEM=dataController.completelist(ID,innerTxt);
-        console.log(NEWITEM);
-        console.log(Todos);
         location.reload();
      }
     
 };
 document.querySelector(".todo-container").addEventListener('click',ctrlcompleteItem);
+
+//Edit 
+console.log("hiiii");
+function ctrlEdititem(edit) {
+    console.log("editing");
+    var listItem=edit.target.parentNode;
+
+    if(edit.target.id=="edit") {
+        console.log("okkk");
+        var editInput=listItem.querySelector('input[type=text]');
+        var edittext=editInput.value;
+        console.log(editInput,edittext);
+        editInput.style.border="1px solid #E0E0E0"; 
+
+        document.addEventListener("keypress",function(event){
+            if(event.keycode===13 || event.which===13){
+               var afteredit=listItem.querySelector('input[type=text]').value;
+               console.log(afteredit);
+               document.querySelector("#inputbox").value=afteredit;
+               editInput.style.border="none";
+            }
+        });
+    }
+
+}
+document.querySelector(".edit-btn").addEventListener("click",ctrlEdititem);
 
 //drag and drop functions
 
@@ -510,29 +567,39 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
         addEventsDragAndDrop(item);
     });
 
-    function todonamefunction(papa){
-        var itemId,splitId,ID; 
-        itemId=papa.target.id;
-        splitId=itemId.split('-'); 
-        type=splitId[0]; 
-        ID=parseInt(splitId[1]);
-        console.log(itemId,splitId,ID);
+    function clickFunction(clk) {              
+
+        var itemId,splitId,ID;
+        itemId=clk.target.parentNode.id;
         if(itemId){
-            var innertext=papa.target.innerText;
-            console.log(innertext);
-            document.querySelector(".inputName").innerHTML = innertext;
-        }  
-    }
-    document.querySelector(".todo-container").addEventListener('click',todonamefunction);
-
-    function clickFunction(elementID) {               
-
+            splitId=itemId.split('-'); 
+            type=splitId[0]; 
+            ID=parseInt(splitId[1]);
+            
             var totalDiv=document.createElement("div");
-            totalDiv.className="totaldiv";
-            document.getElementById(elementID).appendChild(totalDiv);
+            totalDiv.className="total-div";
+            totalDiv.id="totalId";
+    
+
+            if($("#"+itemId).find("#totalId").length == 0){
+                // document.getElementById(itemId).style.backgroundColor="#99CCFF";
+                document.querySelector(".iconify").style.color="black";
+                document.querySelector(".daySettings").style.color="black";
+                document.querySelector(".notify").style.color="black";
+                document.querySelector(".remainInput").style.color="black";
+                document.querySelector(".date").style.color="black";
+                document.querySelector(".dateInput").style.color="black";
+                document.querySelector(".daysettings").innerHTML="Add to my day";
+
+                document.getElementById(itemId).appendChild(totalDiv);
+
+            }
+        }
+
             //add my day
-            function addMyDay(e) {
-                document.querySelector(".totaldiv").style.display="block";
+            function addMyDay(e) {             
+        
+
                 var addInput="Added to My Day";
                 var changeInput=document.querySelector(".daySettings");
                 changeInput.innerHTML=addInput;
@@ -541,39 +608,39 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                 document.querySelector("#crossIcon").style.display="block";
                 var createDiv=document.createElement("div");
                 createDiv.className="newElementClass";
-                createDiv.innerHTML="My Day";
-                document.querySelector(".totaldiv").appendChild(createDiv);
+                createDiv.id="element1";
+                
+                var createSpanhtml=document.createElement("span");
+                createSpanhtml.className="spanhtml";
+                createSpanhtml.id="html1";
+                createSpanhtml.innerHTML="My Day";
+                createDiv.appendChild(createSpanhtml);
+
                 var createSpan=document.createElement("span");
                 createSpan.className="fas fa-sun icon";
                 createDiv.appendChild(createSpan);
-                document.getElementById("elementID").height="100px";
+
+                if($("#"+itemId).find("#element1").length == 0){
+                    document.querySelector(".total-div").appendChild(createDiv);
+                }
             }
             document.querySelector(".daySettings").addEventListener('click',addMyDay);
-            
-            //remove my day
-            function removeMyDay() {
-                var removeInput="Add My Day"
-                var changeInput=document.querySelector(".daySettings");
-                changeInput.innerHTML=removeInput;
-                changeInput.style.color="gray";
-                document.querySelector(".iconify").style.color="gray";
-                document.querySelector("#crossIcon").style.display="none";
-                document.querySelector(".newElementClass").remove();
-            }
-            document.querySelector("#crossIcon").addEventListener('click',removeMyDay);
 
             //file attaching
             function fileAttach() {
-                document.querySelector(".todo-item-input").style.marginTop="-50px";
                 document.querySelector(".fileattachDiv").style.display="block";
                 var createDiv=document.createElement("div");
-                createDiv.className="newElementClass1";
+                createDiv.className="newElementClass";
+                createDiv.id="element2";
                 createDiv.innerHTML="Files Attached";
-                createDiv.style.color="black";
-                document.querySelector(".totaldiv").appendChild(createDiv);
+                
                 var createSpan=document.createElement("span");
                 createSpan.className="fa fa-paperclip fileAttachIcon";
                 createDiv.appendChild(createSpan);
+
+                if($("#"+itemId).find("#element2").length == 0){
+                    document.querySelector(".total-div").appendChild(createDiv);
+                }
 
                 function myFunction(){
                     var x = document.getElementById("fileAttach");
@@ -668,8 +735,8 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                 function latertodayFunction() {
 
                     var createDiv=document.createElement("div");
-                    createDiv.className="newElementClass2";
-                    document.querySelector(".totaldiv").appendChild(createDiv);
+                    createDiv.className="newElementClass";
+                    createDiv.id="element3";
 
                     var createSpan=document.createElement("span");
                     createSpan.className="fas fa-bell note";
@@ -681,16 +748,19 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                     changeInput.innerHTML=addInput +" "+numInput;
                     changeInput.style.color="#67A8F7";
                     document.querySelector(".notify").style.color="#67A8F7";
+
+                    if($("#"+itemId).find("#element3").length == 0){
+                        document.querySelector(".total-div").appendChild(createDiv);
+                    }
                 }
                 document.querySelector(".laterToday").addEventListener('click',latertodayFunction);
 
                 //  get tomorrowFunction
                  function tomorrowFunction() {
-                    document.querySelector(".todo-item-input").style.marginTop="-50px";
-
                     var createDiv=document.createElement("div");
-                    createDiv.className="newElementClass2";
-                    document.querySelector(".totaldiv").appendChild(createDiv);
+                    createDiv.className="newElementClass";
+                    createDiv.id="element3";
+                    document.querySelector(".total-div").appendChild(createDiv);
                     var createSpan=document.createElement("span");
                     createSpan.className="fas fa-bell note";
                     createDiv.appendChild(createSpan);
@@ -701,16 +771,19 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                     changeInput.innerHTML=addInput +" "+numInput;
                     changeInput.style.color="#67A8F7";                    
                     document.querySelector(".notify").style.color="#67A8F7";
+
+                    if($("#"+itemId).find("#element3").length == 0){
+                        document.querySelector(".total-div").appendChild(createDiv);
+                    }
                 }
                 document.querySelector(".tomorrow").addEventListener('click',tomorrowFunction);
 
                  //  get tomorrowFunction
                  function nextWeekFunction() {
-                    document.querySelector(".totaldiv").style.marginTop="-50px";
-
                     var createDiv=document.createElement("div");
-                    createDiv.className="newElementClass2";
-                    document.querySelector(".todo-item-input").appendChild(createDiv);
+                    createDiv.className="newElementClass";
+                    createDiv.id="element3";
+                    document.querySelector(".total-div").appendChild(createDiv);
 
                     var createSpan=document.createElement("span");
                     createSpan.className="fas fa-bell note";
@@ -722,6 +795,10 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                     changeInput.innerHTML=addInput +" "+numInput;
                     changeInput.style.color="#67A8F7";                    
                     document.querySelector(".notify").style.color="#67A8F7";
+
+                    if($("#"+itemId).find("#element3").length == 0){
+                        document.querySelector(".total-div").appendChild(createDiv);
+                    }
                 }
                 document.querySelector(".nextweek").addEventListener('click',nextWeekFunction);
                 
@@ -818,12 +895,18 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                 console.log("red");    
                 var createdivred=document.createElement("div");
                 createdivred.className="divred";
+                createdivred.id="Red"
                 createdivred.innerHTML="Red Category";  
                 console.log(createdivred);  
-                document.querySelector(".todo-item-input").appendChild(createdivred);
+                
                 document.querySelector(".categoryInput").innerHTML = createdivred.innerText;
                 document.querySelector(".redcolors").style.display="block";
                 document.querySelector(".redcolors").innerHTML=createdivred.innerText;
+
+                if($("#"+itemId).find("#Red").length == 0){
+                    document.querySelector(".total-div").appendChild(createdivred);
+                }
+
                 function createdivredfunction(e){
                     if(e.target.className=="divred"){
                         var ele=e.target;
@@ -838,12 +921,17 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                 console.log("yellow");    
                 var createdivyellow=document.createElement("div");
                 createdivyellow.className="divyellow";
+                createdivyellow.id="Yellow";
                 createdivyellow.innerHTML="Yellow Category";
                 document.querySelector(".fourthDiv").appendChild(createdivyellow);
-                document.querySelector(".todo-item-input").appendChild(createdivyellow);
                 document.querySelector(".categoryInput").innerHTML = createdivyellow.innerText;
                 document.querySelector(".yellowcolors").style.display="block";
                 document.querySelector(".yellowcolors").innerHTML=createdivyellow.innerText;
+
+                if($("#"+itemId).find("#Yellow").length == 0){
+                    document.querySelector(".total-div").appendChild(createdivyellow);
+                }
+
                 function createdivyellowfunction(e){
                     if(e.target.className=="divyellow"){
                         var ele=e.target;
@@ -858,12 +946,17 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                 console.log("blue");  
                 var createdivblue=document.createElement("div");
                 createdivblue.className="divblue";
+                createdivblue.id="Blue";
                 createdivblue.innerHTML="Blue Category";
-                document.querySelector(".fourthDiv").appendChild(createdivblue); 
-                document.querySelector(".todo-item-input").appendChild(createdivblue); 
+                document.querySelector(".fourthDiv").appendChild(createdivblue);  
                 document.querySelector(".categoryInput").innerHTML = createdivblue.innerText;
                 document.querySelector(".bluecolors").style.display="block";
                 document.querySelector(".bluecolors").innerHTML=createdivblue.innerText;
+
+                if($("#"+itemId).find("#Blue").length == 0){
+                    document.querySelector(".total-div").appendChild(createdivblue);
+                }
+
                 function createdivbluefunction(e){
                     if(e.target.className=="divblue"){
                         var ele=e.target;
@@ -878,12 +971,17 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                 console.log("green");    
                 var createdivgreen=document.createElement("div");
                 createdivgreen.className="divgreen";
+                createdivgreen.id="Green";
                 createdivgreen.innerHTML="Green Category";
                 document.querySelector(".fourthDiv").appendChild(createdivgreen); 
-                document.querySelector(".todo-item-input").appendChild(createdivgreen);
                 document.querySelector(".categoryInput").innerHTML = createdivgreen.innerText;
                 document.querySelector(".greencolors").style.display="block";
                 document.querySelector(".greencolors").innerHTML=createdivgreen.innerText;
+
+                if($("#"+itemId).find("#Green").length == 0){
+                    document.querySelector(".total-div").appendChild(createdivgreen);
+                }
+
                 function createdivgreenfunction(e){
                     if(e.target.className=="divgreen"){
                         var ele=e.target;
@@ -899,11 +997,14 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                 var createdivpurple=document.createElement("div");
                 createdivpurple.className="divpurple";
                 createdivpurple.innerHTML="Purple Category";
+                createdivpurple.id="Purple";
                 document.querySelector(".fourthDiv").appendChild(createdivpurple); 
-                document.querySelector(".todo-item-input").appendChild(createdivpurple);
                 document.querySelector(".categoryInput").innerHTML = createdivpurple.innerText;
                 document.querySelector(".purplecolors").style.display="block";
                 document.querySelector(".purplecolors").innerHTML=createdivpurple.innerText;
+                if($("#"+itemId).find("#Purple").length == 0){
+                    document.querySelector(".total-div").appendChild(createdivpurple);
+                }
                 function createdivpurplefunction(e){
                     if(e.target.className=="divpurle"){
                         var ele=e.target;
@@ -918,12 +1019,15 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                 console.log("orange");    
                 var createdivorange=document.createElement("div");
                 createdivorange.className="divorange";
+                createdivorange.id="Orange";
                 createdivorange.innerHTML="Orange Category";
-                document.querySelector(".fourthDiv").appendChild(createdivorange);
-                document.querySelector(".todo-item-input").appendChild(createdivorange); 
+                document.querySelector(".fourthDiv").appendChild(createdivorange); 
                 document.querySelector(".categoryInput").innerHTML = createdivorange.innerText;
                 document.querySelector(".orangecolors").style.display="block";
                 document.querySelector(".orangecolors").innerHTML=createdivorange.innerText;
+                if($("#"+itemId).find("#Orange").length == 0){
+                    document.querySelector(".total-div").appendChild(createdivorange);
+                }
                 function createdivorangefunction(e){
                     if(e.target.className=="divorange"){
                         var ele=e.target;
@@ -936,35 +1040,20 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
         }         
     document.querySelector(".todo-container").addEventListener('click',clickFunction);
    
-    function clicked(clk) {
-        var itemId,splitId,ID;
-        itemId=clk.target.id;
-        console.log(itemId);
-        if(itemId){
-            splitId=itemId.split('-'); 
-            type=splitId[0]; 
-            ID=parseInt(splitId[1]);
-            clickFunction(itemId);
-        }   
-    }
-    document.querySelector(".todo-container").addEventListener('click',clicked);
-   
     function taskFunction() {
         document.querySelector(".todo-container").style.display="block";
+        document.querySelector(".todo-favourite-div").style.display="none";
         document.querySelector(".todo-addtasks").style.display="block";
         document.querySelector(".homeIcon").style.color="#4993E9";
         document.querySelector(".addtask").style.color="#4993E9";
         document.querySelector(".todo-header").style.display="block";
-        document.querySelector(".favIcon").style.color="grey";
-        document.querySelector(".addimp").style.color="grey";
-        document.querySelector(".checkIcon").style.color="grey";
-        document.querySelector(".addcomplete").style.color="grey";
-        document.querySelector(".todo-complete-div").style.display="block";
+        document.querySelector(".favIcon").style.color="black";
+        document.querySelector(".addimp").style.color="black";
+        document.querySelector(".checkIcon").style.color="black";
+        document.querySelector(".addcomplete").style.color="black";
+        document.querySelector(".todo-complete-div").style.display="none";
     }
     document.querySelector(".tasks").addEventListener('click',taskFunction);
-    document.querySelector(".noofTasks").textContent=Todos.length;
-    document.querySelector(".nooffavTasks").textContent=FavTodos.length;
-    document.querySelector(".noofcompletetasks").textContent=CompleteTodos.length
 
     function favFunction() {
         document.querySelector(".todo-container").style.display="none";
@@ -973,10 +1062,10 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
         document.querySelector(".todo-header").style.display="none";
         document.querySelector(".favIcon").style.color="#4993E9";
         document.querySelector(".addimp").style.color="#4993E9";
-        document.querySelector(".homeIcon").style.color="grey";
-        document.querySelector(".addtask").style.color="grey";
-        document.querySelector(".checkIcon").style.color="grey";
-        document.querySelector(".addcomplete").style.color="grey";
+        document.querySelector(".homeIcon").style.color="black";
+        document.querySelector(".addtask").style.color="black";
+        document.querySelector(".checkIcon").style.color="black";
+        document.querySelector(".addcomplete").style.color="black";
         document.querySelector(".fav-heading").style.display="block";
         document.querySelector(".todo-complete-div").style.display="none";
     }
@@ -989,10 +1078,14 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
         document.querySelector(".todo-header").style.display="none";
         document.querySelector(".checkIcon").style.color="#4993E9";
         document.querySelector(".addcomplete").style.color="#4993E9";
-        document.querySelector(".homeIcon").style.color="grey";
-        document.querySelector(".addtask").style.color="grey";
-        document.querySelector(".favIcon").style.color="grey";
-        document.querySelector(".addimp").style.color="grey";
+        document.querySelector(".homeIcon").style.color="black";
+        document.querySelector(".addtask").style.color="black";
+        document.querySelector(".favIcon").style.color="black";
+        document.querySelector(".addimp").style.color="black";
         document.querySelector(".todo-complete-div").style.display="block";
     }
     document.querySelector(".completed").addEventListener("click",completefunction);
+
+    document.querySelector(".noofTasks").textContent=Todos.length;
+    document.querySelector(".nooffavTasks").textContent=FavTodos.length;
+    document.querySelector(".noofcompletetasks").textContent=CompleteTodos.length;

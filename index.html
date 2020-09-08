@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     </head>
-    <body class="body">
+    <body class="body" style="overflow: hidden;">
         <div class="todohead"> ToDo </div>
         <div class="Types">
             
@@ -15,27 +15,18 @@
             <div class="important">
                 <i class="fa fa-star-o favIcon" style="font-size: 25px; margin-left: 20px;    margin-top: 15px; color:grey" id="favIcon"></i>
                 <div class="addimp">Important</div>
-                <div class="nooffavTasks"></div>
+                <div class="nooffavTasks">0</div>
             </div>
 
             <div class="tasks">
                 <i class="fa fa-home homeIcon" style="font-size: 25px; margin-left: 20px; margin-top: 12px;" aria-hidden="true"></i>
                 <div class="addtask">Tasks</div>
-                <div class="noofTasks"></div>
+                <div class="noofTasks">0</div>
             </div>
             <div class="completed">
                 <i class="fa fa-check-circle-o checkIcon" style="font-size: 25px; margin-left: 20px; margin-top: 12px;" aria-hidden="true"></i>
                 <div class="addcomplete">Complete</div>
-                <div class="noofcompleteTasks"></div>
-            </div>
-            <div class="colorcategories">
-                <div class="headcolor">Color Categories</div>
-                <div class="redcolors" style="display: none;"></div>
-                <div class="yellowcolors" style="display: none;"></div>
-                <div class="bluecolors" style="display: none;"></div>
-                <div class="greencolors" style="display: none;"></div>
-                <div class="purplecolors" style="display: none;"></div>
-                <div class="orangecolors" style="display: none;"></div>
+                <div class="noofcompleteTasks">0</div>
             </div>
         </div>
         <div class="TODO" >
@@ -58,6 +49,7 @@
             <div class="todo-complete-div" style="display: none;">
                 <div class="complete-heading">Complete</div>
             </div>
+
 
         </div>
         <div class="categories">
@@ -118,46 +110,34 @@
             </div>  
 
             <div class="fourthDiv">
-                <i class='fas fa-tag categorypick'></i>
-                <div class="categoryInput">Pick Category</div>
+                <i class='fas fa-tag prioritypick'></i>
+                <div class="priorityInput">Pick Category</div>
             </div>
 
-            <div class="categoryPopup" style="display: none;">
-                <ul class="colors">
-                    <div class="redcolor"> 
-                        <i class="fa fa-circle-o" aria-hidden="true" id="red"></i>
-                        <li class="red">Red Category</li>
+            <div class="priorityPopup" style="display: none;">
+                <ul class="priorities">
+                    <div class="firstpriority"> 
+                        <i class="fa fa-circle-o" aria-hidden="true" id="one"></i>
+                        <li class="first">Priority1</li>
                     </div>
-                    <div class="yellowcolor">
-                        <i class="fa fa-circle-o" aria-hidden="true" id="yellow"></i>
-                        <li class="yellow">Yellow Category</li>
+                    <div class="secondpriority">
+                        <i class="fa fa-circle-o" aria-hidden="true" id="two"></i>
+                        <li class="second">Priority2</li>
                     </div>
-                    <div class="bluecolor">
-                        <i class="fa fa-circle-o" aria-hidden="true" id="blue"></i>
-                        <li class="blue">Blue Category</li>
+                    <div class="thirdpriority">
+                        <i class="fa fa-circle-o" aria-hidden="true" id="three"></i>
+                        <li class="third">Priority3</li>
                     </div>
-                    <div class="greencolor">
-                        <i class="fa fa-circle-o" aria-hidden="true" id="green"></i>
-                        <li class="green">Green Category</li>
-                    </div>
-                    <div class="purplecolor">
-                        <i class="fa fa-circle-o" aria-hidden="true" id="purple"></i>
-                        <li class="purple"> Purple Category</li>
-                    </div>
-                    <div class="orangecolor">
-                        <i class="fa fa-circle-o" aria-hidden="true" id="orange"></i>
-                        <li class="orange"> Orange Category</li>
-                    </div> 
                 </ul>
+            </div>            
+            
+            <div class="fifthDiv">
+                <i class="fa fa-paperclip fileAttach" style="font-size:30px;"></i>
+                <label for="fileAttach" class="addFilename" style="margin-top: -40px;">Add File</label>
+                <input type="file" id="fileAttach" class="inputFile" style="display: none;" >
             </div>
 
             <div class="fileattachDiv" style="display: none;"></div>
-
-            <div class="fifthDiv">
-                <i class="fa fa-paperclip fileAttach" style="font-size:30px;"></i>
-                <input type="file" id="fileAttach" class="inputFile" style="display: none;" >
-                <label for="fileAttach" class="addFile">Add File</label>
-            </div>
 
         </div>
 

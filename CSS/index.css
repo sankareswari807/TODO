@@ -1,6 +1,7 @@
 .body{
     display: block;
     position: relative;
+    overflow: hidden;
 }
 
 .body::after{
@@ -9,76 +10,76 @@
 }
 
 .todohead{
-    width:100%; 
-    height:75px;
-    border-bottom:gray ;
+    width: 100%;
+    height: 75px;
+    border-bottom: gray;
     font-size: 30px;
     color: white;
+    top: -2px;
     background-color: dodgerblue;
     text-align: center;
     line-height: 2.5;
+    position: fixed;
 }
 .TODO{
-    width:52%;
-    position: relative;
-    left: 22%;
-    top: 10%;
+    width: 55%;
+    margin: auto;
 }
 
 .Types{
-        width: 400px;
-        height: 91%;
-        position: fixed;
-        top: 85px;
-        background-color: #EDEDED;
+    width: 300px;
+    height: 91%;
+    position: fixed;
+    top: 75px;
+    background-color: #EDEDED;
 }
 
 .todo-addtasks{
-    width:100%;
+    width: 108%;
+    background-color: white;
     position: fixed;
-    top: 100px;
+    top: 109px;
     display: inline-block;
 }
 .todo-header{
-    width: 95%;
+    width: 55%;
     position: fixed;
-    top:100px;
+    top: 72px;
     font-size: 30px;
+    /* border: 1px solid black; */
     color: dodgerblue;
+    background-color: white;
+    padding: 13px;
 }
-#sort{
-    width: 40px;
-    height:40px;
-    margin-left: 1750px;
-    color:#7F55BF;
-    margin-top:-60px;
-    cursor: pointer;
-}
+
 #todo-inputbox{
-    width:50%;
+    width: 50%;
     height: 40px;
-    border:2px solid dodgerblue; 
+    border: 2px solid dodgerblue;
     font-size: 20px;
-    outline:none;   
+    outline: none;
     text-align: center;
     position: absolute;
-    top: 50px;
+    top: 22px;
+    
 }
 #add{
-    font-size:20px;
+    font-size: 20px;
     position: fixed;
-    top: 150px;
-    color:dodgerblue;
-    width:8%;
-    height:40px;
+    top: 131px;
+    color: dodgerblue;
+    width: 8%;
+    height: 40px;
     outline: none;
-    border:1px solid dodgerblue; 
+    border: 1px solid dodgerblue;
 
 }
 
 .todo-container{
-   position: fixed;
-   top:185px;
+    min-height: 750px;
+    height: 750px;
+    margin-top: 179px;
+    /* overflow-y: scroll !important; */
 }
 .todo-item,.todo-item-fav {
     height: 80px;   
@@ -100,7 +101,7 @@
 }
 
 .todo-item-input{
-    width:40%;
+    width:30%;
     height:40px;
     font-size: 25px;
     outline: none;
@@ -165,12 +166,12 @@
 }
 
 .edit-btn{
-    width:60px;
+    width: 60px;
     height: 30px;
     line-height: 30px;
     cursor: pointer;
-    margin-left: 700px;
-    margin-top: -37px;
+    margin-left: 460px;
+    /* margin-top: -45px; */
     font-size: 15px;
 }
 
@@ -204,21 +205,23 @@
 }
 
 .categories{
-    width: 25%;
-    height: 85%;
+    width: 20%;
+    height: 100%;
     position: fixed;
     background-color: #EDEDED;
-    left: 74.4%;
-    top: 16%;
+    right:0;
+    top: 70px;
 } 
 
 
 .secondDiv{
-    width: 24.9%;
+    width: 368px;
+    margin-top: 20px;
     height: 50px;
-    position: fixed;
-    top: 105px;
-    background-color: #FFFFFF;
+    /* top: 116px; */
+    /* left: 1440px; */
+    background-color:#F5F5F5;
+    /* border: 1px solid black; */
 }
 
 .iconify{
@@ -231,7 +234,7 @@
 }
 
 .secondDiv:hover,.thirdDiv:hover,.fourthDiv:hover,.fifthDiv:hover{
-   background-color:#F5F5F5;
+   background-color:#FFFFFF;
 }
 
 .daySettings{
@@ -242,11 +245,12 @@
 }
 
 .thirdDiv{
-    width: 24.9%;
+    width: 368px;
     height: 100px;
-    position: fixed;
-    top: 175px;
-    background-color: #FFFFFF;
+    margin-top: 20px;
+    /* left: 1440px; */
+    background-color:#F5F5F5;
+    /* border: 1px solid black; */
 }
 
 .remainder{
@@ -293,14 +297,21 @@
 }
 
 .fourthDiv{
-    width: 24.9%;
+    width: 375px;
     height: 50px;
-    position: fixed;
-    top: 300px;
-    background-color: #FFFFFF;
+    margin-top: 20px;
+    /* left: 1440px; */
+    background-color:#F5F5F5;
+    /* border: 1px solid black; */
 }
 
-.categoryInput{
+.priority-heading{
+    font-size: 25px;
+    color:#7F55BF;
+    display: none;
+}
+
+.priorityInput{
     width:300px;
     border:none;
     height:30px;
@@ -310,7 +321,7 @@
     margin-left:130px;
 }
 
-.categorypick{
+.prioritypick{
     font-size: 30px;
     margin-top: 8px;
     margin-left: 20px;
@@ -350,13 +361,12 @@
 }
 
 .fifthDiv{
-    width: 24.9%;
+    width: 375px;
     height: 50px;
-    /* border: 1px solid grey; */
-    /* margin: auto; */
-    position: fixed;
-    top: 375px;
-    background-color: #FFFFFF;
+    margin-top: 20px;
+    /* left: 1440px; */
+    background-color:#F5F5F5;
+    /* border: 1px solid black; */
 }
 
 .fa-paperclip{
@@ -366,17 +376,19 @@
     cursor: pointer;
 }
 
-.addFile{
+.addFilename{
     width: 375px;
-    height:50px;
+    height: 50px;
     font-size: 20px;
-    margin-left: 130px;
-    margin-top:-27px;
+    position: fixed;
+    right: -142px;
+    /* margin-left: 130px; */
+    /* margin-top: 55px; */
     cursor: pointer;
     text-decoration: none;
-    -webkit-user-select: none; 
+    -webkit-user-select: none;
     -ms-user-select: none;
-    user-select: none;
+    user-select: none;  
 }
 
 #element2{
@@ -403,23 +415,22 @@
 }
 
 .fileattachDiv{
-    width:500px;
-    height:50px;
-    border:1px solid whitesmoke;
+    width: 456px;
+    height: 50px;
+    border: 1px solid whitesmoke;
     background-color: white;
-    margin:auto;
-    margin-top: 20px;
+    margin-top: 360px;
     text-align: center;
     font-size: 17px;
 }
 
 .remainderPopup{
-    width:400px;
-    height:288px;
-    border: 2px solid  #EBEFF0;
+    width: 300px;
+    height: 250px;
+    border: 2px solid #EBEFF0;
     position: absolute;
-    margin-top: -60px;
-    margin-left: 75px;
+    margin-top: -59px;
+    margin-left: 60px;
     background-color: white;
 }
 
@@ -475,12 +486,12 @@
 }
 
 .TodayName,.TomorrowName,.NextweekName,.TodayTime{
-    width:100px;
-    height:20px;
-    /* border:1px solid gray; */
+    width: 100px;
+    height: 20px;
+    /* border: 1px solid gray; */
     text-align: center;
     margin-top: -20px;
-    margin-left: 290px;
+    margin-left: 205px;
     font-size: 17px;
     color: grey;
 }
@@ -513,17 +524,17 @@
     text-align: center;
 }
 
-.categoryPopup{
-    width:400px;
-    height:350px;
-    border: 2px solid  #EBEFF0;
+.priorityPopup{
+    width: 275px;
+    height: 200px;
+    border: 2px solid #EBEFF0;
     position: absolute;
-    margin-top: -310px;
+    margin-top: 50px;
     margin-left: 75px;
     background-color: white;
 }
 
-.redcolor,.yellowcolor,.bluecolor,.greencolor,.purplecolor,.orangecolor{
+.firstpriority,.secondpriority,.thirdpriority{
     width: 100%;
     height: 50px;
     cursor: pointer;
@@ -532,173 +543,125 @@
     margin-left: -20px;
  }
 
-.redcolor{
+.firstpriority{
     margin-top:14px;
 }   
 
-.orangecolor{
+.secondpriority{
     margin-top:9px;
 }
 
-.redcolor:hover,.yellowcolor:hover,.bluecolor:hover,.greencolor:hover,.purplecolor:hover,.orangecolor:hover{
+.firstpriority:hover,.secondpriority:hover,.thirdpriority:hover{
     background-color:#F5F5F5 ;
 }
 
-#red,#blue,#purple,#green,#yellow,#orange{
+#one,#two,#three{
     width:20px;
     height:20px;
-    /* border:2px solid black; */
-    color: red;
+    color: magenta;
     margin-top: 15px;
 }
 
-#blue{
+#TWO{
     color: skyblue;
 }
 
-#yellow{
-    color: #DAD7A7;
+#THREE{
+    color:palegreen;
 }
 
-#green{
-    color:lightseagreen
-}
-
-#purple{
-    color: purple;
-}
-
-#orange{
-    color: orange;
-}
-
-.red,.green,.blue,.purple,.yellow,.orange{
+.first,.second,.third{
     text-align: center;
     margin-top: -20px;
 }
 
-.divred{
+/* .priority1{
+    width: 150px;
+    height: 30px;
+    border: 1px solid magenta;
+    background-color: plum;
+    text-align: center;
+    color: black;
+    font-size: 18px;
+    line-height: 1.8;
+    position: fixed;
+    top: 500px;
+    left: 150px;
+}
+
+.priority2{
+    width:150px;
+    height: 30px;
+    border:1px solid  rgb(9, 185, 255);
+    background-color:rgb(148, 220, 230);
+    text-align: center;
+    color:black;
+    font-size: 18px;
+    line-height: 1.8;
+    position: fixed;
+    top:550px;
+    left:150px;
+}
+
+.priority3{
+    width:150px;
+    height: 30px;
+    border:1px solid  rgb(73, 223, 14);
+    background-color:rgb(211, 250, 211);
+    text-align: center;
+    color:black;
+    font-size: 18px;
+    line-height: 1.8;
+    position: fixed;
+    top:600px;
+    left:150px;
+} */
+
+.PriorityOne{
     width:160px;
     height: 30px;
-    border:1px solid red;
-    background-color: #F4C7C9;
+    border:1px solid magenta;
+    background-color: plum;
     text-align: center;
-    color:red;
+    color:magenta;
     font-size: 15px;
     line-height: 30px;
     display: inline-block;
     margin-top: -13px;
     margin-left: 300px;
 }
-.redcolors{
-    width:160px;
-    height: 30px;
-    border:1px solid red;
-    background-color: #F4C7C9;
-    text-align: center;
-    color:red;
-    font-size: 15px;
-    line-height: 30px;
-    display: inline-block;
-    margin-top: 30px;
-    margin-left: 100px;
-}
 
-.divyellow,.yellowcolors{
+.PriorityTwo{
     width:160px;
     height: 30px;
-    border:1px solid black;
-    background-color: lemonchiffon;
+    border:1px solid  rgb(9, 185, 255);
+    background-color:rgb(148, 220, 230);
     text-align: center;
-    color:black;
+    color:rgb(9, 185, 255);
     font-size: 15px;
     line-height: 30px;
     display: inline-block;
 }
 
-.divgreen,.greencolors{
+.PriorityThree{
     width:160px;
     height: 30px;
-    border:1px solid #257E20;
-    background-color: #C2E1C1;
+    border:1px solid palegreen;
+    background-color:rgb(211, 250, 211);
     text-align: center;
-    color:#257E20;
+    color:palegreen;
     font-size: 15px;
     line-height: 30px;
     display: inline-block;
 }
 
-.divblue,.bluecolors{
-    width:160px;
-    height: 30px;
-    border:1px solid #277898;
-    background-color: #B2DCE8;
-    text-align: center;
-    color: #277898;
-    font-size: 15px;
-    line-height: 30px;
-    display: inline-block;
-}
-
-.divpurple,.purplecolors{
-    width:160px;
-    height: 30px;
-    border:1px solid #7D57B2;
-    background-color:#C1B1DB;
-    text-align: center;
-    color: #7D57B2  ;
-    font-size: 15px;
-    line-height: 30px;
-    display: inline-block;
-}
-
-.divorange,.orangecolors{
-    width:160px;
-    height: 30px;
-    border:1px solid #A35A00;
-    background-color: #EBD4B7;
-    text-align: center;
-    color:#A35A00;
-    font-size: 15px;
-    line-height: 30px;
-    display: inline-block;
-}
-
-.day{
+.day,.important,.tasks,.completed,.dayset,.dayremainder,.fileattach{
     width:100%;
     height:50px;
     border:1px solid rgba(248, 240, 240, 0.801); 
 }   
 
-.addday{
-    width:200px;
-    height:30px;
-    border:gray;
-    font-size: 18px;
-    margin-top:-23px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.Iconify{
-    font-size: 25px;
-    color: gray;
-    cursor: pointer;
-}
-
-.important{
-    width:100%;
-    height:50px;
-    border:1px solid rgba(248, 240, 240, 0.801);
-}
-
-.favIcon{
-    font-size: 25px;
-    /* color: plum; */
-    cursor: pointer;
-}
-
-.addimp{
+.addday,.addimp,.addremainder,.addtask,.addcomplete,.addfile{
     width:200px;
     height:30px;
     border:gray;
@@ -708,71 +671,22 @@
     cursor: pointer;
 }
 
-.tasks{
-    width:100%;
-    height:50px;
-    border:1px solid rgba(248, 240, 240, 0.801);
-}
-
-.addtask{
-    width:200px;
-    height:30px;
-    border:gray;
-    font-size: 18px;
-    margin-top:-25px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.homeIcon{
+.Iconify,.favIcon,.homeIcon,.checkIcon,.remainicon,.fileicon{
     font-size: 25px;
     color: gray;
     cursor: pointer;
 }
 
-.completed{
-    width:100%;
-    height:50px;
-    border:1px solid rgba(248, 240, 240, 0.801);
-}
-
-.addcomplete,.addremainder{
-    width:200px;
-    height:30px;
-    border:gray;
-    font-size: 18px;
-    margin-top:-25px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.checkIcon{
-    font-size: 25px;
-    color: gray;
-    cursor: pointer;
-}
-
-.noofTasks{
+.nooffavTasks,.noofcompleteTasks,.noofTasks,.noofday,.noofremainders,.nooffiles,.noofpriorities{
     font-size:20px ;
     text-align: center;
     margin-top: -30px;
-    margin-left:350px;
+    margin-left:200px;
 }
 
-.nooffavTasks,.noofday,.noofremainders{
-    font-size:20px ;
-    text-align: center;
-    margin-top: -30px;
-    margin-left:350px;
-}
-
-.noofcompleteTasks{
-    font-size:20px ;
-    text-align: center;
-    margin-top: -30px;
-    margin-left:350px;
-}
-
+/* .noofpriorities{
+    margin-left:330px;
+} */
 .todo-complete-div{
     margin-top: 15px;
 }
@@ -781,15 +695,14 @@
     display: block;
 }
 
-.complete-heading,.day-heading{
+.complete-heading,.day-heading,.remain-heading,.file-heading{
     font-size: 25px;
     color:#7F55BF;
-    /* display: none; */
 }
 
 .total-div{
     width:600px;
-    margin-left:180px;
+    margin-left:250px;
     margin-top: -45px;
     height:50px;
 }
@@ -800,92 +713,9 @@
     border:1px solid rgba(248, 240, 240, 0.801); 
 } 
 
-.headcolor{
-    font-size: 20px;
+.headpro{
+    font-size: 24px;
+    cursor: pointer;
     margin-left: 20px; 
     margin-top: 20px;   
-}
-
-.todo-day-div{
-    margin-top: 20px;
-}
-
-.DeletePopup{
-    width:400px;
-    height:200px;
-    border:1px solid black;
-    background-color: #EDEDED;
-    position: fixed;
-    top:300px;
-    left:680px;
-}
-
-.delete-content{
-    width:400px;
-    height:100px;
-    /* border: 1px solid red; */
-}
-
-.content{
-    width: 300px;
-    height: 50px;
-    /* border: 1px solid blue; */
-    position: fixed;
-    top: 305px;
-    left: 775px;
-    font-size: 20px;
-    text-align: center;
-    line-height: 2.5;
-}
-
-.name-content{
-    width: 120px;
-    height: 50px;
-    /* border: 2px solid black; */
-    position: fixed;
-    top: 305px;
-    left: 685px;
-    font-size: 20px;
-    text-align: center;
-    line-height: 2.5;
-    background-color: lightcyan;
-}
-
-.delete-content{
-    width: 390px;
-    height: 50px;
-    /* border: 2px solid black; */
-    position: fixed;
-    top: 375px;
-    left: 685px;
-    font-size: 20px;
-    text-align: center;
-    line-height: 2.5;
-}
-
-.buttons{
-    width: 390px;
-    height: 55px;
-    /* border: 1px solid black; */
-    position: fixed;
-    top: 435px;
-    left: 685px;
-}
-
-.cancelbut{
-    width: 100px;
-    height: 30px;
-    font-size: 17px;
-    position: fixed;
-    top: 450px;
-    left: 755px;
-}
-
-.deletebut{
-    width: 100px;
-    height: 30px;
-    font-size: 17px;
-    position: fixed;
-    top: 450px;
-    left: 915px;
 }

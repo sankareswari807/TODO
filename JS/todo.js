@@ -557,8 +557,6 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
                     document.querySelector(".daySettings").style.color="black";
                     document.querySelector(".notify").style.color="black";
                     document.querySelector(".remainInput").style.color="black";
-                    document.querySelector(".date").style.color="black";
-                    document.querySelector(".dateInput").style.color="black";
                     document.querySelector(".daysettings").innerHTML="Add to my day";
 
                     document.getElementById(itemId).appendChild(totalDiv);
@@ -567,8 +565,6 @@ document.querySelector(".todo-container").addEventListener('click',ctrlcompleteI
 
             //add my day
             function addMyDay(e) {             
-
-                document.querySelector(".noofday").innerHTML=daycount;
 
                 var addInput="Added to My Day";
                 var changeInput=document.querySelector(".daySettings");

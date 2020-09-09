@@ -285,15 +285,11 @@ var controller=function(Datactrl,UIctrl){
     var ctrlDeleteitem=function(event){
         var target=event.target.parentNode.parentNode;
             if(event.target.id=="delete"){
-                document.querySelector(".DeletePopup").style.display="block";
                 console.log(event.target.id);
                 var innerTxt=target.querySelector('input[type=text]').value;
-                document.querySelector(".name-content").innerHTML=innerTxt;
-                console.log(target,innerTxt);
                 var itemId=target.id;
                 console.log(itemId);
                 var splitId,type,ID;
-                setTimeout(function(){
                     if(itemId){
                         console.log(itemId)
                         splitId=itemId.split('-'); 
@@ -305,12 +301,8 @@ var controller=function(Datactrl,UIctrl){
                         Datactrl.deleteTodo(ID);
                         UIctrl.deleteListitem(ID);
                     };
-                },2000);
-            }
-            if(event.target.id=="Delete"){
-                document.querySelector(".DeletePopup").style.display="none";
-            }
-    };
+                }
+    }
     document.querySelector(".todo-container").addEventListener('click',ctrlDeleteitem);
 
     var ctrlFavouriteitem=function(favour){
